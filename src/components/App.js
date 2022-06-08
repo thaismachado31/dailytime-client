@@ -21,7 +21,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="/userprofile"
+          path="/userprofile/:_id"
           element={<ProtectedRoute component={UserProfile} />}
         />
         <Route
@@ -30,11 +30,11 @@ function App() {
         />
         <Route path="/create" element={<ProtectedRoute component={Create} />} />
         <Route
-          path="/eventDetail"
+          path="/eventDetail/:_id"
           element={<ProtectedRoute component={EventDetail} />}
         />
         <Route
-          path="/taskDetail"
+          path="/taskDetail/:_id"
           element={<ProtectedRoute component={TaskDetail} />}
         />
       </Routes>
