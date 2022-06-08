@@ -1,7 +1,21 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import api from "../../apis/api";
+import {
+  Input,
+  InputAdornment,
+  Typography,
+  Link,
+  Box,
+  Button,
+  Divider,
+} from "@mui/material";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import KeyIcon from "@mui/icons-material/Key";
 
+import React, { useState, useContext } from "react";
+
+import { useNavigate, useLocation } from "react-router-dom";
+import api from "../../apis/api";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import { AuthContext } from "../../contexts/authContext";
 
 function Login(props) {
@@ -45,40 +59,184 @@ function Login(props) {
     }
   }
 
+  // css
+
+  const titlePositionCss = {
+    fontFamily: "Quicksand",
+    position: "absolute",
+    width: "304px",
+    height: "57.8px",
+    left: "43px",
+    top: "162px",
+    textAlign: "center",
+  };
+
+  const inputCss = {
+    width: "300px",
+    height: "41px",
+    padding: "11px 10px 11px 10px",
+    gap: "10px",
+    position: "absolute",
+    left: "45px",
+
+    border: "1px solid #ADB7C2",
+    borderRadius: "25px",
+  };
+
+  const linkSenhaCss = {
+    width: "198px",
+    height: "15px",
+    position: "absolute",
+    left: "96px",
+    textAlign: "center",
+    fontSize: "12px",
+    color: "#333D49",
+    textDecoration: "none",
+  };
+
+  const buttonCss = {
+    width: "142px",
+    height: "41px",
+    left: "125px",
+    borderRadius: "100px",
+    backgroundColor: "#CDD4DB",
+  };
+
+  const ouDivCss = {
+    width: "300px",
+    display: "flex",
+    alignItems: "center",
+    position: "absolute",
+    top: "502px",
+    left: "45px",
+  };
+
+  const linkRegistroCss = {
+    width: "228px",
+    height: "15px",
+    position: "absolute",
+    left: "82px",
+    textAlign: "center",
+    fontSize: "14px",
+    color: "#516274",
+    textDecoration: "none",
+  };
+
+  const socialMediaDiv = {
+    position: "absolute",
+    display: "flex",
+    justifyContent: "space-between",
+    top: "565px",
+    left: "45px",
+    width: "300px",
+    height: "41px",
+  };
+
+  const socialMediaLink = {
+    width: "141px",
+    heigh: "41px",
+    border: "1px solid #32747F",
+    borderRadius: "25px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  console.log(state);
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
+    <div>
+      <div style={titlePositionCss}>
+        <Typography
+          component="h4"
+          sx={{ fontSize: "24px", fontWeight: 700, lineHeight: "32.53px" }}
+        >
+          <strong> Vamos começar!</strong>
+        </Typography>
+        <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
+          Conte-me mais sobre você
+        </Typography>
+      </div>
 
-      <div>
-        <label htmlFor="signupFormEmail">E-mail Address</label>
-        <input
-          type="email"
+      <Box component="form" onSubmit={handleSubmit}>
+        <Input
+          sx={{
+            "&:after": {
+              border: "none",
+            },
+            "&::before": {
+              border: "none",
+            },
+            "&:hover:not(.Mui-disabled):before": {
+              border: "none",
+            },
+            top: "268px",
+          }}
+          placeholder="Email"
+          style={inputCss}
+          startAdornment={
+            <InputAdornment position="start">
+              <AccountCircleOutlinedIcon />
+            </InputAdornment>
+          }
           name="email"
-          id="signupFormEmail"
-          value={state.email}
-          error={errors.email}
           onChange={handleChange}
         />
-      </div>
-
-      <div>
-        <label htmlFor="signupFormPassword">Password</label>
-        <input
-          type="password"
+        <Input
+          sx={{
+            "&:after": {
+              border: "none",
+            },
+            "&::before": {
+              border: "none",
+            },
+            "&:hover:not(.Mui-disabled):before": {
+              border: "none",
+            },
+            top: "333px",
+          }}
+          placeholder="Password"
+          style={inputCss}
+          startAdornment={
+            <InputAdornment position="start">
+              <KeyIcon />
+            </InputAdornment>
+          }
           name="password"
-          id="signupFormPassword"
-          value={state.password}
-          error={errors.password}
           onChange={handleChange}
         />
+
+        <Button
+          variant="contained"
+          sx={{ top: "421px" }}
+          style={buttonCss}
+          type="submit"
+        >
+          Entrar
+        </Button>
+      </Box>
+      <Link sx={{ top: "382px" }} style={linkSenhaCss} href="/">
+        Esqueceu a senha?
+      </Link>
+
+      <div style={ouDivCss}>
+        <Divider style={{ width: "127px" }}></Divider>
+        <p style={{ fontSize: "14px", margin: "12px" }}>OU</p>
+        <Divider style={{ width: "127px", float: "right" }}></Divider>
       </div>
 
-      <div>
-        <button type="submit">Login!</button>
-
-        <Link to="/signup">Don't have an account? Click here to signup!</Link>
+      <div style={socialMediaDiv}>
+        <Link style={socialMediaLink}>
+          <GoogleIcon />
+        </Link>
+        <Link style={socialMediaLink}>
+          <FacebookRoundedIcon />
+        </Link>
       </div>
-    </form>
+
+      <Link sx={{ top: "755px" }} style={linkRegistroCss} href="/">
+        Não tem conta? <strong>Registre-se aqui</strong>
+      </Link>
+    </div>
   );
 }
 
