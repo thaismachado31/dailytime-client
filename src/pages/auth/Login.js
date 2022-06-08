@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import KeyIcon from "@mui/icons-material/Key";
-
 import React, { useState, useContext } from "react";
 
 import { useNavigate, useLocation } from "react-router-dom";
@@ -17,14 +16,14 @@ import api from "../../apis/api";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import { AuthContext } from "../../contexts/authContext";
+import Alert from "@mui/material/Alert";
 
 function Login(props) {
   const authContext = useContext(AuthContext);
 
   const [state, setState] = useState({ password: "", email: "" });
   const [errors, setErrors] = useState({
-    email: null,
-    password: null,
+    msg: null,
   });
 
   const navigate = useNavigate();
@@ -54,18 +53,17 @@ function Login(props) {
       setErrors({ password: "", email: "" });
       navigate(from, { replace: true });
     } catch (err) {
-      console.error(err.response);
-      setErrors({ ...err.response.data.errors });
+      console.error(err.response.data);
+      setErrors({ ...err.response.data });
     }
   }
 
+  console.log(errors);
   // css
 
   const titlePositionCss = {
-    fontFamily: "Quicksand",
     width: "304px",
     height: "57.8px",
-
     textAlign: "center",
   };
 
@@ -144,9 +142,22 @@ function Login(props) {
     height: "80vh",
     marginTop: "7vh",
   };
-  console.log(state);
+
+  const removeBorderInput = {
+    "&:after": {
+      border: "none",
+    },
+    "&::before": {
+      border: "none",
+    },
+    "&:hover:not(.Mui-disabled):before": {
+      border: "none",
+    },
+  };
+
   return (
     <div style={mainDiv}>
+      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
       <div style={titlePositionCss}>
         <Typography
           component="h4"
@@ -161,17 +172,7 @@ function Login(props) {
 
       <Box component="form" onSubmit={handleSubmit} style={formCss}>
         <Input
-          sx={{
-            "&:after": {
-              border: "none",
-            },
-            "&::before": {
-              border: "none",
-            },
-            "&:hover:not(.Mui-disabled):before": {
-              border: "none",
-            },
-          }}
+          sx={removeBorderInput}
           placeholder="Email"
           style={inputCss}
           startAdornment={
@@ -183,17 +184,7 @@ function Login(props) {
           onChange={handleChange}
         />
         <Input
-          sx={{
-            "&:after": {
-              border: "none",
-            },
-            "&::before": {
-              border: "none",
-            },
-            "&:hover:not(.Mui-disabled):before": {
-              border: "none",
-            },
-          }}
+          sx={removeBorderInput}
           placeholder="Password"
           style={inputCss}
           startAdornment={
