@@ -22,13 +22,13 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ShortTextIcon from "@mui/icons-material/ShortText";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import LoopIcon from "@mui/icons-material/Loop";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 
 import useStyles from "../styles/styles";
 
-function TabTask(props) {
+function TabEvent(props) {
   const { children, value, index, ...other } = props;
 
   const classes = useStyles();
@@ -39,13 +39,7 @@ function TabTask(props) {
 
   const [newDate, setNewDate] = useState(new Date());
 
-  const [repeat, setRepeat] = useState("");
-
   const [alarm, setAlarm] = useState("");
-
-  const handleChangeRepeat = (event) => {
-    setRepeat(event.target.value);
-  };
 
   const handleChangeAlarm = (event) => {
     setAlarm(event.target.value);
@@ -66,7 +60,7 @@ function TabTask(props) {
             fullWidth
             hiddenLabel
             id="filled-hidden-label-small"
-            placeholder="nome da tarefa"
+            placeholder="nome do evento"
             variant="filled"
             size="small"
             margin="normal"
@@ -111,26 +105,6 @@ function TabTask(props) {
                 />
               </Box>
               <Box className={classes.input}>
-                <LoopIcon className={classes.icons} />
-                <FormControl>
-                  <InputLabel id="demo-simple-select-label">repetir</InputLabel>
-                  <Select
-                    style={{ width: "140px" }}
-                    variant="standard"
-                    labelId="week-recurrence"
-                    id="week-recurrence"
-                    value={repeat}
-                    label="recurrence"
-                    onChange={handleChangeRepeat}
-                  >
-                    <MenuItem value={"vazio"}>-</MenuItem>
-                    <MenuItem value={"diario"}>Diario</MenuItem>
-                    <MenuItem value={"semanal"}>Semanal</MenuItem>
-                    <MenuItem value={"mensal"}>Mensal</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box className={classes.input}>
                 <NotificationsNoneIcon className={classes.icons} />
                 <FormControl>
                   <InputLabel id="demo-simple-select-label">
@@ -152,16 +126,27 @@ function TabTask(props) {
                   </Select>
                 </FormControl>
               </Box>
+              <Box className={classes.input}>
+                <PersonAddAltOutlinedIcon className={classes.icons} />
+                <TextField
+                  fullWidth
+                  id="input-invite"
+                  label="convidado"
+                  placeholder="convidado"
+                  variant="standard"
+                  margin="normal"
+                />
+              </Box>
             </Stack>
           </LocalizationProvider>
           <div className={classes.divButton}>
             <Button
-              className={classes.styleButton}
+              className={classes.buttonStyle}
               variant="contained"
               type="submit"
               endIcon={<PlayArrowOutlinedIcon />}
             >
-              Criar tarefa
+              Criar evento
             </Button>
           </div>
         </Box>
@@ -170,4 +155,4 @@ function TabTask(props) {
   );
 }
 
-export default TabTask;
+export default TabEvent;

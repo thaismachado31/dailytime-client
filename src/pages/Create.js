@@ -1,11 +1,20 @@
 import React from "react";
+import { useState } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 import TabTask from "../components/TabTask";
+import TabEvent from "../components/TabEvent";
 import useStyles from "../styles/styles";
 
 function Create() {
   const classes = useStyles();
 
+  const [state, setState] = useState({
+    value: 1,
+  });
+
+  const handleChange = (event) => {
+    setState(event.target.value);
+  };
   return (
     <div>
       <Box
@@ -18,8 +27,8 @@ function Create() {
           className={classes.tab}
           textColor="#83C5BE"
           indicatorColor="#83C5BE"
-          value={0}
-          //   onChange={handleChange}
+          value={state.value}
+          onChange={handleChange}
           aria-label="basic tabs example"
           centered
         >
@@ -27,12 +36,12 @@ function Create() {
           <Tab className={classes.form} label="Novo evento" />
         </Tabs>
       </Box>
-      <TabTask value={0} index={0}>
+      <TabTask value={state.value} index={0}>
         Nova tarefa
       </TabTask>
-      {/* <TabPanel value={value} index={1}>
+      <TabEvent value={state.value} index={1}>
         Novo Evento
-      </TabPanel> */}
+      </TabEvent>
     </div>
   );
 }

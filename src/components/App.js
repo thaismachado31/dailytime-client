@@ -28,7 +28,7 @@ function App() {
           path="/secondhome"
           element={<ProtectedRoute component={SecondHome} />}
         />
-        <Route path="/create" element={<ProtectedRoute component={Create} />} />
+        <Route path="/create" element={<Create />} />
         <Route
           path="/eventDetail/:_id"
           element={<ProtectedRoute component={EventDetail} />}
