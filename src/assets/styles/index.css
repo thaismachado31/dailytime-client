@@ -1,2 +1,6 @@
 /* Seus estilos globais vão aqui */
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap");
+* {
+  box-sizing: border-box;
+  font-family: "Quicksand";
+}

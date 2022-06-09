@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import KeyIcon from "@mui/icons-material/Key";
-
 import React, { useState, useContext } from "react";
 
 import { useNavigate, useLocation } from "react-router-dom";
@@ -17,14 +16,14 @@ import api from "../../apis/api";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import { AuthContext } from "../../contexts/authContext";
+import Alert from "@mui/material/Alert";
 
 function Login(props) {
   const authContext = useContext(AuthContext);
 
   const [state, setState] = useState({ password: "", email: "" });
   const [errors, setErrors] = useState({
-    email: null,
-    password: null,
+    msg: null,
   });
 
   const navigate = useNavigate();
@@ -54,20 +53,17 @@ function Login(props) {
       setErrors({ password: "", email: "" });
       navigate(from, { replace: true });
     } catch (err) {
-      console.error(err.response);
-      setErrors({ ...err.response.data.errors });
+      console.error(err.response.data);
+      setErrors({ ...err.response.data });
     }
   }
 
+  console.log(errors);
   // css
 
   const titlePositionCss = {
-    fontFamily: "Quicksand",
-    position: "absolute",
     width: "304px",
     height: "57.8px",
-    left: "43px",
-    top: "162px",
     textAlign: "center",
   };
 
@@ -76,9 +72,6 @@ function Login(props) {
     height: "41px",
     padding: "11px 10px 11px 10px",
     gap: "10px",
-    position: "absolute",
-    left: "45px",
-
     border: "1px solid #ADB7C2",
     borderRadius: "25px",
   };
@@ -86,8 +79,7 @@ function Login(props) {
   const linkSenhaCss = {
     width: "198px",
     height: "15px",
-    position: "absolute",
-    left: "96px",
+    marginTop: "5px",
     textAlign: "center",
     fontSize: "12px",
     color: "#333D49",
@@ -97,7 +89,6 @@ function Login(props) {
   const buttonCss = {
     width: "142px",
     height: "41px",
-    left: "125px",
     borderRadius: "100px",
     backgroundColor: "#CDD4DB",
   };
@@ -106,16 +97,11 @@ function Login(props) {
     width: "300px",
     display: "flex",
     alignItems: "center",
-    position: "absolute",
-    top: "502px",
-    left: "45px",
   };
 
   const linkRegistroCss = {
     width: "228px",
     height: "15px",
-    position: "absolute",
-    left: "82px",
     textAlign: "center",
     fontSize: "14px",
     color: "#516274",
@@ -123,11 +109,9 @@ function Login(props) {
   };
 
   const socialMediaDiv = {
-    position: "absolute",
     display: "flex",
     justifyContent: "space-between",
-    top: "565px",
-    left: "45px",
+
     width: "300px",
     height: "41px",
   };
@@ -142,9 +126,38 @@ function Login(props) {
     alignItems: "center",
   };
 
-  console.log(state);
+  const formCss = {
+    height: "200px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
+
+  const mainDiv = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-around",
+    height: "80vh",
+    marginTop: "7vh",
+  };
+
+  const removeBorderInput = {
+    "&:after": {
+      border: "none",
+    },
+    "&::before": {
+      border: "none",
+    },
+    "&:hover:not(.Mui-disabled):before": {
+      border: "none",
+    },
+  };
+
   return (
-    <div>
+    <div style={mainDiv}>
+      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
       <div style={titlePositionCss}>
         <Typography
           component="h4"
@@ -157,20 +170,9 @@ function Login(props) {
         </Typography>
       </div>
 
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box component="form" onSubmit={handleSubmit} style={formCss}>
         <Input
-          sx={{
-            "&:after": {
-              border: "none",
-            },
-            "&::before": {
-              border: "none",
-            },
-            "&:hover:not(.Mui-disabled):before": {
-              border: "none",
-            },
-            top: "268px",
-          }}
+          sx={removeBorderInput}
           placeholder="Email"
           style={inputCss}
           startAdornment={
@@ -182,18 +184,7 @@ function Login(props) {
           onChange={handleChange}
         />
         <Input
-          sx={{
-            "&:after": {
-              border: "none",
-            },
-            "&::before": {
-              border: "none",
-            },
-            "&:hover:not(.Mui-disabled):before": {
-              border: "none",
-            },
-            top: "333px",
-          }}
+          sx={removeBorderInput}
           placeholder="Password"
           style={inputCss}
           startAdornment={
@@ -205,18 +196,13 @@ function Login(props) {
           onChange={handleChange}
         />
 
-        <Button
-          variant="contained"
-          sx={{ top: "421px" }}
-          style={buttonCss}
-          type="submit"
-        >
+        <Button variant="contained" style={buttonCss} type="submit">
           Entrar
         </Button>
+        <Link style={linkSenhaCss} href="/">
+          Esqueceu a senha?
+        </Link>
       </Box>
-      <Link sx={{ top: "382px" }} style={linkSenhaCss} href="/">
-        Esqueceu a senha?
-      </Link>
 
       <div style={ouDivCss}>
         <Divider style={{ width: "127px" }}></Divider>
@@ -233,7 +219,7 @@ function Login(props) {
         </Link>
       </div>
 
-      <Link sx={{ top: "755px" }} style={linkRegistroCss} href="/">
+      <Link style={linkRegistroCss} href="/">
         Não tem conta? <strong>Registre-se aqui</strong>
       </Link>
     </div>
