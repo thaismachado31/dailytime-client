@@ -22,9 +22,13 @@ const useStyles = makeStyles(() => ({
     marginRight: "20px",
   },
   input: {
+    border: "none",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+  },
+  picker: {
+    margin: "20px",
   },
 }));
 

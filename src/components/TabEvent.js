@@ -12,6 +12,8 @@ import {
   Select,
 } from "@mui/material";
 
+import FormSelect from "./FormSelect";
+
 import {
   TimePicker,
   LocalizationProvider,
@@ -33,6 +35,14 @@ function TabEvent(props) {
 
   const classes = useStyles();
 
+  const alarmOp = [
+    "-",
+    "5min antes",
+    "10min antes",
+    "15min antes",
+    "30min antes",
+  ];
+
   const [datetime, setDatetime] = useState(
     new Date("2018-01-01T00:00:00.000Z")
   );
@@ -43,6 +53,18 @@ function TabEvent(props) {
 
   const handleChangeAlarm = (event) => {
     setAlarm(event.target.value);
+  };
+
+  const removeBorderInput = {
+    "&:after": {
+      border: "none",
+    },
+    "&:before": {
+      border: "none",
+    },
+    "&:hover:not(.Mui-disabled):before": {
+      border: "none",
+    },
   };
 
   return (
@@ -56,14 +78,14 @@ function TabEvent(props) {
       {value === index && (
         <Box sx={{ p: 3 }}>
           <TextField
-            className={classes.form}
+            InputProps={{ disableUnderline: true }}
+            sx={{ margin: "15px 0" }}
             fullWidth
             hiddenLabel
             id="filled-hidden-label-small"
             placeholder="nome do evento"
             variant="filled"
             size="small"
-            margin="normal"
           />
 
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -71,6 +93,7 @@ function TabEvent(props) {
               <Box className={classes.input}>
                 <ShortTextIcon className={classes.icons} />
                 <TextField
+                  InputProps={{ disableUnderline: true }}
                   fullWidth
                   id="input-description"
                   label="descrição"
@@ -78,40 +101,70 @@ function TabEvent(props) {
                   multiline
                   variant="standard"
                   maxRows={2}
-                  margin="normal"
                 />
               </Box>
               <Box className={classes.input}>
                 <AccessTimeIcon className={classes.icons} />
                 <TimePicker
-                  label="Hora"
+                  className={classes.picker}
+                  InputProps={{ disableUnderline: true }}
+                  hiddenLabel
+                  ampm={false}
                   margin="normal"
                   value={datetime}
                   onChange={(newDatetime) => {
                     setDatetime(newDatetime);
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField variant="standard" {...params} />
+                  )}
                 />
               </Box>
               <Box className={classes.input}>
                 <CalendarMonthIcon className={classes.icons} />
                 <MobileDatePicker
-                  label="Data"
+                  className={classes.picker}
+                  InputProps={{ disableUnderline: true }}
+                  inputFormat="dd/MM/yyyy"
+                  hiddenLabel
                   value={newDate}
                   onChange={(newDate) => {
                     setNewDate(newDate);
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField variant="standard" {...params} />
+                  )}
                 />
               </Box>
               <Box className={classes.input}>
+                <PersonAddAltOutlinedIcon className={classes.icons} />
+                <TextField
+                  InputProps={{ disableUnderline: true }}
+                  id="input-invite"
+                  label="convidado"
+                  placeholder="convidado"
+                  variant="standard"
+                />
+              </Box>
+              <FormSelect
+                label="lembrete"
+                icon={<NotificationsNoneIcon className={classes.icons} />}
+                value={alarm}
+                onChange={handleChangeAlarm}
+                name="alarm"
+                options={alarmOp}
+              ></FormSelect>
+              {/* <Box className={classes.input}>
                 <NotificationsNoneIcon className={classes.icons} />
                 <FormControl>
                   <InputLabel id="demo-simple-select-label">
                     lembrete
                   </InputLabel>
                   <Select
-                    style={{ width: "140px" }}
+                    sx={removeBorderInput}
+                    style={{
+                      width: "140px",
+                    }}
                     variant="standard"
                     labelId="notification"
                     id="notification-alarm"
@@ -125,23 +178,20 @@ function TabEvent(props) {
                     <MenuItem value={"mensal"}>30min antes</MenuItem>
                   </Select>
                 </FormControl>
-              </Box>
-              <Box className={classes.input}>
-                <PersonAddAltOutlinedIcon className={classes.icons} />
-                <TextField
-                  fullWidth
-                  id="input-invite"
-                  label="convidado"
-                  placeholder="convidado"
-                  variant="standard"
-                  margin="normal"
-                />
-              </Box>
+              </Box> */}
             </Stack>
           </LocalizationProvider>
           <div className={classes.divButton}>
             <Button
               className={classes.buttonStyle}
+              sx={{
+                width: "197px",
+                height: "42px",
+                borderRadius: "100px",
+                backgroundColor: "#CDD4DB",
+                padding: "10px",
+                textTransform: "unset",
+              }}
               variant="contained"
               type="submit"
               endIcon={<PlayArrowOutlinedIcon />}

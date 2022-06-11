@@ -8,12 +8,10 @@ import useStyles from "../styles/styles";
 function Create() {
   const classes = useStyles();
 
-  const [state, setState] = useState({
-    value: 1,
-  });
+  const [state, setState] = useState(0);
 
-  const handleChange = (event) => {
-    setState(event.target.value);
+  const handleChange = (event, newValue) => {
+    setState(newValue);
   };
   return (
     <div>
@@ -24,24 +22,32 @@ function Create() {
         }}
       >
         <Tabs
-          className={classes.tab}
-          textColor="#83C5BE"
-          indicatorColor="#83C5BE"
-          value={state.value}
+          sx={{
+            ".MuiButtonBase-root": {
+              textTransform: "none",
+              fontSize: "17px",
+            },
+            marginTop: "20px",
+            color: "#32747F",
+            indicatorColor: "#83C5BE",
+          }}
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "#83C5BE",
+            },
+          }}
+          textColor="#32747F"
+          value={state}
           onChange={handleChange}
-          aria-label="basic tabs example"
+          aria-label="tarefas ou eventos"
           centered
         >
           <Tab className={classes.form} label="Nova tarefa" />
           <Tab className={classes.form} label="Novo evento" />
         </Tabs>
       </Box>
-      <TabTask value={state.value} index={0}>
-        Nova tarefa
-      </TabTask>
-      <TabEvent value={state.value} index={1}>
-        Novo Evento
-      </TabEvent>
+      {state === 0 && <TabTask />}
+      {state === 1 && <TabEvent />}
     </div>
   );
 }
