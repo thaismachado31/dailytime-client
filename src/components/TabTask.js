@@ -177,7 +177,6 @@ function TabTask(props) {
             borderRadius: "100px",
             backgroundColor: "#CDD4DB",
             padding: "10px",
-            textTransform: "unset",
           }}
           variant="contained"
           type="submit"
