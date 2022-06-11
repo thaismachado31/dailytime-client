@@ -2,7 +2,6 @@ import {
   Input,
   InputAdornment,
   Typography,
-  Link,
   Box,
   Button,
   Divider,
@@ -12,7 +11,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import KeyIcon from "@mui/icons-material/Key";
 import React, { useState, useContext } from "react";
 
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import api from "../../apis/api";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
@@ -22,7 +21,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Login(props) {
   const authContext = useContext(AuthContext);
-  const [state, setState] = useState({ password: "", email: "", nome: "" });
+  const [state, setState] = useState({ password: "", email: "", name: "" });
+  const [checkbox, setCheckbox] = useState(false);
   const [errors, setErrors] = useState({
     msg: null,
   });
@@ -59,20 +59,22 @@ function Login(props) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    try {
-      const response = await api.post("/login", state);
-      console.log(response);
+    if (!checkbox) {
+      return setErrors({ msg: "You must agree with terms and conditions" });
+    }
 
-      authContext.setLoggedInUser({ ...response.data });
-      localStorage.setItem(
-        "loggedInUser",
-        JSON.stringify({ ...response.data })
-      );
-      setErrors({ password: "", email: "" });
-      navigate(from, { replace: true });
+    try {
+      const response = await api.post("/signup", state);
+      setErrors({ msg: null });
+      navigate("/login");
     } catch (err) {
-      console.error(err.response.data);
-      setErrors({ ...err.response.data });
+      if (err.response) {
+        console.error(err.response);
+
+        return setErrors({ ...err.response.data });
+      }
+
+      console.error(err);
     }
   }
 
@@ -118,7 +120,9 @@ function Login(props) {
     height: "41px",
     borderRadius: "100px",
     backgroundColor:
-      state.email && state.password && state.nome ? "#32747F" : "#CDD4DB",
+      state.email && state.password && state.name && checkbox
+        ? "#32747F"
+        : "#CDD4DB",
   };
 
   const linkRegistroCss = {
@@ -172,7 +176,7 @@ function Login(props) {
                 <AccountCircleOutlinedIcon />
               </InputAdornment>
             }
-            name="nome"
+            name="name"
             onChange={handleChange}
           />
           <Input
@@ -200,7 +204,10 @@ function Login(props) {
           />
 
           <div href="/">
-            <Checkbox />
+            <Checkbox
+              onChange={(event) => setCheckbox(event.target.checked)}
+              checked={checkbox}
+            />
             Concordo com os <strong>Termos e condições</strong>
           </div>
           <Button variant="contained" style={buttonCss} type="submit">
@@ -208,7 +215,7 @@ function Login(props) {
           </Button>
         </Box>
 
-        <Link style={linkRegistroCss} href="/">
+        <Link style={linkRegistroCss} to="/login">
           Já tem uma conta? <strong>Iniciar sessão</strong>
         </Link>
       </ThemeProvider>
