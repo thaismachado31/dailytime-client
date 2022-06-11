@@ -2,7 +2,6 @@ import {
   Input,
   InputAdornment,
   Typography,
-  Link,
   Box,
   Button,
   Divider,
@@ -11,7 +10,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import KeyIcon from "@mui/icons-material/Key";
 import React, { useState, useContext } from "react";
 
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import api from "../../apis/api";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
@@ -212,7 +211,7 @@ function Login(props) {
           <Button variant="contained" style={buttonCss} type="submit">
             Entrar
           </Button>
-          <Link style={linkSenhaCss} href="/">
+          <Link style={linkSenhaCss} to={"/"}>
             Esqueceu a senha?
           </Link>
         </Box>
@@ -224,15 +223,15 @@ function Login(props) {
         </div>
 
         <div style={socialMediaDiv}>
-          <Link style={socialMediaLink}>
+          <Link style={socialMediaLink} to={"/"}>
             <GoogleIcon />
           </Link>
-          <Link style={socialMediaLink}>
+          <Link style={socialMediaLink} to={"/"}>
             <FacebookRoundedIcon />
           </Link>
         </div>
 
-        <Link style={linkRegistroCss} href="/">
+        <Link style={linkRegistroCss} to={"/signup"}>
           Não tem conta? <strong>Registre-se aqui</strong>
         </Link>
       </ThemeProvider>
