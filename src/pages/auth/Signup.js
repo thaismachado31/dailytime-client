@@ -13,8 +13,7 @@ import React, { useState, useContext } from "react";
 
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import api from "../../apis/api";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { AuthContext } from "../../contexts/authContext";
 import Alert from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -184,7 +183,7 @@ function Login(props) {
             placeholder="Email"
             startAdornment={
               <InputAdornment position="start">
-                <AccountCircleOutlinedIcon />
+                <EmailOutlinedIcon />
               </InputAdornment>
             }
             name="email"
