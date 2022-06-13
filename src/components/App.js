@@ -12,6 +12,7 @@ import EventDetail from "../pages/UserProfile";
 import TaskDetail from "../pages/TaskDetail";
 
 import { AuthContextComponent } from "../contexts/authContext";
+import Navbar from "./navbar/Navbar";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           element={<ProtectedRoute component={TaskDetail} />}
         />
       </Routes>
+      <Navbar />
     </AuthContextComponent>
   );
 }

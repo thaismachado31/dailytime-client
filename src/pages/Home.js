@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import InviteList from "../components/InviteList";
+import api from "../apis/api";
+import {
+  lastDayOfWeek,
+  startOfWeek,
+  eachDayOfInterval,
+  format,
+} from "date-fns";
+import MyInvites from "../components/MyInvites";
+import DayComponent from "../components/weekbar/DayComponent";
+import WeekBar from "../components/weekbar/WeekBar";
 
 function Home() {
+  const mainDiv = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-around",
+    height: "80vh",
+    marginTop: "7vh",
+  };
   return (
-    <div className="text-center">
-      <img
-        src="https://coursereport-s3-production.global.ssl.fastly.net/uploads/school/logo/84/original/logo-ironhack-blue.png"
-        alt="ironhack logo"
-      />
-      <h1>React IronPlate</h1>
-      <p>This is the homepage</p>
-      <div className="d-flex flex-column align-items-center">
-        <Link className="btn btn-lg btn-primary" to="/auth/signup">
-          Signup here!
-        </Link>
-      </div>
+    <div style={mainDiv} className="text-center">
+      {/* <MyInvites /> */}
+      <WeekBar />
+      <MyInvites />
     </div>
   );
 }
