@@ -39,7 +39,7 @@ const WeekBar = () => {
             <DayComponent
               key={index}
               day={date}
-              hasTask
+              hasTask={index % 2 === 0 ? true : false}
               functions={{ handleSelectedDay, selectedDay }}
             />
           );

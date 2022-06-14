@@ -11,7 +11,7 @@ const MyInvites = () => {
       // /eventinvites/629b9859ef51fb2688f9c0b9
       // /eventinvites/62a4c4a6946c8247c4060d31
       // /myinvites
-      const myinvites = await api.get(`/eventinvites/62a4c4a6946c8247c4060d31`);
+      const myinvites = await api.get(`/myinvites`);
       setInvites(myinvites.data);
     } catch (error) {}
   }

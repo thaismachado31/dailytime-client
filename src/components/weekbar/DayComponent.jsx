@@ -29,6 +29,9 @@ const DayComponent = (props) => {
             : "black",
       },
     },
+    "MuiSvgIcon-root": {
+      width: "7px",
+    },
   });
 
   const boxCss = {
@@ -55,7 +58,7 @@ const DayComponent = (props) => {
         <Typography variant="p">{day.getDate()}</Typography>
         {hasTask && (
           <Typography variant="p">
-            <FiberManualRecordIcon />
+            <FiberManualRecordIcon sx={{ fontSize: "7px" }} />
           </Typography>
         )}
       </ThemeProvider>
