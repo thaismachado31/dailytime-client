@@ -13,7 +13,6 @@ import { AuthContext } from "../contexts/authContext";
 import { Link } from "react-router-dom";
 
 import api from "../apis/api";
-import { getDate } from "date-fns/esm";
 
 function TaskDetail() {
   const [task, setTask] = useState({
@@ -22,7 +21,7 @@ function TaskDetail() {
     description: "",
     icon: "",
     color: "",
-    dateTime: "Sun Jun 12 2022 11:58:17 GMT-0300",
+    dateTime: "",
     duration: 0,
     reminder: "",
     timeReminder: 0,
@@ -38,10 +37,6 @@ function TaskDetail() {
         const response = await api.get(`/task/${_id}`);
 
         console.log(response.data);
-        console.log(
-          "🚀 ~ file: TaskDetail.js ~ line 33 ~ TaskDetail ~ _id",
-          _id
-        );
 
         setTask({ ...response.data });
       } catch (err) {
@@ -52,7 +47,7 @@ function TaskDetail() {
   }, [_id]);
 
   function isOwner() {
-    return task.userId._id === loggedInUser.user._id;
+    return task.userId === loggedInUser.user._id;
   }
 
   const informationsStyle = {
@@ -69,7 +64,6 @@ function TaskDetail() {
 
   return (
     <div>
-      {" "}
       {isOwner() && (
         <div>
           <h4 style={{ margin: "1.5rem", color: "#32747F" }}> DETALHES: </h4>

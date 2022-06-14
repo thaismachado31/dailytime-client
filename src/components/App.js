@@ -37,12 +37,10 @@ function App() {
           path="/event/:_id"
           element={<ProtectedRoute component={EventDetail} />}
         />
-        {/* <Route
+        <Route
           path="/task/:_id"
           element={<ProtectedRoute component={TaskDetail} />}
-        /> */}
-
-        <Route path="/task/:_id" element={<TaskDetail />} />
+        />
       </Routes>
       {/* <Navbar /> */}
     </AuthContextComponent>
