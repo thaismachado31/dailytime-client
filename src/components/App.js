@@ -23,16 +23,16 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="/userprofile"
+          path="/userprofile/:_id"
           element={<ProtectedRoute component={UserProfile} />}
         />
         <Route
           path="/secondhome"
           element={<ProtectedRoute component={SecondHome} />}
         />
-        <Route path="/create" element={<ProtectedRoute component={Create} />} />
+        <Route path="/create" element={<Create />} />
         <Route
-          path="/eventDetail"
+          path="/eventdetail/:_id"
           element={<ProtectedRoute component={EventDetail} />}
         />
         {/* <Route
@@ -40,7 +40,7 @@ function App() {
           element={<ProtectedRoute component={TaskDetail} />}
         /> */}
 
-        <Route path="/taskDetail/:_id" element={<TaskDetail />} />
+        <Route path="/taskdetail/:_id" element={<TaskDetail />} />
       </Routes>
     </AuthContextComponent>
   );

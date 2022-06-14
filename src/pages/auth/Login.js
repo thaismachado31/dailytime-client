@@ -17,13 +17,30 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import { AuthContext } from "../../contexts/authContext";
 import Alert from "@mui/material/Alert";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Login(props) {
   const authContext = useContext(AuthContext);
-
   const [state, setState] = useState({ password: "", email: "" });
   const [errors, setErrors] = useState({
     msg: null,
+  });
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        "Quicksand",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(","),
+    },
   });
 
   const navigate = useNavigate();
@@ -74,6 +91,15 @@ function Login(props) {
     gap: "10px",
     border: "1px solid #ADB7C2",
     borderRadius: "25px",
+    "&:after": {
+      border: "none",
+    },
+    "&::before": {
+      border: "none",
+    },
+    "&:hover:not(.Mui-disabled):before": {
+      border: "none",
+    },
   };
 
   const linkSenhaCss = {
@@ -90,7 +116,7 @@ function Login(props) {
     width: "142px",
     height: "41px",
     borderRadius: "100px",
-    backgroundColor: "#CDD4DB",
+    backgroundColor: state.email && state.password ? "blue" : "#CDD4DB",
   };
 
   const ouDivCss = {
@@ -143,85 +169,73 @@ function Login(props) {
     marginTop: "7vh",
   };
 
-  const removeBorderInput = {
-    "&:after": {
-      border: "none",
-    },
-    "&::before": {
-      border: "none",
-    },
-    "&:hover:not(.Mui-disabled):before": {
-      border: "none",
-    },
-  };
-
   return (
     <div style={mainDiv}>
-      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
-      <div style={titlePositionCss}>
-        <Typography
-          component="h4"
-          sx={{ fontSize: "24px", fontWeight: 700, lineHeight: "32.53px" }}
-        >
-          <strong> Vamos começar!</strong>
-        </Typography>
-        <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
-          Conte-me mais sobre você
-        </Typography>
-      </div>
+      <ThemeProvider theme={theme}>
+        {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
+        <div style={titlePositionCss}>
+          <Typography
+            component="h4"
+            sx={{ fontSize: "24px", fontWeight: 700, lineHeight: "32.53px" }}
+          >
+            <strong> Vamos começar!</strong>
+          </Typography>
+          <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
+            Conte-me mais sobre você
+          </Typography>
+        </div>
 
-      <Box component="form" onSubmit={handleSubmit} style={formCss}>
-        <Input
-          sx={removeBorderInput}
-          placeholder="Email"
-          style={inputCss}
-          startAdornment={
-            <InputAdornment position="start">
-              <AccountCircleOutlinedIcon />
-            </InputAdornment>
-          }
-          name="email"
-          onChange={handleChange}
-        />
-        <Input
-          sx={removeBorderInput}
-          placeholder="Password"
-          style={inputCss}
-          startAdornment={
-            <InputAdornment position="start">
-              <KeyIcon />
-            </InputAdornment>
-          }
-          name="password"
-          onChange={handleChange}
-        />
+        <Box component="form" onSubmit={handleSubmit} style={formCss}>
+          <Input
+            sx={inputCss}
+            placeholder="Email"
+            startAdornment={
+              <InputAdornment position="start">
+                <AccountCircleOutlinedIcon />
+              </InputAdornment>
+            }
+            name="email"
+            onChange={handleChange}
+          />
+          <Input
+            sx={inputCss}
+            placeholder="Password"
+            startAdornment={
+              <InputAdornment position="start">
+                <KeyIcon />
+              </InputAdornment>
+            }
+            name="password"
+            onChange={handleChange}
+          />
 
-        <Button variant="contained" style={buttonCss} type="submit">
-          Entrar
-        </Button>
-        <Link style={linkSenhaCss} href="/">
-          Esqueceu a senha?
+          <Button variant="contained" style={buttonCss} type="submit">
+            Entrar
+          </Button>
+          <Link style={linkSenhaCss} href="/">
+            Esqueceu a senha?
+          </Link>
+        </Box>
+
+        <div style={ouDivCss}>
+          <Divider style={{ width: "127px" }}></Divider>
+          <p style={{ fontSize: "14px", margin: "12px" }}>OU</p>
+          <Divider style={{ width: "127px", float: "right" }}></Divider>
+        </div>
+
+        <div style={socialMediaDiv}>
+          <Link style={socialMediaLink}>
+            <GoogleIcon />
+          </Link>
+          <Link style={socialMediaLink}>
+            <FacebookRoundedIcon />
+          </Link>
+        </div>
+
+        <Link style={linkRegistroCss} href="/">
+          Não tem conta? <strong>Registre-se aqui</strong>
         </Link>
-      </Box>
-
-      <div style={ouDivCss}>
-        <Divider style={{ width: "127px" }}></Divider>
-        <p style={{ fontSize: "14px", margin: "12px" }}>OU</p>
-        <Divider style={{ width: "127px", float: "right" }}></Divider>
-      </div>
-
-      <div style={socialMediaDiv}>
-        <Link style={socialMediaLink}>
-          <GoogleIcon />
-        </Link>
-        <Link style={socialMediaLink}>
-          <FacebookRoundedIcon />
-        </Link>
-      </div>
-
-      <Link style={linkRegistroCss} href="/">
-        Não tem conta? <strong>Registre-se aqui</strong>
-      </Link>
+      </ThemeProvider>
     </div>
   );
 }
