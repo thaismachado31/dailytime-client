@@ -14,7 +14,6 @@ const useStyles = makeStyles(() => ({
   },
   buttonStyle: {
     borderRadius: "100px",
-    backgroundColor: "#CDD4DB",
     padding: "10px",
   },
   icons: {
@@ -22,9 +21,13 @@ const useStyles = makeStyles(() => ({
     marginRight: "20px",
   },
   input: {
+    border: "none",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+  },
+  picker: {
+    margin: "20px",
   },
 }));
 

@@ -10,6 +10,7 @@ import Create from "../pages/Create";
 import SecondHome from "../pages/SecondHome";
 import EventDetail from "../pages/UserProfile";
 import TaskDetail from "../pages/TaskDetail";
+import NavBar from "./NavBar";
 
 import { AuthContextComponent } from "../contexts/authContext";
 
@@ -30,7 +31,7 @@ function App() {
           path="/secondhome"
           element={<ProtectedRoute component={SecondHome} />}
         />
-        <Route path="/create" element={<Create />} />
+        <Route path="/create" element={<ProtectedRoute component={Create} />} />
         <Route
           path="/event/:_id"
           element={<ProtectedRoute component={EventDetail} />}
