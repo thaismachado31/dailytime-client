@@ -76,11 +76,20 @@ function TabTask() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    validadeInputs();
+    if (isBefore(state.dateTime, new Date())) {
+      return setErrors({
+        msg: "Your date has to be after today.",
+      });
+    }
+    if (!state.name || !state.dateTime || !state.duration) {
+      return setErrors({
+        msg: "You have to fill in: name, date, time and duration to complete.",
+      });
+    }
     try {
       const response = await api.post("/newtask", state);
       console.log(response);
-      validadeInputs();
+      setErrors({ msg: null });
       navigate("/");
     } catch (err) {
       console.error(err.response.data);
@@ -88,19 +97,32 @@ function TabTask() {
     }
   }
 
-  function validadeInputs() {
-    if (isBefore(new Date(), state.dateTime)) {
-      return setErrors({
-        msg: "Your date has to be after today.",
-      });
-    }
-    if (!state.name && !state.dateTime && !state.duration) {
-      return setErrors({
-        msg: "You have to fill in: name, date, time and duration to complete.",
-      });
-    }
-    return setErrors({ msg: null });
-  }
+  // function validadeInputs() {
+  //   if (isBefore(new Date(), state.dateTime)) {
+  //     return setErrors({
+  //       msg: "Your date has to be after today.",
+  //     });
+  //   }
+  //   if (!state.name || !state.dateTime || !state.duration) {
+  //     return setErrors({
+  //       msg: "You have to fill in: name, date, time and duration to complete.",
+  //     });
+  //   }
+  //   return setErrors({ msg: null });
+  // }
+
+  // useEffect(() => {
+  //   async function submitData() {
+  //     try {
+  //       const response = await api.post("/newtask", state);
+  //       console.log(response);
+  //       navigate("/");
+  //     } catch (err) {
+  //       console.error(err.response.data);
+  //     }
+  //   }
+  //   submitData();
+  // }, [errors]);
 
   console.log(state);
   const removeBorderInput = {

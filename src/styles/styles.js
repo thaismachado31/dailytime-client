@@ -14,7 +14,6 @@ const useStyles = makeStyles(() => ({
   },
   buttonStyle: {
     borderRadius: "100px",
-    backgroundColor: "#CDD4DB",
     padding: "10px",
   },
   icons: {

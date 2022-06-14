@@ -1,144 +1,141 @@
-import React from "react";
+import * as React from "react";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 
-import { useState } from "react";
-import { Box } from "@mui/material";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 
-import useStyles from "../styles/styles";
+import { AuthContext } from "../contexts/authContext";
+
+import { Link } from "react-router-dom";
+
+import api from "../apis/api";
+import { getDate } from "date-fns/esm";
 
 function TaskDetail() {
-  const classes = useStyles();
+  const [task, setTask] = useState({
+    userId: "",
+    name: "",
+    description: "",
+    icon: "",
+    color: "",
+    dateTime: "Sun Jun 12 2022 11:58:17 GMT-0300",
+    duration: 0,
+    reminder: "",
+    timeReminder: 0,
+    address: "",
+  });
 
-  //   const [state, setState] = useState({
-  //     value: 0,
-  //   });
+  const { _id } = useParams();
+  const { loggedInUser } = useContext(AuthContext);
 
-  //   const handleChange = (event) => {
-  //     setState(event.target.value);
-  //   };
-  //   return (
-  //     <Box sx={{ p: 3 }}>
-  //     <TextField
-  //       InputProps={{ disableUnderline: true }}
-  //       sx={{ margin: "15px 0" }}
-  //       fullWidth
-  //       hiddenLabel
-  //       id="filled-hidden-label-small"
-  //       placeholder="nome da tarefa"
-  //       variant="filled"
-  //       size="small"
-  //     />
+  useEffect(() => {
+    async function taskDetails() {
+      try {
+        const response = await api.get(`/task/${_id}`);
 
-  //     <LocalizationProvider dateAdapter={AdapterDateFns}>
-  //       <Stack spacing={2}>
-  //         <Box className={classes.input}>
-  //           <ShortTextIcon className={classes.icons} />
-  //           <TextField
-  //             InputProps={{ disableUnderline: true }}
-  //             fullWidth
-  //             id="input-description"
-  //             label="descrição"
-  //             placeholder="descrição"
-  //             multiline
-  //             variant="standard"
-  //             maxRows={2}
-  //           />
-  //         </Box>
-  //         <Box className={classes.input}>
-  //           <AccessTimeIcon className={classes.icons} />
-  //           <TimePicker
-  //             className={classes.picker}
-  //             InputProps={{ disableUnderline: true }}
-  //             hiddenLabel
-  //             ampm={false}
-  //             margin="normal"
-  //             value={datetime}
-  //             onChange={(newDatetime) => {
-  //               setDatetime(newDatetime);
-  //             }}
-  //             renderInput={(params) => (
-  //               <TextField variant="standard" {...params} />
-  //             )}
-  //           />
-  //         </Box>
-  //         <Box className={classes.input}>
-  //           <CalendarMonthIcon className={classes.icons} />
-  //           <MobileDatePicker
-  //             className={classes.picker}
-  //             InputProps={{ disableUnderline: true }}
-  //             inputFormat="dd/MM/yyyy"
-  //             hiddenLabel
-  //             value={newDate}
-  //             onChange={(newDate) => {
-  //               setNewDate(newDate);
-  //             }}
-  //             renderInput={(params) => (
-  //               <TextField variant="standard" {...params} />
-  //             )}
-  //           />
-  //         </Box>
-  //         <Box className={classes.input}>
-  //           <LoopIcon className={classes.icons} />
-  //           <FormControl>
-  //             <InputLabel id="demo-simple-select-label">repetir</InputLabel>
-  //             <Select
-  //               sx={removeBorderInput}
-  //               style={{ width: "140px" }}
-  //               variant="standard"
-  //               labelId="week-recurrence"
-  //               id="week-recurrence"
-  //               value={repeat}
-  //               label="recurrence"
-  //               onChange={handleChangeRepeat}
-  //             >
-  //               <MenuItem value={"vazio"}>-</MenuItem>
-  //               <MenuItem value={"diario"}>Diario</MenuItem>
-  //               <MenuItem value={"semanal"}>Semanal</MenuItem>
-  //               <MenuItem value={"mensal"}>Mensal</MenuItem>
-  //             </Select>
-  //           </FormControl>
-  //         </Box>
-  //         <Box className={classes.input}>
-  //           <NotificationsNoneIcon className={classes.icons} />
-  //           <FormControl>
-  //             <InputLabel id="demo-simple-select-label">lembrete</InputLabel>
-  //             <Select
-  //               sx={removeBorderInput}
-  //               style={{ width: "140px" }}
-  //               variant="standard"
-  //               labelId="notification"
-  //               id="notification-alarm"
-  //               value={alarm}
-  //               label="alarm"
-  //               onChange={handleChangeAlarm}
-  //             >
-  //               <MenuItem value={"vazio"}>-</MenuItem>
-  //               <MenuItem value={"diario"}>5min antes</MenuItem>
-  //               <MenuItem value={"semanal"}>10min antes</MenuItem>
-  //               <MenuItem value={"mensal"}>30min antes</MenuItem>
-  //             </Select>
-  //           </FormControl>
-  //         </Box>
-  //       </Stack>
-  //     </LocalizationProvider>
-  //     <div className={classes.divButton}>
-  //       <Button
-  //         className={classes.styleButton}
-  //         sx={{
-  //           width: "197px",
-  //           height: "42px",
-  //           borderRadius: "100px",
-  //           backgroundColor: "#CDD4DB",
-  //           padding: "10px",
-  //           textTransform: "unset",
-  //         }}
-  //         variant="contained"
-  //         type="submit"
-  //         endIcon={<PlayArrowOutlinedIcon />}
-  //       >
-  //         Criar tarefa
-  //       </Button>
-  //     </div>
-  //   </Box>
-  //   );
+        console.log(response.data);
+        console.log(
+          "🚀 ~ file: TaskDetail.js ~ line 33 ~ TaskDetail ~ _id",
+          _id
+        );
+
+        setTask({ ...response.data });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    taskDetails();
+  }, [_id]);
+
+  function isOwner() {
+    return task.userId._id === loggedInUser.user._id;
+  }
+
+  const informationsStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding: "0.5rem 0 0 1rem",
+    marginLeft: "1.2rem",
+    marginTop: "2rem",
+  };
+
+  const iconsStyle = { marginRight: "1rem", color: "#32747F" };
+
+  return (
+    <div>
+      {" "}
+      {isOwner() && (
+        <div>
+          <h4 style={{ margin: "1.5rem", color: "#32747F" }}> DETALHES: </h4>
+          <div
+            style={{
+              height: "40px",
+              width: "89%",
+              marginLeft: "20px",
+              borderRadius: "10px",
+              backgroundColor: "#EBEDF1",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                padding: "0.5rem 0 0 1rem",
+                color: "#32747F",
+              }}
+            >
+              {task.name}
+            </div>
+          </div>
+
+          <div style={informationsStyle}>
+            <DescriptionOutlinedIcon
+              style={iconsStyle}
+            ></DescriptionOutlinedIcon>
+            {task.description}
+          </div>
+
+          <img style={informationsStyle} src={task.icon} alt={`Icon`} />
+
+          <div style={informationsStyle}>
+            <AccessTimeIcon style={iconsStyle}></AccessTimeIcon>
+            {task.dateTime}
+          </div>
+
+          <div style={informationsStyle}>
+            <CalendarMonthOutlinedIcon
+              style={iconsStyle}
+            ></CalendarMonthOutlinedIcon>
+            {task.dateTime}
+          </div>
+
+          <div style={informationsStyle}>
+            <NotificationsNoneOutlinedIcon
+              style={iconsStyle}
+            ></NotificationsNoneOutlinedIcon>
+            {task.duration}
+          </div>
+
+          {task.timeReminder > 0 ? (
+            <div style={informationsStyle}>
+              <VolumeUpOutlinedIcon style={iconsStyle}></VolumeUpOutlinedIcon>
+              {task.timeReminder} minutos
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
+
 export default TaskDetail;

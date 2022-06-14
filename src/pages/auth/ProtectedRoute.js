@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import NavBar from "../../components/NavBar";
 
 import { AuthContext } from "../../contexts/authContext";
 
@@ -12,7 +13,12 @@ function ProtectedRoute({ component: Component }) {
   }
 
   if (loggedInUser.user._id) {
-    return <Component />;
+    return (
+      <div>
+        <Component />;
+        <NavBar />
+      </div>
+    );
   } else {
     return <Navigate to="/login" state={{ from: location }} replace={true} />;
   }

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 // import FormSelect from "./FormSelect";
-import { parseISO } from "date-fns";
+import { parseISO, isBefore } from "date-fns";
 import api from "../apis/api";
 import { useNavigate } from "react-router-dom";
 
@@ -85,6 +85,16 @@ function TabEvent() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (isBefore(state.dateTime, new Date())) {
+      return setErrors({
+        msg: "Your date has to be after today.",
+      });
+    }
+    if (!state.name || !state.dateTime || !state.duration) {
+      return setErrors({
+        msg: "You have to fill in: name, date, time and duration to complete.",
+      });
+    }
     try {
       const response = await api.post("/event", state);
       console.log(response);
