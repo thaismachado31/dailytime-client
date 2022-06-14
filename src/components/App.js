@@ -44,7 +44,7 @@ function App() {
 
         <Route path="/task/:_id" element={<TaskDetail />} />
       </Routes>
-      <Navbar />
+      {/* <Navbar /> */}
     </AuthContextComponent>
   );
 }
