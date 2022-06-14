@@ -32,15 +32,15 @@ function App() {
         />
         <Route path="/create" element={<Create />} />
         <Route
-          path="/eventdetail/:_id"
+          path="/event/:_id"
           element={<ProtectedRoute component={EventDetail} />}
         />
         {/* <Route
-          path="/taskDetail/:_id"
+          path="/task/:_id"
           element={<ProtectedRoute component={TaskDetail} />}
         /> */}
 
-        <Route path="/taskdetail/:_id" element={<TaskDetail />} />
+        <Route path="/task/:_id" element={<TaskDetail />} />
       </Routes>
     </AuthContextComponent>
   );
