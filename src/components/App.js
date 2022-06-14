@@ -10,6 +10,7 @@ import Create from "../pages/Create";
 import SecondHome from "../pages/SecondHome";
 import EventDetail from "../pages/UserProfile";
 import TaskDetail from "../pages/TaskDetail";
+import NavBar from "./NavBar";
 
 import { AuthContextComponent } from "../contexts/authContext";
 import Navbar from "./navbar/Navbar";
@@ -18,7 +19,9 @@ function App() {
   return (
     <AuthContextComponent>
       <Routes>
-        <Route path="/" element={<ProtectedRoute component={Home} />} />
+        {/* <Route path="/" element={<ProtectedRoute component={Home} />} /> */}
+        <Route path="/" element={<Home />} />
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route
@@ -29,15 +32,17 @@ function App() {
           path="/secondhome"
           element={<ProtectedRoute component={SecondHome} />}
         />
-        <Route path="/create" element={<Create />} />
+        <Route path="/create" element={<ProtectedRoute component={Create} />} />
         <Route
-          path="/eventDetail/:_id"
+          path="/event/:_id"
           element={<ProtectedRoute component={EventDetail} />}
         />
-        <Route
-          path="/taskDetail/:_id"
+        {/* <Route
+          path="/task/:_id"
           element={<ProtectedRoute component={TaskDetail} />}
-        />
+        /> */}
+
+        <Route path="/task/:_id" element={<TaskDetail />} />
       </Routes>
       <Navbar />
     </AuthContextComponent>
