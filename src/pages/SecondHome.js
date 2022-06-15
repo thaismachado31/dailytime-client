@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import InviteList from "../components/InviteList";
+import api from "../apis/api";
+import {
+  lastDayOfWeek,
+  startOfWeek,
+  eachDayOfInterval,
+  format,
+} from "date-fns";
+import MyInvites from "../components/MyInvites";
+import DayComponent from "../components/weekbar/DayComponent";
+import WeekBar from "../components/weekbar/WeekBar";
 
-function SecondHome() {
+function Home() {
+  const mainDiv = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-around",
+    height: "80vh",
+    marginTop: "7vh",
+  };
   return (
-    <div>
-      <h1>Daily Time - calendario</h1>
+    <div style={mainDiv} className="text-center">
+      {/* <MyInvites /> */}
+      <WeekBar />
+      <MyInvites />
     </div>
   );
 }
 
-export default SecondHome;
+export default Home;
