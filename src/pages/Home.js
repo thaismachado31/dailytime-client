@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Button } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import imageHome from "../";
+import imageHome from "../img/Picture_home.png";
 import useStyles from "../styles/styles";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 
@@ -35,8 +35,8 @@ function Home() {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-around",
-    height: "80vh",
+    justifyContent: "center",
+    // height: "80vh",
     marginTop: "7vh",
   };
 
@@ -71,23 +71,35 @@ function Home() {
           <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
             Partilhe com os seus amigos
           </Typography>
-          <Button
-            className={classes.buttonStyle}
-            sx={{
-              marginTop: "50px",
-              width: "197px",
-              height: "42px",
-              borderRadius: "100px",
-              backgroundColor: "#32747F",
-              padding: "10px",
-              textTransform: "unset",
+          <img
+            style={{
+              margin: "50px",
+              width: 230,
+              display: "block",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-            variant="contained"
-            href="/login"
-            endIcon={<PlayArrowOutlinedIcon />}
-          >
-            Começar
-          </Button>
+            src={imageHome}
+            alt="Time management"
+          />
+          <div className={classes.divButton}>
+            <Button
+              className={classes.buttonStyle}
+              sx={{
+                width: "197px",
+                height: "42px",
+                borderRadius: "100px",
+                backgroundColor: "#32747F",
+                padding: "10px",
+                textTransform: "unset",
+              }}
+              variant="contained"
+              href="/login"
+              endIcon={<PlayArrowOutlinedIcon />}
+            >
+              Começar
+            </Button>
+          </div>
         </div>
       </ThemeProvider>
     </div>
