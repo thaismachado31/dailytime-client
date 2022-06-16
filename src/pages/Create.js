@@ -5,7 +5,6 @@ import TabTask from "../components/TabTask";
 import TabEvent from "../components/TabEvent";
 import useStyles from "../styles/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import NavBar from "../components/NavBar";
 
 function Create() {
   const classes = useStyles();

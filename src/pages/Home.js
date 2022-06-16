@@ -64,11 +64,11 @@ function Home() {
           </Typography>
           <Typography
             component="h4"
-            sx={{ fontSize: "24px", fontWeight: 700, lineHeight: "32.53px" }}
+            sx={{ fontSize: "20px", fontWeight: 700, lineHeight: "32.53px" }}
           >
             Organize o seu dia!
           </Typography>
-          <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
+          <Typography sx={{ fontSize: "18px", fontWeight: 500 }}>
             Partilhe com os seus amigos
           </Typography>
           <img

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import InviteList from "../components/InviteList";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import api from "../apis/api";
 import {
   lastDayOfWeek,
@@ -11,23 +12,43 @@ import {
 import MyInvites from "../components/MyInvites";
 import DayComponent from "../components/weekbar/DayComponent";
 import WeekBar from "../components/weekbar/WeekBar";
+import DayTimeline from "../components/timeline/DayTimeline";
 
-function Home() {
-  const mainDiv = {
+function SecondHome() {
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        "Quicksand",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(","),
+    },
+  });
+  const homeDiv = {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-around",
-    height: "80vh",
-    marginTop: "7vh",
+    height: "90vh",
+    marginTop: "5vh",
   };
   return (
-    <div style={mainDiv} className="text-center">
-      {/* <MyInvites /> */}
-      <WeekBar />
-      <MyInvites />
+    <div style={homeDiv} className="text-center">
+      <ThemeProvider theme={theme}>
+        {/* <MyInvites /> */}
+        <WeekBar />
+        {/* <MyInvites /> */}
+        <DayTimeline />
+      </ThemeProvider>
     </div>
   );
 }
 
-export default Home;
+export default SecondHome;

@@ -45,7 +45,7 @@ function Login(props) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/home";
 
   function handleChange(event) {
     setState({
@@ -211,7 +211,7 @@ function Login(props) {
           <Button variant="contained" style={buttonCss} type="submit">
             Entrar
           </Button>
-          <Link style={linkSenhaCss} to={"/"}>
+          <Link style={linkSenhaCss} to={"/home"}>
             Esqueceu a senha?
           </Link>
         </Box>
@@ -223,10 +223,10 @@ function Login(props) {
         </div>
 
         <div style={socialMediaDiv}>
-          <Link style={socialMediaLink} to={"/"}>
+          <Link style={socialMediaLink} to={"/home"}>
             <GoogleIcon />
           </Link>
-          <Link style={socialMediaLink} to={"/"}>
+          <Link style={socialMediaLink} to={"/home"}>
             <FacebookRoundedIcon />
           </Link>
         </div>
