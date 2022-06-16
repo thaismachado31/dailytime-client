@@ -90,7 +90,7 @@ function TabTask() {
       const response = await api.post("/newtask", state);
       console.log(response);
       setErrors({ msg: null });
-      navigate("/");
+      navigate("/secondhome");
     } catch (err) {
       console.error(err.response.data);
       return setErrors({ ...err.response.data });

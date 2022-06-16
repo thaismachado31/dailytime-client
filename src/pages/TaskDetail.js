@@ -4,9 +4,12 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
+import { Button, Stack } from "@mui/material";
 
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+
+import { format } from "date-fns";
 
 import { AuthContext } from "../contexts/authContext";
 
@@ -50,6 +53,10 @@ function TaskDetail() {
     return task.userId === loggedInUser.user._id;
   }
 
+  // const newYears = new Date(task.dateTime);
+  // const formattedDate = format(newYears, "DD/MM/YYYY");
+  // console.log(formattedDate);
+
   const informationsStyle = {
     display: "flex",
     flexDirection: "row",
@@ -66,7 +73,16 @@ function TaskDetail() {
     <div>
       {isOwner() && (
         <div>
-          <h4 style={{ margin: "1.5rem", color: "#32747F" }}> DETALHES: </h4>
+          <h4
+            style={{
+              margin: "1.5rem",
+              color: "#32747F",
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            DETALHES:
+          </h4>
           <div
             style={{
               height: "40px",
@@ -83,7 +99,7 @@ function TaskDetail() {
                 justifyContent: "flex-start",
                 alignItems: "center",
                 padding: "0.5rem 0 0 1rem",
-                color: "#32747F",
+                // color: "#32747F",
               }}
             >
               {task.name}
@@ -115,17 +131,47 @@ function TaskDetail() {
             <NotificationsNoneOutlinedIcon
               style={iconsStyle}
             ></NotificationsNoneOutlinedIcon>
-            {task.duration}
+            {task.duration} min
           </div>
 
           {task.timeReminder > 0 ? (
             <div style={informationsStyle}>
               <VolumeUpOutlinedIcon style={iconsStyle}></VolumeUpOutlinedIcon>
-              {task.timeReminder} minutos
+              {task.timeReminder} min antes
             </div>
           ) : (
-            ""
+            " "
           )}
+          <Stack justifyContent="center" direction="row" spacing={2} mt={3}>
+            <Button
+              sx={{
+                width: "10rem",
+                height: "2.7rem",
+                borderRadius: "100px",
+                backgroundColor: "#32747F",
+                padding: "10px",
+                textTransform: "unset",
+              }}
+              variant="contained"
+              href=""
+            >
+              Editar
+            </Button>
+            <Button
+              sx={{
+                width: "10rem",
+                height: "2.7rem",
+                borderRadius: "100px",
+                padding: "10px",
+                textTransform: "unset",
+              }}
+              variant="contained"
+              href={`/taskdelete/${_id}`}
+              color="error"
+            >
+              Deletar
+            </Button>
+          </Stack>
         </div>
       )}
     </div>

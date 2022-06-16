@@ -15,7 +15,7 @@ function ProtectedRoute({ component: Component }) {
   if (loggedInUser.user._id) {
     return (
       <div>
-        <Component />;
+        <Component />
         <NavBar />
       </div>
     );
