@@ -6,6 +6,7 @@ const useStyles = makeStyles(() => ({
   },
   form: {
     color: "#32747F",
+    fontWeight: "bold",
   },
   divButton: {
     display: "flex",

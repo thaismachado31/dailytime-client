@@ -8,6 +8,7 @@ import { useId } from "react";
 const DayComponent = (props) => {
   const { hasTask, day, functions } = props;
   const portugueseDays = ["dom", "seg", "ter", "qua", "qui", "sex", "sab"];
+
   const theme = createTheme({
     typography: {
       fontFamily: [
