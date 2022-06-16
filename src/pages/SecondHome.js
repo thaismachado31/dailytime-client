@@ -36,7 +36,7 @@ function SecondHome() {
     flexDirection: "column",
     // alignItems: "center",
     justifyContent: "space-around",
-    height: "90vh",
+    // height: "90vh",
     marginTop: "5vh",
   };
   return (
@@ -45,7 +45,7 @@ function SecondHome() {
         {/* <MyInvites /> */}
         <WeekBar />
         {/* <MyInvites /> */}
-        <DayTimeline />
+        {/* <DayTimeline /> */}
       </ThemeProvider>
     </div>
   );

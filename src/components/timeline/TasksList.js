@@ -30,7 +30,7 @@ function TasksList(props) {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#E7C542",
+        main: "#fbc02d",
       },
       secondary: {
         main: "#FF9904",
@@ -84,19 +84,18 @@ function TasksList(props) {
     <MenuBookIcon />,
     <AlarmOnOutlinedIcon />,
     <DirectionsCarIcon />,
-    <AirplanemodeActiveIcon />,
     <AssignmentIndOutlinedIcon />,
     <MoreHorizOutlinedIcon />,
   ];
 
   const iconColors = [
-    "primary",
-    "secondary",
-    "warning",
     "info",
+    "secondary",
     "success",
     "error",
     "grey",
+    "warning",
+    "primary",
   ];
 
   return (

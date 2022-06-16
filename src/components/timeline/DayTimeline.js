@@ -20,40 +20,29 @@ import {
 import TasksList from "./TasksList";
 import SportsTennisIcon from "@mui/icons-material/SportsTennis";
 
-function DayTimeline() {
+function DayTimeline(props) {
   const [tasks, setTasks] = useState([]);
+  const { date } = props;
 
   async function getTask() {
     try {
-      const mytasks = await api.get(`/taskbydate/${"2022-06-14"}`);
+      const mytasks = await api.get(`/taskbydate/${date}`);
       setTasks(mytasks.data);
     } catch (error) {
       console.error(error);
     }
   }
 
-  // const dateAjust = format(tasks[0].dateTime, "dd-MM-yyyy");
-
-  // function dataFormat() {
-  //   const dateAjust = format(tasks[0].datetime, "dd-MM-yyyy'T'HH:mm")
-  //   const dateString = newDate.toISOString();
-  //   const timeString = datetime.toISOString();
-  //   const lastDate = dateString.split("T")[0] + "T" + timeString.split("T")[1];
-  //   const finalDate = parseISO(lastDate);
-  //   console.log(finalDate);
-  //   setState({ ...state, date: finalDate });
-  // }
-
   useEffect(() => {
     getTask();
-  }, []);
+  }, [date]);
 
   console.log(tasks);
   return (
     <div
       style={{
         backgroundColor: "#EDE7E0CC",
-        height: "100%",
+        height: "100vh",
         marginTop: "30px",
         marginBottom: 0,
       }}
