@@ -33,7 +33,6 @@ function DayTimeline() {
   }
 
   // const dateAjust = format(tasks[0].dateTime, "dd-MM-yyyy");
-  console.log(tasks[0]);
 
   // function dataFormat() {
   //   const dateAjust = format(tasks[0].datetime, "dd-MM-yyyy'T'HH:mm")

@@ -29,7 +29,7 @@ function EachTask(props) {
       <TimelineSeparator>
         <TimelineConnector />
         <TimelineDot color={props.colorDot} sx={{ boxShadow: 3 }}>
-          <Link to={props.link} style={{ color: "white" }}>
+          <Link to={props.link} style={{ color: "grey" }}>
             {props.icon}
           </Link>
         </TimelineDot>

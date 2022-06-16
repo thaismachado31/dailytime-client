@@ -15,9 +15,56 @@ import {
   TimelineDot,
 } from "@mui/lab";
 
-import SportsTennisIcon from "@mui/icons-material/SportsTennis";
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import RestaurantOutlinedIcon from "@mui/icons-material/RestaurantOutlined";
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import AlarmOnOutlinedIcon from "@mui/icons-material/AlarmOnOutlined";
+import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
+
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function TasksList(props) {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#E7C542",
+      },
+      secondary: {
+        main: "#FF9904",
+      },
+      warning: {
+        main: "#E9190C",
+      },
+      info: {
+        main: "#005D99",
+      },
+      inherit: {
+        main: "#EBEDF1",
+      },
+      success: {
+        main: "#3DC6C9",
+      },
+      error: {
+        main: "#E29478",
+      },
+      grey: {
+        50: "#FFFFFF",
+        100: "#EBEDF1",
+        200: "#67A12D",
+        300: "#ADB7C2",
+        400: "#8D9AAA",
+        500: "#768597",
+        600: "#5E7185",
+        700: "#516274",
+        800: "#333D49",
+        900: "#212932",
+      },
+    },
+  });
+
   function formatTime(date) {
     return format(new Date(date), `HH:mm`);
   }
@@ -31,148 +78,52 @@ function TasksList(props) {
     } else return `${minutes}min`;
   }
 
+  const icons = [
+    <ColorLensIcon />,
+    <RestaurantOutlinedIcon />,
+    <MenuBookIcon />,
+    <AlarmOnOutlinedIcon />,
+    <DirectionsCarIcon />,
+    <AirplanemodeActiveIcon />,
+    <AssignmentIndOutlinedIcon />,
+    <MoreHorizOutlinedIcon />,
+  ];
+
+  const iconColors = [
+    "primary",
+    "secondary",
+    "warning",
+    "info",
+    "success",
+    "error",
+    "grey",
+  ];
+
   return (
-    <Timeline align="left">
-      {props.all.map((element) => {
-        const { _id, name, dateTime, duration } = element;
-        const startTime = formatTime(dateTime);
-        const end = addMinutes(new Date(dateTime), duration);
-        const endTime = formatTime(end);
-        return (
-          <EachTask
-            key={_id}
-            time={startTime}
-            colorDot="secondary"
-            link={`/task/${_id}`}
-            icon={<SportsTennisIcon />}
-            taskName={name}
-            timeEnd={endTime}
-            duration={formatMinutes(duration)}
-          />
-        );
-      })}
-      {/* <EachTask
-        time="6:30"
-        colorDot="secondary"
-        link="/create"
-        icon={<SportsTennisIcon />}
-        taskName="Acordar"
-        timeEnd="6:45"
-        duration="15min"
-      />
-      <TimelineItem>
-        <TimelineOppositeContent
-          sx={{
-            m: "auto 0",
-            flex: 0.1,
-            ".MuiTimelineOppositeContent-root": { width: "70px" },
-          }}
-          align="right"
-          variant="body2"
-          color="text.secondary"
-        >
-          9:30
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot color="primary" sx={{ boxShadow: 3 }}>
-            <Link to="/create" style={{ color: "white" }}>
-              <SportsTennisIcon />
-            </Link>
-          </TimelineDot>
-          <TimelineConnector
-            sx={{
-              ".MuiTimelineConnector-root": { backgroundColor: "primary" },
-            }}
-          />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: "12px", px: 2 }}>
-          <Typography
-            style={{ fontWeight: "bold", height: "18px", marginBottom: 0 }}
-            display="block"
-            component="span"
-            variant="subtitle1"
-          >
-            Aula de tênis
-          </Typography>
-          <Typography variant="caption">9:30-10:30(1 hora)</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineOppositeContent
-          sx={{
-            m: "auto 0",
-            flex: 0.1,
-            ".MuiTimelineOppositeContent-root": { width: "10px" },
-          }}
-          align="left"
-          variant="body2"
-          color="text.secondary"
-        >
-          11:00
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot color="primary" sx={{ boxShadow: 3 }}>
-            <SportsTennisIcon />
-          </TimelineDot>
-          <TimelineConnector
-            sx={{
-              ".MuiTimelineConnector-root": { backgroundColor: "primary" },
-            }}
-          />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: "12px", px: 2 }}>
-          <Typography
-            style={{ fontWeight: "bold", height: "18px", marginBottom: 0 }}
-            display="block"
-            component="span"
-            variant="subtitle1"
-          >
-            Dentista
-          </Typography>
-          <Typography variant="caption">11:00-12:00(1 hora)</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineOppositeContent
-          sx={{
-            m: "auto 0",
-            flex: 0.1,
-            ".MuiTimelineOppositeContent-root": {
-              width: "80px",
-            },
-          }}
-          align="left"
-          variant="body2"
-          color="text.secondary"
-        >
-          12:30
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot color="primary" sx={{ boxShadow: 3 }}>
-            <SportsTennisIcon />
-          </TimelineDot>
-          <TimelineConnector
-            sx={{
-              ".MuiTimelineConnector-root": { backgroundColor: "primary" },
-            }}
-          />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: "12px", px: 2 }}>
-          <Typography
-            style={{ fontWeight: "bold", height: "18px", marginBottom: 0 }}
-            display="block"
-            component="span"
-            variant="subtitle1"
-          >
-            Almoço
-          </Typography>
-          <Typography variant="caption">12:30-13:00(30min)</Typography>
-        </TimelineContent>
-      </TimelineItem> */}
-    </Timeline>
+    <ThemeProvider theme={theme}>
+      <Timeline align="left">
+        {props.all.map((element) => {
+          const { _id, name, dateTime, duration, category } = element;
+          const startTime = formatTime(dateTime);
+          const end = addMinutes(new Date(dateTime), duration);
+          const endTime = formatTime(end);
+          const catColor = iconColors[category];
+          const catIcon = icons[category];
+          return (
+            <EachTask
+              key={_id}
+              time={startTime}
+              colorDot={catColor}
+              link={`/task/${_id}`}
+              icon={catIcon}
+              taskName={name}
+              timeEnd={endTime}
+              duration={formatMinutes(duration)}
+            />
+          );
+        })}
+      </Timeline>
+    </ThemeProvider>
   );
 }
 

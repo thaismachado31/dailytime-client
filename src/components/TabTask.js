@@ -27,6 +27,7 @@ import LoopIcon from "@mui/icons-material/Loop";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
 import api from "../apis/api";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +42,7 @@ function TabTask() {
 
   const [state, setState] = useState({
     name: "",
+    category: "",
     description: "",
     dateTime: new Date(),
     duration: "",
@@ -158,6 +160,30 @@ function TabTask() {
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Stack spacing={3}>
+            <Box className={classes.input}>
+              <CategoryOutlinedIcon className={classes.icons} />
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">categoria</InputLabel>
+                <Select
+                  sx={removeBorderInput}
+                  style={{ width: "140px" }}
+                  variant="standard"
+                  id="label-category"
+                  value={state.category}
+                  name="category"
+                  label="categoria"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={0}>lazer</MenuItem>
+                  <MenuItem value={1}>refeições</MenuItem>
+                  <MenuItem value={2}>trabalho/estudo</MenuItem>
+                  <MenuItem value={3}>cotidiano</MenuItem>
+                  <MenuItem value={4}>transporte</MenuItem>
+                  <MenuItem value={5}>reunião</MenuItem>
+                  <MenuItem value={6}>outro</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
             <Box className={classes.input}>
               <ShortTextIcon className={classes.icons} />
               <TextField
