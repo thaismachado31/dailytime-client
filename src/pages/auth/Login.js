@@ -115,7 +115,7 @@ function Login(props) {
     width: "142px",
     height: "41px",
     borderRadius: "100px",
-    backgroundColor: state.email && state.password ? "blue" : "#CDD4DB",
+    backgroundColor: state.email && state.password ? "#32747F" : "#CDD4DB",
   };
 
   const ouDivCss = {
@@ -199,6 +199,7 @@ function Login(props) {
           <Input
             sx={inputCss}
             placeholder="Password"
+            type="password"
             startAdornment={
               <InputAdornment position="start">
                 <KeyIcon />
