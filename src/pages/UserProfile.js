@@ -1,10 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Input, InputAdornment, Box, Button, Tabs, Tab } from "@mui/material";
+import {
+  Input,
+  InputAdornment,
+  Box,
+  Button,
+  Tabs,
+  Tab,
+  Stack,
+} from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import KeyIcon from "@mui/icons-material/Key";
 import api from "../apis/api";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+
 import Alert from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyInvites from "../components/MyInvites";
@@ -12,43 +20,81 @@ import useStyles from "../styles/styles";
 import { AuthContext } from "../contexts/authContext";
 
 function EventDetail() {
-  const { loggedInUser, setLoggedInUser } = useContext(AuthContext);
   const [state, setState] = useState({
-    ...loggedInUser.user,
+    name: "",
+    email: "",
+    _id: "",
     password: "",
     confirmPassword: "",
+    picture: "",
+    profilePicture: "",
   });
   const [componentToRender, setComponentToRender] = useState(0);
   const [errors, setErrors] = useState({ msg: null });
+  const [refresh, setRefresh] = useState(false);
 
   const classes = useStyles();
 
-  const navigate = useNavigate();
-
-  const location = useLocation();
-
   console.log(state);
+
+  useEffect(async () => {
+    const response = await api.get("/profile");
+
+    console.log(`dentro effect`, response);
+    setState({ ...response.data, password: "", confirmPassword: "" });
+  }, []);
+
+  useEffect(async () => {
+    const response = await api.get("/profile");
+    setState({ ...response.data, password: "", confirmPassword: "" });
+  }, [refresh]);
+
   function handleChange(event) {
+    if (event.target.files) {
+      setState({ ...state, [event.currentTarget.name]: event.target.files[0] });
+      return;
+    }
+
     setState({
       ...state,
       [event.currentTarget.name]: event.currentTarget.value,
     });
   }
 
+  async function handleFileUpload(file) {
+    const formData = new FormData();
+    formData.append("picture", file);
+    console.log("entrou handler", formData);
+    console.log("entrou handler file", file);
+    const response = await api.post("/upload", formData);
+    return response.data;
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
     try {
-      const response = await api.patch("/profile", state);
-
-      if (response) {
-        console.log(response.data);
-        localStorage.setItem(
-          "loggedInUser",
-          JSON.stringify({ ...response.data })
-        );
+      let urlimg = "";
+      if (state.picture) {
+        const { fileUrl } = await handleFileUpload(state.picture);
+        urlimg = fileUrl;
       }
-      setErrors({ msg: null });
+
+      const clone = { ...state };
+
+      delete clone.picture;
+
+      const response = await api.patch("/profile", {
+        ...clone,
+        profilePicture: urlimg,
+      });
+
+      if (!response) {
+        return;
+      }
+
+      setRefresh(!refresh);
+      setErrors({ msg: "" });
     } catch (err) {
       if (err.response) {
         console.error(err.response);
@@ -180,6 +226,7 @@ function EventDetail() {
 
   return (
     <Box>
+      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
       <Box
         sx={{
           borderBottom: 1,
@@ -216,7 +263,7 @@ function EventDetail() {
           <div style={titlePositionCss}>
             <img
               style={{ width: "150px", height: "150px", borderRadius: "100%" }}
-              src="https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info"
+              src={state.profilePicture}
             />
           </div>
 
@@ -263,9 +310,27 @@ function EventDetail() {
                 onChange={handleChange}
               />
 
-              <Button variant="contained" style={buttonCss} type="submit">
-                Atualizar
-              </Button>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Button variant="contained" style={buttonCss} type="submit">
+                  Atualizar
+                </Button>
+                <label htmlFor="contained-button-file">
+                  <input
+                    style={{ display: "none" }}
+                    id="contained-button-file"
+                    type="file"
+                    name="picture"
+                    onChange={handleChange}
+                  />
+                  <Button
+                    variant="contained"
+                    component="span"
+                    style={buttonCss}
+                  >
+                    Upload image
+                  </Button>
+                </label>
+              </Stack>
             </Box>
           )}
         </ThemeProvider>
