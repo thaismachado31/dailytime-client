@@ -49,7 +49,7 @@ const InviteList = (props) => {
   console.log(loggedInUser.user.email);
   return (
     <List sx={listCss}>
-      <h1>{props.title}</h1>
+      <h3>{props.title}</h3>
       {props.list?.map((element) => {
         const { _id, eventId, userId, confirmacao, email } = element;
         const { deleteInvite, acceptInvite } = props.functions;

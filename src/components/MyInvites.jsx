@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import InviteList from "../components/InviteList";
 import api from "../apis/api";
+import he from "date-fns/esm/locale/he/index.js";
 
-const MyInvites = () => {
+const MyInvites = (props) => {
   const [invites, setInvites] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const { title, height } = props;
 
   async function getInvites() {
     try {
@@ -41,11 +43,14 @@ const MyInvites = () => {
   console.log(invites);
 
   return (
-    <div className="text-center">
+    <div
+      className="text-center"
+      style={{ height: `${height}vh`, overflow: `auto` }}
+    >
       {" "}
       <InviteList
         list={invites}
-        title="My Invites"
+        title={title || "My Invites"}
         functions={{ deleteInvite, acceptInvite }}
       />{" "}
     </div>

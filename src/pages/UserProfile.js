@@ -1,7 +1,277 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Input, InputAdornment, Box, Button, Tabs, Tab } from "@mui/material";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import KeyIcon from "@mui/icons-material/Key";
+import api from "../apis/api";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import Alert from "@mui/material/Alert";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import MyInvites from "../components/MyInvites";
+import useStyles from "../styles/styles";
+import { AuthContext } from "../contexts/authContext";
 
 function EventDetail() {
-  return <div></div>;
+  const { loggedInUser, setLoggedInUser } = useContext(AuthContext);
+  const [state, setState] = useState({
+    ...loggedInUser.user,
+    password: "",
+    confirmPassword: "",
+  });
+  const [componentToRender, setComponentToRender] = useState(0);
+  const [errors, setErrors] = useState({ msg: null });
+
+  const classes = useStyles();
+
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  console.log(state);
+  function handleChange(event) {
+    setState({
+      ...state,
+      [event.currentTarget.name]: event.currentTarget.value,
+    });
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    try {
+      const response = await api.patch("/profile", state);
+
+      if (response) {
+        console.log(response.data);
+        localStorage.setItem(
+          "loggedInUser",
+          JSON.stringify({ ...response.data })
+        );
+      }
+      setErrors({ msg: null });
+    } catch (err) {
+      if (err.response) {
+        console.error(err.response);
+
+        return setErrors({ ...err.response.data });
+      }
+
+      console.error(err);
+    }
+  }
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        "Quicksand",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(","),
+    },
+    palette: {
+      primary: {
+        light: "#b5f8f1",
+        main: "#83C5BE",
+        dark: "#53948e",
+      },
+      secondary: {
+        light: "#63a2ae",
+        main: "#32747F",
+        dark: "#004753",
+      },
+      warning: {
+        main: "#E29478",
+      },
+      info: {
+        main: "#FFB672",
+      },
+      grey: {
+        50: "#FFFFFF",
+        100: "#EBEDF1",
+        200: "#CDD4DB",
+        300: "#ADB7C2",
+        400: "#8D9AAA",
+        500: "#768597",
+        600: "#5E7185",
+        700: "#516274",
+        800: "#333D49",
+        900: "#212932",
+      },
+    },
+    button: {
+      fontWeight: 500,
+      fontSize: "14px",
+      textTransform: "unset",
+    },
+  });
+
+  const titlePositionCss = {
+    width: "304px",
+    textAlign: "center",
+  };
+
+  const inputCss = {
+    width: "300px",
+    height: "41px",
+    padding: "11px 10px 11px 10px",
+    gap: "10px",
+    border: "1px solid #ADB7C2",
+    borderRadius: "25px",
+    "&:after": {
+      border: "none",
+    },
+    "&::before": {
+      border: "none",
+    },
+    "&:hover:not(.Mui-disabled):before": {
+      border: "none",
+    },
+  };
+
+  const linkSenhaCss = {
+    width: "198px",
+    height: "15px",
+    marginTop: "5px",
+    textAlign: "center",
+    fontSize: "12px",
+    color: "#333D49",
+    textDecoration: "none",
+  };
+
+  const buttonCss = {
+    width: "142px",
+    height: "41px",
+    borderRadius: "100px",
+    backgroundColor: "#32747F",
+    color: "white",
+  };
+
+  const linkRegistroCss = {
+    width: "228px",
+    height: "15px",
+    textAlign: "center",
+    fontSize: "14px",
+    color: "#516274",
+    textDecoration: "none",
+  };
+
+  const formCss = {
+    height: "300px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
+
+  const mainDiv = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-around",
+    height: "calc(100vh - 124px )",
+  };
+
+  return (
+    <Box>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+        }}
+      >
+        <Tabs
+          sx={{
+            ".MuiButtonBase-root": {
+              textTransform: "none",
+              fontSize: "17px",
+            },
+            marginTop: "20px",
+            color: "#32747F",
+            indicatorColor: "#83C5BE",
+          }}
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "#83C5BE",
+            },
+          }}
+          textColor="#32747F"
+          value={componentToRender}
+          onChange={(event, value) => setComponentToRender(value)}
+          aria-label="tarefas ou eventos"
+          centered
+        >
+          <Tab className={classes.form} label="Perfil" />
+          <Tab className={classes.form} label="Convites" />
+        </Tabs>
+      </Box>
+      <Box style={mainDiv}>
+        <ThemeProvider theme={theme}>
+          <div style={titlePositionCss}>
+            <img
+              style={{ width: "150px", height: "150px", borderRadius: "100%" }}
+              src="https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info"
+            />
+          </div>
+
+          {componentToRender === 1 ? (
+            <MyInvites title="Meus Convites" height="50" />
+          ) : (
+            <Box component="form" onSubmit={handleSubmit} style={formCss}>
+              <Input
+                sx={inputCss}
+                placeholder="Nome"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <AccountCircleOutlinedIcon />
+                  </InputAdornment>
+                }
+                name="name"
+                value={state.name}
+                onChange={handleChange}
+              />
+              <Input
+                sx={inputCss}
+                placeholder="Password"
+                type="password"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <KeyIcon />
+                  </InputAdornment>
+                }
+                name="password"
+                value={state.password}
+                onChange={handleChange}
+              />
+              <Input
+                sx={inputCss}
+                placeholder="Confirm Password"
+                type="password"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <KeyIcon />
+                  </InputAdornment>
+                }
+                name="confirmPassword"
+                value={state.confirmPassword}
+                onChange={handleChange}
+              />
+
+              <Button variant="contained" style={buttonCss} type="submit">
+                Atualizar
+              </Button>
+            </Box>
+          )}
+        </ThemeProvider>
+      </Box>
+    </Box>
+  );
 }
 
 export default EventDetail;
