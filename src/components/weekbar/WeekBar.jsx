@@ -9,13 +9,16 @@ import {
   format,
   isToday,
 } from "date-fns";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 const WeekBar = () => {
-  const daysOfCurrentWeek = eachDayOfInterval({
-    start: startOfWeek(new Date()),
-    end: lastDayOfWeek(new Date()),
-  }); //.map((date) => format(date, "d/M/y"));
+  const [daysOfCurrentWeek, setDaysOfCurrentWeek] = useState(
+    eachDayOfInterval({
+      start: startOfWeek(new Date()),
+      end: lastDayOfWeek(new Date()),
+    })
+  ); //.map((date) => format(date, "d/M/y"));
+  const [weekcounter, setWeekCounter] = useState(7);
 
   const [selectedDay, setSelectedDay] = useState("Hoje");
 
@@ -32,6 +35,45 @@ const WeekBar = () => {
         <Typography variant="h5" style={{ color: "#32747F" }}>
           {selectedDay}
         </Typography>
+        <Box>
+          <Button
+            onClick={() => {
+              const firstday = startOfWeek(new Date());
+              const nextweek = new Date(
+                firstday.setDate(firstday.getDate() - weekcounter)
+              );
+              setDaysOfCurrentWeek(
+                eachDayOfInterval({
+                  start: startOfWeek(nextweek),
+                  end: lastDayOfWeek(nextweek),
+                })
+              );
+
+              setWeekCounter(weekcounter - 7);
+            }}
+          >
+            anterior
+          </Button>
+          <Button
+            onClick={() => {
+              const firstday = startOfWeek(new Date());
+              const nextweek = new Date(
+                firstday.setDate(firstday.getDate() + weekcounter)
+              );
+
+              setDaysOfCurrentWeek(
+                eachDayOfInterval({
+                  start: startOfWeek(nextweek),
+                  end: lastDayOfWeek(nextweek),
+                })
+              );
+
+              setWeekCounter(weekcounter + 7);
+            }}
+          >
+            próximo
+          </Button>
+        </Box>
         <Box
           sx={{
             display: "flex",

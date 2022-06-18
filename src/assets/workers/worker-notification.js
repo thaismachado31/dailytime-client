@@ -11,9 +11,14 @@ export default () => {
     setInterval(() => {
       // postMessage(arr);
       tasklist.map((task) => {
-        const dif = new Date(task.dateTime).getTime() - new Date().getTime();
-        console.log("dif", dif / (1000 * 60));
-        if (dif / (1000 * 60) <= task?.timeReminder && !task.notified) {
+        let dif = new Date(task.dateTime).getTime() - new Date().getTime();
+        dif = dif / (1000 * 60);
+        console.log("dif", dif);
+        if (
+          dif <= task?.timeReminder &&
+          dif > task?.timeReminder &&
+          !task.notified
+        ) {
           postMessage(JSON.stringify(task));
           task.notified = true;
           return task;
