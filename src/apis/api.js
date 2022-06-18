@@ -1,4 +1,5 @@
 import axios from "axios";
+import { isExpired } from "react-jwt";
 
 const apis = {
   development: "http://localhost:4000",
@@ -16,6 +17,10 @@ api.interceptors.request.use((config) => {
   const storedUser = localStorage.getItem("loggedInUser");
 
   const loggedInUser = JSON.parse(storedUser || '""');
+
+  if (isExpired(loggedInUser.token)) {
+    localStorage.removeItem("loggedInUser");
+  }
 
   if (loggedInUser.token) {
     config.headers = {

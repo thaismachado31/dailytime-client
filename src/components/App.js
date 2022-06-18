@@ -10,17 +10,15 @@ import Create from "../pages/Create";
 import SecondHome from "../pages/SecondHome";
 import EventDetail from "../pages/EventDetail";
 import TaskDetail from "../pages/TaskDetail";
-import TaskDelete from "../pages/TaskDelete";
-import NavBar from "./NavBar";
 
 import { AuthContextComponent } from "../contexts/authContext";
-import Navbar from "./navbar/Navbar";
+import TaskDelete from "../pages/TaskDelete";
 
 function App() {
   return (
     <AuthContextComponent>
       <Routes>
-        {/* <Route path="/" element={<ProtectedRoute component={Home} />} /> */}
+        {/* <Route path="/" elemen={<ProtectedRoute component={Home} />} /> */}
         <Route path="/" element={<Home />} />
 
         <Route path="/signup" element={<Signup />} />
@@ -47,7 +45,6 @@ function App() {
           element={<ProtectedRoute component={TaskDelete} />}
         />
       </Routes>
-      {/* <Navbar /> */}
     </AuthContextComponent>
   );
 }
