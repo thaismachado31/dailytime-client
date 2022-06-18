@@ -88,12 +88,12 @@ function TabEvent() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (isBefore(state.dateTime, new Date())) {
+    if (isBefore(state.date, new Date())) {
       return setErrors({
         msg: "Your date has to be after today.",
       });
     }
-    if (!state.name || !state.dateTime || !state.duration) {
+    if (!state.name || !state.date || !state.duration) {
       return setErrors({
         msg: "You have to fill in: name, date, time and duration to complete.",
       });
@@ -108,6 +108,9 @@ function TabEvent() {
       return setErrors({ ...err.response.data });
     }
   }
+
+  console.log(state);
+
   const removeBorderInput = {
     "&:after": {
       border: "none",
