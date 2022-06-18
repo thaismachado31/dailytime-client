@@ -8,6 +8,7 @@ import {
   Tabs,
   Tab,
   Stack,
+  Typography,
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import KeyIcon from "@mui/icons-material/Key";
@@ -35,12 +36,10 @@ function EventDetail() {
 
   const classes = useStyles();
 
-  console.log(state);
+  const context = useContext(AuthContext);
 
   useEffect(async () => {
     const response = await api.get("/profile");
-
-    console.log(`dentro effect`, response);
     setState({ ...response.data, password: "", confirmPassword: "" });
   }, []);
 
@@ -161,6 +160,9 @@ function EventDetail() {
   const titlePositionCss = {
     width: "304px",
     textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   };
 
   const inputCss = {
@@ -265,6 +267,9 @@ function EventDetail() {
               style={{ width: "150px", height: "150px", borderRadius: "100%" }}
               src={state.profilePicture}
             />
+            <Button onClick={context.handleLogout}>
+              <Typography variant="h6">Logout</Typography>
+            </Button>
           </div>
 
           {componentToRender === 1 ? (
