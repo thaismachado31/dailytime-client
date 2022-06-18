@@ -273,7 +273,7 @@ function EventDetail() {
           </div>
 
           {componentToRender === 1 ? (
-            <MyInvites title="Meus Convites" height="50" />
+            <MyInvites title="Meus Convites" height="50" route="/myinvites" />
           ) : (
             <Box component="form" onSubmit={handleSubmit} style={formCss}>
               <Input

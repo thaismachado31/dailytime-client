@@ -106,7 +106,7 @@ function EqualDetails(props) {
           {props.timeReminder} min antes
         </div>
       ) : (
-        " deu ruim"
+        ""
       )}
     </div>
   );

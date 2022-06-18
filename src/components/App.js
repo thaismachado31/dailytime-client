@@ -8,7 +8,7 @@ import ProtectedRoute from "../pages/auth/ProtectedRoute";
 import UserProfile from "../pages/UserProfile";
 import Create from "../pages/Create";
 import SecondHome from "../pages/SecondHome";
-import EventDetail from "../pages/UserProfile";
+import EventDetail from "../pages/EventDetail";
 import TaskDetail from "../pages/TaskDetail";
 
 import { AuthContextComponent } from "../contexts/authContext";

@@ -5,7 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Typography from "@mui/material/Typography";
 import React, { useContext } from "react";
-import EventDetail from "../pages/UserProfile";
+import EventDetail from "../pages/EventDetail";
 import { Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import api from "../apis/api";
