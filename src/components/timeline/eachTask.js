@@ -42,7 +42,9 @@ function EachTask(props) {
           component="span"
           variant="subtitle1"
         >
-          {props.taskName}
+          <Link to={props.link} style={{ color: "#212932" }}>
+            {props.taskName}
+          </Link>
         </Typography>
         <Typography variant="caption">
           {props.time}-{props.timeEnd}({props.duration})

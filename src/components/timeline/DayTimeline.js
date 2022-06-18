@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../../apis/api";
 
-import { format } from "date-fns";
+import { format, startOfDay } from "date-fns";
 
 import EachTask from "./eachTask";
 import { Typography } from "@mui/material";
@@ -26,7 +26,9 @@ function DayTimeline(props) {
 
   async function getTask() {
     try {
-      const mytasks = await api.get(`/taskbydate/${date || new Date()}`);
+      const mytasks = await api.get(
+        `/timeline/${date || startOfDay(new Date())}`
+      );
       setTasks(mytasks.data);
     } catch (error) {
       console.error(error);
@@ -41,16 +43,8 @@ function DayTimeline(props) {
     getTask();
   }, []);
 
-  console.log(tasks);
   return (
-    <div
-      style={{
-        backgroundColor: "#EDE7E0CC",
-        height: "calc(95vh - 213px )",
-        marginTop: "30px",
-        marginBottom: 0,
-      }}
-    >
+    <div>
       <TasksList all={tasks} />
     </div>
   );

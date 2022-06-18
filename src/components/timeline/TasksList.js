@@ -100,7 +100,16 @@ function TasksList(props) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Timeline align="left">
+      <Timeline
+        style={{
+          backgroundColor: "#EDE7E0CC",
+          height: "calc(95vh - 213px )",
+          marginTop: "30px",
+          marginBottom: 0,
+          overflow: "scroll",
+        }}
+        align="left"
+      >
         {props.all.map((element) => {
           const { _id, name, dateTime, duration, category } = element;
           const startTime = formatTime(dateTime);

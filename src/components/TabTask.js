@@ -33,7 +33,7 @@ import api from "../apis/api";
 import { useNavigate } from "react-router-dom";
 
 import useStyles from "../styles/styles";
-import { parseISO, isBefore } from "date-fns";
+import { lightFormat, isBefore } from "date-fns";
 
 function TabTask() {
   const navigate = useNavigate();
@@ -64,11 +64,9 @@ function TabTask() {
   }
 
   function dataFormat() {
-    const dateString = newDate.toISOString();
-    const timeString = datetime.toISOString();
-    const lastDate = dateString.split("T")[0] + "T" + timeString.split("T")[1];
-    const finalDate = parseISO(lastDate);
-    console.log(finalDate);
+    const date = lightFormat(new Date(newDate), "yyyy-MM-dd");
+    const time = lightFormat(new Date(datetime), "HH:mm:ss:S");
+    const finalDate = new Date(date + " " + time);
     setState({ ...state, dateTime: finalDate });
   }
 
@@ -78,55 +76,27 @@ function TabTask() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (isBefore(state.dateTime, new Date())) {
-      return setErrors({
-        msg: "Your date has to be after today.",
-      });
-    }
-    if (!state.name || !state.dateTime || !state.duration) {
-      return setErrors({
-        msg: "You have to fill in: name, date, time and duration to complete.",
-      });
-    }
+    // if (isBefore(new Date(state.dateTime), new Date())) {
+    //   return setErrors({
+    //     msg: "Your date has to be after today.",
+    //   });
+    // }
+    // if (!state.name || !state.dateTime || !state.duration || !state.category) {
+    //   return setErrors({
+    //     msg: "You have to fill in: name, date, time and duration to complete.",
+    //   });
+    // }
     try {
       const response = await api.post("/newtask", state);
       console.log(response);
       setErrors({ msg: null });
-      navigate("/home");
+      navigate(`/task/${response.data._id}`);
     } catch (err) {
       console.error(err.response.data);
       return setErrors({ ...err.response.data });
     }
   }
 
-  // function validadeInputs() {
-  //   if (isBefore(new Date(), state.dateTime)) {
-  //     return setErrors({
-  //       msg: "Your date has to be after today.",
-  //     });
-  //   }
-  //   if (!state.name || !state.dateTime || !state.duration) {
-  //     return setErrors({
-  //       msg: "You have to fill in: name, date, time and duration to complete.",
-  //     });
-  //   }
-  //   return setErrors({ msg: null });
-  // }
-
-  // useEffect(() => {
-  //   async function submitData() {
-  //     try {
-  //       const response = await api.post("/newtask", state);
-  //       console.log(response);
-  //       navigate("/");
-  //     } catch (err) {
-  //       console.error(err.response.data);
-  //     }
-  //   }
-  //   submitData();
-  // }, [errors]);
-
-  console.log(state);
   const removeBorderInput = {
     "&:after": {
       border: "none",
