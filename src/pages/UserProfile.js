@@ -33,6 +33,8 @@ function EventDetail() {
   });
   const [componentToRender, setComponentToRender] = useState(0);
   const [errors, setErrors] = useState({ msg: null });
+  const [success, setSuccess] = useState({ msg: null });
+  const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
   const classes = useStyles();
@@ -73,6 +75,7 @@ function EventDetail() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    setLoading(true);
     try {
       let urlimg = "";
       if (state.picture) {
@@ -94,15 +97,15 @@ function EventDetail() {
       }
 
       setRefresh(!refresh);
+      setLoading(false);
+      setSuccess({ msg: "Profile has been successfully updated" });
       setErrors({ msg: "" });
     } catch (err) {
       if (err.response) {
         console.error(err.response);
-
+        setLoading(false);
         return setErrors({ ...err.response.data });
       }
-
-      console.error(err);
     }
   }
 
@@ -229,7 +232,18 @@ function EventDetail() {
 
   return (
     <Box>
-      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
+      {errors.msg && (
+        <Alert severity="error" onClose={() => setErrors({ msg: null })}>
+          {errors.msg}
+        </Alert>
+      )}
+      {success.msg && (
+        <Alert severity="success" onClose={() => setSuccess({ msg: null })}>
+          {success.msg}
+        </Alert>
+      )}
+
+      {loading && <Alert severity="info"> Updating...</Alert>}
       <Box
         sx={{
           borderBottom: 1,
@@ -263,7 +277,6 @@ function EventDetail() {
       </Box>
       <Box style={mainDiv}>
         <ThemeProvider theme={theme}>
-          <CreateInvite /> {/* props.route.match(/\bmyinvites/g) */}
           <div style={titlePositionCss}>
             <img
               style={{ width: "150px", height: "150px", borderRadius: "100%" }}
