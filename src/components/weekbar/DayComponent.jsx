@@ -1,13 +1,32 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { isToday } from "date-fns";
-import { useId } from "react";
+import { startOfDay, useId } from "react";
+import api from "../../apis/api";
 
 const DayComponent = (props) => {
-  const { hasTask, day, functions } = props;
+  const { day, functions } = props;
   const portugueseDays = ["dom", "seg", "ter", "qua", "qui", "sex", "sab"];
+
+  const [hasTask, setHasTask] = useState(true);
+  async function getTask() {
+    try {
+      const mytasks = await api.get(`/timeline/${day}`);
+      console.log(mytasks.data);
+      if (mytasks.data.length === 0) {
+        setHasTask(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getTask();
+  }, []);
 
   const theme = createTheme({
     typography: {
