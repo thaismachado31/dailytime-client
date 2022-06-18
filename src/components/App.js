@@ -10,6 +10,11 @@ import Create from "../pages/Create";
 import SecondHome from "../pages/SecondHome";
 import EventDetail from "../pages/UserProfile";
 import TaskDetail from "../pages/TaskDetail";
+<<<<<<< HEAD
+=======
+import TaskDelete from "../pages/TaskDelete";
+import NavBar from "./NavBar";
+>>>>>>> ffbf4e6361185f1833c0a55c725d570100ddd41a
 
 import { AuthContextComponent } from "../contexts/authContext";
 
@@ -38,6 +43,10 @@ function App() {
         <Route
           path="/task/:_id"
           element={<ProtectedRoute component={TaskDetail} />}
+        />
+        <Route
+          path="/taskdelete/:_id/"
+          element={<ProtectedRoute component={TaskDelete} />}
         />
       </Routes>
     </AuthContextComponent>

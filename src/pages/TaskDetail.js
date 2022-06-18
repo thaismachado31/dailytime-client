@@ -4,22 +4,30 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
+import { Button, Stack } from "@mui/material";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import RestaurantOutlinedIcon from "@mui/icons-material/RestaurantOutlined";
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import AlarmOnOutlinedIcon from "@mui/icons-material/AlarmOnOutlined";
+import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
-import { AuthContext } from "../contexts/authContext";
+import { format } from "date-fns";
 
-import { Link } from "react-router-dom";
+import { AuthContext } from "../contexts/authContext";
 
 import api from "../apis/api";
 
 function TaskDetail() {
   const [task, setTask] = useState({
     userId: "",
+    category: "",
     name: "",
     description: "",
-    icon: "",
     color: "",
     dateTime: "",
     duration: 0,
@@ -30,6 +38,18 @@ function TaskDetail() {
 
   const { _id } = useParams();
   const { loggedInUser } = useContext(AuthContext);
+
+  const icons = [
+    <ColorLensIcon />,
+    <RestaurantOutlinedIcon />,
+    <MenuBookIcon />,
+    <AlarmOnOutlinedIcon />,
+    <DirectionsCarIcon />,
+    <AssignmentIndOutlinedIcon />,
+    <MoreHorizOutlinedIcon />,
+  ];
+
+  const catIcon = icons[task.category];
 
   useEffect(() => {
     async function taskDetails() {
@@ -66,7 +86,16 @@ function TaskDetail() {
     <div>
       {isOwner() && (
         <div>
-          <h4 style={{ margin: "1.5rem", color: "#32747F" }}> DETALHES: </h4>
+          <h4
+            style={{
+              margin: "1.5rem",
+              color: "#32747F",
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            DETALHES:
+          </h4>
           <div
             style={{
               height: "40px",
@@ -86,7 +115,8 @@ function TaskDetail() {
                 color: "#32747F",
               }}
             >
-              {task.name}
+              <div style={iconsStyle}> {catIcon} </div>
+              <div> {task.name}</div>
             </div>
           </div>
 
@@ -97,35 +127,63 @@ function TaskDetail() {
             {task.description}
           </div>
 
-          <img style={informationsStyle} src={task.icon} alt={`Icon`} />
-
           <div style={informationsStyle}>
             <AccessTimeIcon style={iconsStyle}></AccessTimeIcon>
-            {task.dateTime}
+            {format(new Date(task.dateTime), `HH:mm`)}
           </div>
 
           <div style={informationsStyle}>
             <CalendarMonthOutlinedIcon
               style={iconsStyle}
             ></CalendarMonthOutlinedIcon>
-            {task.dateTime}
+            {format(new Date(task.dateTime), `dd/MM/yyyy`)}
           </div>
 
           <div style={informationsStyle}>
             <NotificationsNoneOutlinedIcon
               style={iconsStyle}
             ></NotificationsNoneOutlinedIcon>
-            {task.duration}
+            {task.duration} min
           </div>
 
           {task.timeReminder > 0 ? (
             <div style={informationsStyle}>
               <VolumeUpOutlinedIcon style={iconsStyle}></VolumeUpOutlinedIcon>
-              {task.timeReminder} minutos
+              {task.timeReminder} min antes
             </div>
           ) : (
-            ""
+            " "
           )}
+          <Stack justifyContent="center" direction="row" spacing={2} mt={3}>
+            <Button
+              sx={{
+                width: "10rem",
+                height: "2.7rem",
+                borderRadius: "100px",
+                backgroundColor: "#32747F",
+                padding: "10px",
+                textTransform: "unset",
+              }}
+              variant="contained"
+              href=""
+            >
+              Editar
+            </Button>
+            <Button
+              sx={{
+                width: "10rem",
+                height: "2.7rem",
+                borderRadius: "100px",
+                padding: "10px",
+                textTransform: "unset",
+              }}
+              variant="contained"
+              href={`/taskdelete/${_id}`}
+              color="error"
+            >
+              Deletar
+            </Button>
+          </Stack>
         </div>
       )}
     </div>
