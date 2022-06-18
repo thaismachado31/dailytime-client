@@ -106,7 +106,6 @@ function TabEvent() {
     }
   }
 
-  console.log(state);
   const removeBorderInput = {
     "&:after": {
       border: "none",
