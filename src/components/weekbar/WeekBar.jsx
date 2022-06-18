@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import api from "../../apis/api";
 import DayComponent from "./DayComponent";
 import DayTimeline from "../timeline/DayTimeline";
+import TasksList from "../timeline/TasksList";
 
 import {
   lastDayOfWeek,
@@ -26,6 +28,7 @@ const WeekBar = () => {
     setSelectedDay(isToday(day) ? "Hoje" : info);
     setDayTL(day);
   }
+
   return (
     <div>
       <Box>
@@ -46,7 +49,6 @@ const WeekBar = () => {
                 <DayComponent
                   key={index}
                   day={date}
-                  hasTask={index % 2 === 0 ? true : false}
                   functions={{ handleSelectedDay, selectedDay }}
                 />
               </div>
