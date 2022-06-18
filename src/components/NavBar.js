@@ -23,7 +23,7 @@ function NavBar() {
         // }}
         sx={{
           width: "100%",
-          position: "absolute",
+          // position: "absolute",
           margin: 0,
           bottom: 0,
         }}
