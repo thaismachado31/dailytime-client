@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
+import MyInvites from "../components/MyInvites";
+import InviteList from "../components/InviteList";
 
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -12,18 +14,18 @@ import api from "../apis/api";
 
 function EventDetail() {
   const [event, setEvent] = useState({
-    createdId: "",
+    createdBy: "",
     category: "",
     name: "",
     description: "",
     color: "",
-    dateTime: "",
+    date: "",
     duration: 0,
     reminder: "",
     timeReminder: 0,
     address: "",
+    invites: {},
   });
-  console.log(event);
 
   const { _id } = useParams();
   const { loggedInUser } = useContext(AuthContext);
@@ -36,16 +38,15 @@ function EventDetail() {
         console.log(response.data);
 
         setEvent({ ...response.data });
-        console.log(event);
       } catch (err) {
         console.error(err);
       }
     }
     eventDetails();
-  }, [_id, event]);
+  }, [_id]);
 
   function isOwner() {
-    return event.createdId === loggedInUser.user._id;
+    return event.createdBy === loggedInUser.user._id;
   }
 
   return (
@@ -56,9 +57,14 @@ function EventDetail() {
             key={event._id}
             name={event.name}
             description={event.description}
-            dateTime={event.dateTime}
+            dateTime={event.date}
             duration={event.duration}
             timeReminder={event.timeReminder}
+          />{" "}
+          <MyInvites
+            title="Convites do Evento"
+            height="50"
+            route={`/myinvites/${_id}`}
           />
           <Stack justifyContent="center" direction="row" spacing={2} mt={3}>
             <Button
