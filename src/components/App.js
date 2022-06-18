@@ -30,7 +30,7 @@ function App() {
           element={<ProtectedRoute component={UserProfile} />}
         />
         <Route
-          path="/secondhome"
+          path="/home"
           element={<ProtectedRoute component={SecondHome} />}
         />
         <Route path="/create" element={<ProtectedRoute component={Create} />} />

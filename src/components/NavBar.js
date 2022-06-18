@@ -10,29 +10,37 @@ function NavBar() {
   const [value, setValue] = useState(0);
   return (
     <div>
-      <Box sx={{ width: "100%", position: "absolute", bottom: 0 }}>
+      <Box
+        sx={{
+          width: "100%",
+          position: "absolute",
+          margin: 0,
+          bottom: 0,
+        }}
+      >
         <BottomNavigation
+          // style={{ color: "#ADB7C2" }}
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
         >
           <BottomNavigationAction
+            // style={{ color: "#ADB7C2" }}
             component={Link}
-            to="/secondhome"
-            label="Home"
+            to="/home"
             icon={<HomeOutlinedIcon />}
           />
           <BottomNavigationAction
+            // style={{ color: "#ADB7C2" }}
             component={Link}
             to="/create"
-            label="create"
             icon={<AddCircleOutlineOutlinedIcon />}
           />
           <BottomNavigationAction
+            // style={{ color: "#ADB7C2" }}
             component={Link}
             to="/"
-            label="Profile"
             icon={<PermIdentityOutlinedIcon />}
           />
         </BottomNavigation>
