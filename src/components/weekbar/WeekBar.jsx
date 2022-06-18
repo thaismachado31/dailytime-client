@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import api from "../../apis/api";
 import DayComponent from "./DayComponent";
 import DayTimeline from "../timeline/DayTimeline";
+import TasksList from "../timeline/TasksList";
 
 import {
   lastDayOfWeek,
@@ -18,7 +20,7 @@ const WeekBar = () => {
       end: lastDayOfWeek(new Date()),
     })
   ); //.map((date) => format(date, "d/M/y"));
-  const [weekcounter, setWeekCounter] = useState(7);
+  const [weekcounter, setWeekCounter] = useState(0);
 
   const [selectedDay, setSelectedDay] = useState("Hoje");
 
@@ -36,10 +38,10 @@ const WeekBar = () => {
     padding: `0 10px 0 10px`,
   };
 
-  function handleWeek(nextOrPrev) {
+  function handleWeek() {
     const firstday = startOfWeek(new Date());
     const nextweek = new Date(
-      firstday.setDate(firstday.getDate() - weekcounter)
+      firstday.setDate(firstday.getDate() + weekcounter)
     );
     setDaysOfCurrentWeek(
       eachDayOfInterval({
@@ -47,11 +49,12 @@ const WeekBar = () => {
         end: lastDayOfWeek(nextweek),
       })
     );
-
-    nextOrPrev === "next"
-      ? setWeekCounter(weekcounter + 7)
-      : setWeekCounter(weekcounter - 7);
   }
+
+  useEffect(() => {
+    handleWeek();
+  }, [weekcounter]);
+
   return (
     <div>
       <Box>
@@ -62,7 +65,7 @@ const WeekBar = () => {
           <Button
             style={{ color: "rgb(50, 116, 127)" }}
             onClick={() => {
-              handleWeek("prev");
+              setWeekCounter(weekcounter - 7);
             }}
           >
             anterior
@@ -70,7 +73,7 @@ const WeekBar = () => {
           <Button
             style={{ color: "rgb(50, 116, 127)" }}
             onClick={() => {
-              handleWeek("next");
+              setWeekCounter(weekcounter + 7);
             }}
           >
             próximo
@@ -90,7 +93,6 @@ const WeekBar = () => {
                 <DayComponent
                   key={index}
                   day={date}
-                  hasTask={index % 2 === 0 ? true : false}
                   functions={{ handleSelectedDay, selectedDay }}
                 />
               </div>

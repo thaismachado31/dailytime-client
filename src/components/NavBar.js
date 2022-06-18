@@ -13,6 +13,14 @@ function NavBar() {
   return (
     <div>
       <Box
+        // sx={{
+        //   display: "flex",
+        //   height: "75.63px",
+        //   width: "100%",
+        //   justifyContent: "space-around",
+        //   top: "calc(100vh - 76px )",
+        //   position: "absolute",
+        // }}
         sx={{
           width: "100%",
           position: "absolute",
