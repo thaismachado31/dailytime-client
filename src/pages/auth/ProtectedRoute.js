@@ -43,8 +43,6 @@ function ProtectedRoute({ component: Component }) {
     })();
   }, []);
 
-  //instance.postMessage(5);
-
   if (loading) {
     return <div>Loading...</div>;
   }

@@ -14,11 +14,7 @@ export default () => {
         let dif = new Date(task.dateTime).getTime() - new Date().getTime();
         dif = dif / (1000 * 60);
         console.log("dif", dif);
-        if (
-          dif <= task?.timeReminder &&
-          dif > task?.timeReminder &&
-          !task.notified
-        ) {
+        if (dif <= task?.timeReminder && dif > 0 && !task.notified) {
           postMessage(JSON.stringify(task));
           task.notified = true;
           return task;

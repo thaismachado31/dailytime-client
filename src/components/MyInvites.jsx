@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import InviteList from "../components/InviteList";
 import api from "../apis/api";
-import he from "date-fns/esm/locale/he/index.js";
+
+import { Box, Input, Button } from "@mui/material";
+import CreateInvite from "./invites/CreateInvite";
 
 const MyInvites = (props) => {
   const [invites, setInvites] = useState([]);
@@ -17,6 +19,8 @@ const MyInvites = (props) => {
       setInvites(myinvites.data);
     } catch (error) {}
   }
+
+  console.log(`match`, props.route.match(/\bmyinvites/g));
 
   const deleteInvite = async (_id) => {
     try {
@@ -47,10 +51,9 @@ const MyInvites = (props) => {
       className="text-center"
       style={{ height: `${height}vh`, overflow: `auto` }}
     >
-      {" "}
       <InviteList
         list={invites}
-        title={title || "My Invites"}
+        title={" " || "My Invites"}
         functions={{ deleteInvite, acceptInvite }}
       />{" "}
     </div>
