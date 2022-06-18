@@ -29,46 +29,48 @@ const WeekBar = () => {
     setSelectedDay(isToday(day) ? "Hoje" : info);
     setDayTL(day);
   }
+
+  const weekbuttonsCss = {
+    display: `flex`,
+    justifyContent: `space-between`,
+    padding: `0 10px 0 10px`,
+  };
+
+  function handleWeek(nextOrPrev) {
+    const firstday = startOfWeek(new Date());
+    const nextweek = new Date(
+      firstday.setDate(firstday.getDate() - weekcounter)
+    );
+    setDaysOfCurrentWeek(
+      eachDayOfInterval({
+        start: startOfWeek(nextweek),
+        end: lastDayOfWeek(nextweek),
+      })
+    );
+
+    nextOrPrev === "next"
+      ? setWeekCounter(weekcounter + 7)
+      : setWeekCounter(weekcounter - 7);
+  }
   return (
     <div>
       <Box>
         <Typography variant="h5" style={{ color: "#32747F" }}>
           {selectedDay}
         </Typography>
-        <Box>
+        <Box style={weekbuttonsCss}>
           <Button
+            style={{ color: "rgb(50, 116, 127)" }}
             onClick={() => {
-              const firstday = startOfWeek(new Date());
-              const nextweek = new Date(
-                firstday.setDate(firstday.getDate() - weekcounter)
-              );
-              setDaysOfCurrentWeek(
-                eachDayOfInterval({
-                  start: startOfWeek(nextweek),
-                  end: lastDayOfWeek(nextweek),
-                })
-              );
-
-              setWeekCounter(weekcounter - 7);
+              handleWeek("prev");
             }}
           >
             anterior
           </Button>
           <Button
+            style={{ color: "rgb(50, 116, 127)" }}
             onClick={() => {
-              const firstday = startOfWeek(new Date());
-              const nextweek = new Date(
-                firstday.setDate(firstday.getDate() + weekcounter)
-              );
-
-              setDaysOfCurrentWeek(
-                eachDayOfInterval({
-                  start: startOfWeek(nextweek),
-                  end: lastDayOfWeek(nextweek),
-                })
-              );
-
-              setWeekCounter(weekcounter + 7);
+              handleWeek("next");
             }}
           >
             próximo
