@@ -20,8 +20,6 @@ const MyInvites = (props) => {
     } catch (error) {}
   }
 
-  console.log(`match`, props.route.match(/\bmyinvites/g));
-
   const deleteInvite = async (_id) => {
     try {
       const response = await api.delete(`/invite/${_id}`);

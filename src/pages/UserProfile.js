@@ -277,7 +277,6 @@ function EventDetail() {
       </Box>
       <Box style={mainDiv}>
         <ThemeProvider theme={theme}>
-          <CreateInvite /> {/* props.route.match(/\bmyinvites/g) */}
           <div style={titlePositionCss}>
             <img
               style={{ width: "150px", height: "150px", borderRadius: "100%" }}
