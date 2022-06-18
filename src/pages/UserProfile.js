@@ -19,6 +19,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyInvites from "../components/MyInvites";
 import useStyles from "../styles/styles";
 import { AuthContext } from "../contexts/authContext";
+import CreateInvite from "../components/invites/CreateInvite";
 
 function EventDetail() {
   const [state, setState] = useState({
@@ -262,6 +263,7 @@ function EventDetail() {
       </Box>
       <Box style={mainDiv}>
         <ThemeProvider theme={theme}>
+          <CreateInvite /> {/* props.route.match(/\bmyinvites/g) */}
           <div style={titlePositionCss}>
             <img
               style={{ width: "150px", height: "150px", borderRadius: "100%" }}
@@ -271,7 +273,6 @@ function EventDetail() {
               <Typography variant="h6">Logout</Typography>
             </Button>
           </div>
-
           {componentToRender === 1 ? (
             <MyInvites title="Meus Convites" height="50" route="/myinvites" />
           ) : (
