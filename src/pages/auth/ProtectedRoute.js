@@ -6,6 +6,7 @@ import WorkerBuilder from "../../assets/workers/workerBuilder";
 import workerNotification from "../../assets/workers/worker-notification";
 import api from "../../apis/api";
 import Alert from "@mui/material/Alert";
+import { startOfDay } from "date-fns";
 
 const instance = new WorkerBuilder(workerNotification);
 
@@ -25,7 +26,9 @@ function ProtectedRoute({ component: Component }) {
   useEffect(() => {
     (async function getTask() {
       try {
-        const mytasks = await api.get(`/task`);
+        const mytasks = await api.get(`/taskbydate/${new Date()}`);
+
+        console.log(mytasks);
 
         const workerTasks = mytasks?.data?.map((task) => {
           return {
