@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
-
+import { AuthContext } from "../contexts/authContext";
 function NavBar() {
   const [value, setValue] = useState(0);
+  const { loggedInUser, loading } = useContext(AuthContext);
+
   return (
     <div>
       <Box
@@ -48,7 +50,7 @@ function NavBar() {
           <BottomNavigationAction
             // style={{ color: "#ADB7C2" }}
             component={Link}
-            to="/"
+            to={`/userprofile/${loggedInUser.user._id}`}
             icon={<PermIdentityOutlinedIcon />}
           />
         </BottomNavigation>
