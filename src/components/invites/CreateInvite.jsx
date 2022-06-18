@@ -21,7 +21,7 @@ const CreateInvite = (props) => {
 
   console.log(email);
   return (
-    <Box>
+    <Box mt={2} textAlign="center">
       <Input
         placeholder="Insira email...."
         onChange={handleChange}
@@ -29,7 +29,7 @@ const CreateInvite = (props) => {
       ></Input>
       <Button
         onClick={() => {
-          handleInvite("62a4c4a6946c8247c4060d31");
+          handleInvite(props.eventId);
         }}
       >
         Criar

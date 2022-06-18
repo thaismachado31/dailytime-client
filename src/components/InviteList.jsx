@@ -127,6 +127,9 @@ const InviteList = (props) => {
                     <React.Fragment>
                       <Typography variant="body2" color="text.primary">
                         Convidado por: {userId.name}
+                      </Typography>
+
+                      <Typography variant="body2" color="text.primary">
                         Email: {email}
                       </Typography>
 

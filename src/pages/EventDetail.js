@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
 import MyInvites from "../components/MyInvites";
-import InviteList from "../components/InviteList";
+import CreateInvite from "../components/invites/CreateInvite";
 
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -14,12 +14,12 @@ import api from "../apis/api";
 
 function EventDetail() {
   const [event, setEvent] = useState({
-    createdBy: "",
+    userId: "",
     category: "",
     name: "",
     description: "",
     color: "",
-    date: "",
+    dateTime: "",
     duration: 0,
     reminder: "",
     timeReminder: 0,
@@ -46,7 +46,7 @@ function EventDetail() {
   }, [_id]);
 
   function isOwner() {
-    return event.createdBy === loggedInUser.user._id;
+    return event.userId === loggedInUser.user._id;
   }
 
   return (
@@ -57,16 +57,18 @@ function EventDetail() {
             key={event._id}
             name={event.name}
             description={event.description}
-            dateTime={event.date}
+            dateTime={event.dateTime}
             duration={event.duration}
             timeReminder={event.timeReminder}
-          />{" "}
+          />
+          <CreateInvite eventId={_id} />
           <MyInvites
             title="Convites do Evento"
-            height="50"
+            height="30"
             route={`/myinvites/${_id}`}
+            functions="deleteInvite"
           />
-          <Stack justifyContent="center" direction="row" spacing={2} mt={3}>
+          <Stack justifyContent="center" direction="row" spacing={2} mt={5}>
             <Button
               sx={{
                 width: "10rem",
