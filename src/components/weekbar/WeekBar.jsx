@@ -32,6 +32,10 @@ const WeekBar = () => {
     setDayTL(day);
   }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 89bd691e102ae31c60c7e31d8eb235ece2affa7f
   const weekbuttonsCss = {
     display: `flex`,
     justifyContent: `space-between`,
@@ -51,10 +55,13 @@ const WeekBar = () => {
     );
   }
 
+<<<<<<< HEAD
   useEffect(() => {
     handleWeek();
   }, [weekcounter]);
 
+=======
+>>>>>>> 89bd691e102ae31c60c7e31d8eb235ece2affa7f
   return (
     <div>
       <Box>
