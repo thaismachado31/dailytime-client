@@ -10,9 +10,12 @@ import Create from "../pages/Create";
 import SecondHome from "../pages/SecondHome";
 import EventDetail from "../pages/EventDetail";
 import TaskDetail from "../pages/TaskDetail";
+import UpdateTask from "../pages/UpdateTask";
+import UpdateEvent from "../pages/UpdateEvent";
+import TaskDelete from "../pages/TaskDelete";
+import EventDelete from "../pages/EventDelete";
 
 import { AuthContextComponent } from "../contexts/authContext";
-import TaskDelete from "../pages/TaskDelete";
 
 function App() {
   return (
@@ -37,12 +40,24 @@ function App() {
           element={<ProtectedRoute component={EventDetail} />}
         />
         <Route
+          path="/eventdelete/:_id"
+          element={<ProtectedRoute component={EventDelete} />}
+        />
+        <Route
           path="/task/:_id"
           element={<ProtectedRoute component={TaskDetail} />}
         />
         <Route
-          path="/taskdelete/:_id/"
+          path="/taskdelete/:_id"
           element={<ProtectedRoute component={TaskDelete} />}
+        />
+        <Route
+          path="/updatetask/:_id"
+          element={<ProtectedRoute component={UpdateTask} />}
+        />
+        <Route
+          path="/updateevent/:_id"
+          element={<ProtectedRoute component={UpdateEvent} />}
         />
       </Routes>
     </AuthContextComponent>
