@@ -55,6 +55,7 @@ const WeekBar = () => {
     handleWeek();
   }, [weekcounter]);
 
+  console.log("renderizou");
   return (
     <div>
       <Box>
@@ -66,6 +67,7 @@ const WeekBar = () => {
             style={{ color: "rgb(50, 116, 127)" }}
             onClick={() => {
               setWeekCounter(weekcounter - 7);
+              setSelectedDay("");
             }}
           >
             anterior
@@ -74,6 +76,7 @@ const WeekBar = () => {
             style={{ color: "rgb(50, 116, 127)" }}
             onClick={() => {
               setWeekCounter(weekcounter + 7);
+              setSelectedDay("");
             }}
           >
             próximo
