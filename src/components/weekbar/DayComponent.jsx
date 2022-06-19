@@ -18,7 +18,10 @@ const DayComponent = (props) => {
       console.log(mytasks.data);
       if (mytasks.data.length === 0) {
         setHasTask(false);
+        return;
       }
+
+      setHasTask(true);
     } catch (error) {
       console.error(error);
     }
@@ -27,7 +30,7 @@ const DayComponent = (props) => {
   useEffect(() => {
     getTask();
   }, []);
-
+  getTask();
   const theme = createTheme({
     typography: {
       fontFamily: [
