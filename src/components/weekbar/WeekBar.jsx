@@ -11,13 +11,16 @@ import {
   format,
   isToday,
 } from "date-fns";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 const WeekBar = () => {
-  const daysOfCurrentWeek = eachDayOfInterval({
-    start: startOfWeek(new Date()),
-    end: lastDayOfWeek(new Date()),
-  }); //.map((date) => format(date, "d/M/y"));
+  const [daysOfCurrentWeek, setDaysOfCurrentWeek] = useState(
+    eachDayOfInterval({
+      start: startOfWeek(new Date()),
+      end: lastDayOfWeek(new Date()),
+    })
+  ); //.map((date) => format(date, "d/M/y"));
+  const [weekcounter, setWeekCounter] = useState(0);
 
   const [selectedDay, setSelectedDay] = useState("Hoje");
 
@@ -29,12 +32,53 @@ const WeekBar = () => {
     setDayTL(day);
   }
 
+  const weekbuttonsCss = {
+    display: `flex`,
+    justifyContent: `space-between`,
+    padding: `0 10px 0 10px`,
+  };
+
+  function handleWeek() {
+    const firstday = startOfWeek(new Date());
+    const nextweek = new Date(
+      firstday.setDate(firstday.getDate() + weekcounter)
+    );
+    setDaysOfCurrentWeek(
+      eachDayOfInterval({
+        start: startOfWeek(nextweek),
+        end: lastDayOfWeek(nextweek),
+      })
+    );
+  }
+
+  useEffect(() => {
+    handleWeek();
+  }, [weekcounter]);
+
   return (
     <div>
       <Box>
         <Typography variant="h5" style={{ color: "#32747F" }}>
           {selectedDay}
         </Typography>
+        <Box style={weekbuttonsCss}>
+          <Button
+            style={{ color: "rgb(50, 116, 127)" }}
+            onClick={() => {
+              setWeekCounter(weekcounter - 7);
+            }}
+          >
+            anterior
+          </Button>
+          <Button
+            style={{ color: "rgb(50, 116, 127)" }}
+            onClick={() => {
+              setWeekCounter(weekcounter + 7);
+            }}
+          >
+            próximo
+          </Button>
+        </Box>
         <Box
           sx={{
             display: "flex",

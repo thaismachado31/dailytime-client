@@ -8,6 +8,7 @@ import {
   Tabs,
   Tab,
   Stack,
+  Typography,
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import KeyIcon from "@mui/icons-material/Key";
@@ -18,6 +19,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyInvites from "../components/MyInvites";
 import useStyles from "../styles/styles";
 import { AuthContext } from "../contexts/authContext";
+import CreateInvite from "../components/invites/CreateInvite";
 
 function EventDetail() {
   const [state, setState] = useState({
@@ -31,16 +33,16 @@ function EventDetail() {
   });
   const [componentToRender, setComponentToRender] = useState(0);
   const [errors, setErrors] = useState({ msg: null });
+  const [success, setSuccess] = useState({ msg: null });
+  const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
   const classes = useStyles();
 
-  console.log(state);
+  const context = useContext(AuthContext);
 
   useEffect(async () => {
     const response = await api.get("/profile");
-
-    console.log(`dentro effect`, response);
     setState({ ...response.data, password: "", confirmPassword: "" });
   }, []);
 
@@ -73,6 +75,7 @@ function EventDetail() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    setLoading(true);
     try {
       let urlimg = "";
       if (state.picture) {
@@ -94,15 +97,15 @@ function EventDetail() {
       }
 
       setRefresh(!refresh);
+      setLoading(false);
+      setSuccess({ msg: "Profile has been successfully updated" });
       setErrors({ msg: "" });
     } catch (err) {
       if (err.response) {
         console.error(err.response);
-
+        setLoading(false);
         return setErrors({ ...err.response.data });
       }
-
-      console.error(err);
     }
   }
 
@@ -161,6 +164,9 @@ function EventDetail() {
   const titlePositionCss = {
     width: "304px",
     textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   };
 
   const inputCss = {
@@ -226,7 +232,18 @@ function EventDetail() {
 
   return (
     <Box>
-      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
+      {errors.msg && (
+        <Alert severity="error" onClose={() => setErrors({ msg: null })}>
+          {errors.msg}
+        </Alert>
+      )}
+      {success.msg && (
+        <Alert severity="success" onClose={() => setSuccess({ msg: null })}>
+          {success.msg}
+        </Alert>
+      )}
+
+      {loading && <Alert severity="info"> Updating...</Alert>}
       <Box
         sx={{
           borderBottom: 1,
@@ -265,8 +282,10 @@ function EventDetail() {
               style={{ width: "150px", height: "150px", borderRadius: "100%" }}
               src={state.profilePicture}
             />
+            <Button onClick={context.handleLogout}>
+              <Typography variant="h6">Logout</Typography>
+            </Button>
           </div>
-
           {componentToRender === 1 ? (
             <MyInvites title="Meus Convites" height="50" route="/myinvites" />
           ) : (

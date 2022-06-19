@@ -6,7 +6,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Typography from "@mui/material/Typography";
 import React, { useContext } from "react";
 import EventDetail from "../pages/EventDetail";
-import { Box, Button } from "@mui/material";
+import { Backdrop, Box, Button, Fade, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
 import api from "../apis/api";
 import { useState } from "react";
@@ -43,72 +43,134 @@ const listCss = {
   margin: "auto",
 };
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 const InviteList = (props) => {
   const { loggedInUser } = useContext(AuthContext);
+  const [modal, setModal] = useState(false);
+  const [deleteInviteId, setDeleteInviteId] = useState("");
 
-  console.log(loggedInUser.user.email);
+  function handleModal() {
+    setModal(!modal);
+  }
+
   return (
-    <List sx={listCss}>
-      <h3>{props.title}</h3>
-      {props.list?.map((element) => {
-        const { _id, eventId, userId, confirmacao, email } = element;
-        const { deleteInvite, acceptInvite } = props.functions;
+    <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={modal}
+        onClose={handleModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={modal}>
+          <Box sx={modalStyle}>
+            <Typography id="transition-modal-title" variant="h6" component="h2">
+              Você deseja excluir/recusar o seu convite?
+            </Typography>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-around", mt: 2 }}
+            >
+              <Button
+                sx={buttonCss}
+                onClick={() => {
+                  handleModal();
+                  props.functions.deleteInvite(deleteInviteId);
+                }}
+              >
+                Sim
+              </Button>
+              <Button sx={buttonCss} onClick={handleModal}>
+                Não
+              </Button>
+            </Box>
+          </Box>
+        </Fade>
+      </Modal>
+      <List sx={listCss}>
+        <h3>{props.title}</h3>
 
-        console.log(eventId.createdBy);
-        return (
-          <React.Fragment key={_id}>
-            <ListItem sx={listItemCss}>
-              <ListItemText
-                primary={
-                  <Link to={`/eventDetail/${eventId._id}`}>
-                    <Typography
-                      variant="h5"
-                      color="text.primary"
-                      sx={{ textDecoration: "underline", color: "#32747F" }}
-                    >
-                      {eventId.name}
-                    </Typography>
-                  </Link>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body2" color="text.primary">
-                      Convidado por: {userId.name}
-                      Email: {email}
-                    </Typography>
+        {props.list?.map((element) => {
+          const { _id, eventId, userId, confirmacao, email } = element;
+          const { deleteInvite, acceptInvite } = props.functions;
 
-                    <Typography variant="body2" color="text.primary">
-                      Status: {confirmacao ? "Participando" : "Pendente"}
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
+          console.log(eventId.createdBy);
+          return (
+            <React.Fragment key={_id}>
+              <ListItem sx={listItemCss}>
+                <ListItemText
+                  primary={
+                    <Link to={`/eventDetail/${eventId._id}`}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ textDecoration: "underline", color: "#32747F" }}
+                      >
+                        {eventId.name}
+                      </Typography>
+                    </Link>
+                  }
+                  secondary={
+                    <React.Fragment>
+                      <Typography variant="body2" color="text.primary">
+                        Convidado por: {userId.name}
+                      </Typography>
 
-              {(loggedInUser.user.email === email ||
-                loggedInUser.user._id === eventId.createdBy) && (
-                <Box sx={buttonBoxCss}>
-                  {!confirmacao && (
+                      <Typography variant="body2" color="text.primary">
+                        Email: {email}
+                      </Typography>
+
+                      <Typography variant="body2" color="text.primary">
+                        Status: {confirmacao ? "Participando" : "Pendente"}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+
+                {(loggedInUser.user.email === email ||
+                  loggedInUser.user._id === eventId.createdBy) && (
+                  <Box sx={buttonBoxCss}>
+                    {!confirmacao && (
+                      <Button
+                        sx={buttonCss}
+                        onClick={() => {
+                          acceptInvite(_id);
+                        }}
+                      >
+                        Aceitar
+                      </Button>
+                    )}
                     <Button
                       sx={buttonCss}
                       onClick={() => {
-                        acceptInvite(_id);
+                        setDeleteInviteId(_id);
+                        handleModal();
                       }}
                     >
-                      Aceitar
+                      {confirmacao ? "Excluir" : "Recusar"}
                     </Button>
-                  )}
-
-                  <Button sx={buttonCss} onClick={() => deleteInvite(_id)}>
-                    {confirmacao ? "Excluir" : "Recusar"}
-                  </Button>
-                </Box>
-              )}
-            </ListItem>
-            <Divider component="li" />
-          </React.Fragment>
-        );
-      })}
-    </List>
+                  </Box>
+                )}
+              </ListItem>
+              <Divider component="li" />
+            </React.Fragment>
+          );
+        })}
+      </List>
+    </>
   );
 };
 

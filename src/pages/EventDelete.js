@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import api from "../apis/api";
 
-function TaskDelete() {
+function EventDelete() {
   const { _id } = useParams();
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ function TaskDelete() {
 
     if (areYouSure) {
       return api
-        .delete(`/task/${_id}`)
+        .delete(`/event/${_id}`)
         .then((response) => {
           navigate(`/home`);
         })
@@ -26,4 +26,4 @@ function TaskDelete() {
   return <div> Excluindo...</div>;
 }
 
-export default TaskDelete;
+export default EventDelete;
