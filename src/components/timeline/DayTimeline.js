@@ -1,24 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../../apis/api";
 
-import { format, startOfDay } from "date-fns";
+import { startOfDay } from "date-fns";
 
-import EachTask from "./eachTask";
-import { Typography } from "@mui/material";
-import {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineOppositeContent,
-  TimelineDot,
-} from "@mui/lab";
+import {} from "@mui/lab";
 
 import TasksList from "./TasksList";
-import SportsTennisIcon from "@mui/icons-material/SportsTennis";
 
 function DayTimeline(props) {
   const [tasks, setTasks] = useState([]);

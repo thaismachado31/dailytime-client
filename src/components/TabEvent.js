@@ -13,7 +13,6 @@ import {
   Alert,
 } from "@mui/material";
 
-// import FormSelect from "./FormSelect";
 import { lightFormat, parseISO, isBefore } from "date-fns";
 import api from "../apis/api";
 import { useNavigate } from "react-router-dom";
@@ -22,19 +21,16 @@ import {
   TimePicker,
   LocalizationProvider,
   MobileDatePicker,
-  StaticTimePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 import ShortTextIcon from "@mui/icons-material/ShortText";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
-import AlarmOnOutlinedIcon from "@mui/icons-material/AlarmOnOutlined";
 
 import useStyles from "../styles/styles";
 
