@@ -91,7 +91,7 @@ function TasksList(props) {
       <Timeline
         style={{
           backgroundColor: "#EDE7E0CC",
-          height: "calc(95vh - 213px )",
+          height: "calc(95vh - 238px )",
           marginTop: "30px",
           marginBottom: 0,
           overflow: "scroll",
@@ -99,7 +99,7 @@ function TasksList(props) {
         align="left"
       >
         {props.all.map((element) => {
-          const { _id, name, dateTime, duration, category } = element;
+          const { _id, name, dateTime, duration, category, inviteId } = element;
           const startTime = formatTime(dateTime);
           const end = addMinutes(new Date(dateTime), duration);
           const endTime = formatTime(end);
@@ -110,7 +110,7 @@ function TasksList(props) {
               key={_id}
               time={startTime}
               colorDot={catColor}
-              link={`/task/${_id}`}
+              link={inviteId ? `/event/${_id}` : `/task/${_id}`}
               icon={catIcon}
               taskName={name}
               timeEnd={endTime}

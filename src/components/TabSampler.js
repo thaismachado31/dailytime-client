@@ -1,17 +1,6 @@
 import * as React from "react";
 
-import { useState, useEffect } from "react";
-import {
-  TextField,
-  Box,
-  Button,
-  Stack,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  Select,
-  Alert,
-} from "@mui/material";
+import { TextField, Box, Stack, Alert } from "@mui/material";
 
 import {
   TimePicker,
@@ -28,29 +17,13 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
-import api from "../apis/api";
-import { useNavigate } from "react-router-dom";
-
 import useStyles from "../styles/styles";
-import { lightFormat, isBefore } from "date-fns";
 import FormSelect from "./FormSelect";
 import FormInput from "./FormInput";
 import FormButtonCreate from "./FormButtonCreate";
 
-function TabTask() {
-  const navigate = useNavigate();
-
+function TabSampler(props) {
   const classes = useStyles();
-
-  const [state, setState] = useState({
-    name: "",
-    category: "",
-    description: "",
-    dateTime: new Date(),
-    duration: "",
-    timeReminder: "",
-    recurrence: "",
-  });
 
   const alarmOp = [
     { name: "-", value: 0 },
@@ -87,83 +60,32 @@ function TabTask() {
     { name: "4 horas", value: 240 },
   ];
 
-  const [newDate, setNewDate] = useState(new Date());
-  const [datetime, setDatetime] = useState(
-    new Date("2018-01-01T00:00:00.000Z")
-  );
-
-  const [errors, setErrors] = useState({
-    msg: null,
-  });
-
-  function handleChange(event) {
-    setState({ ...state, [event.target.name]: event.target.value });
-  }
-
-  const handleChangeTime = (newDatetime) => setDatetime(newDatetime);
-
-  const handleChangeDate = (newValue) => setNewDate(newValue);
-
-  function dataFormat() {
-    const date = lightFormat(new Date(newDate), "yyyy-MM-dd");
-    const time = lightFormat(new Date(datetime), "HH:mm:ss:S");
-    const finalDate = new Date(date + " " + time);
-    setState({ ...state, dateTime: finalDate });
-  }
-
-  useEffect(() => {
-    dataFormat();
-  }, [newDate, datetime]);
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    if (isBefore(new Date(state.dateTime), new Date())) {
-      return setErrors({
-        msg: "Your date has to be after today.",
-      });
-    }
-    if (!state.name || !state.dateTime || !state.duration || !state.category) {
-      return setErrors({
-        msg: "You have to fill in: name, date, time and duration to complete.",
-      });
-    }
-    try {
-      const response = await api.post("/newtask", state);
-      console.log(response);
-      setErrors({ msg: null });
-      navigate(`/task/${response.data._id}`);
-    } catch (err) {
-      console.error(err.response.data);
-      return setErrors({ ...err.response.data });
-    }
-  }
-
-  const removeBorderInput = {
-    "&:after": {
-      border: "none",
-    },
-    "&::before": {
-      border: "none",
-    },
-    "&:hover:not(.Mui-disabled):before": {
-      border: "none",
-    },
-  };
-  console.log(state);
+  const {
+    tabState,
+    onSubmit,
+    error,
+    title,
+    button,
+    onChange,
+    onChangeTime,
+    onChangeDate,
+    time,
+    date,
+  } = props;
   return (
-    <div style={{ height: "calc(100vh - 144px )", overflow: "scroll" }}>
-      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
+    <div>
+      {error.msg && <Alert severity="error">{error.msg}</Alert>}
 
-      <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
+      <Box component="form" onSubmit={onSubmit} sx={{ p: 3 }}>
         <FormInput
-          id={`title-name-${state.name}`}
+          id={`title-name-${tabState.name}`}
           multiline={false}
-          title="nome da tarefa"
+          title={title}
           variant="filled"
           size="small"
           name="name"
-          value={state.name}
-          onChange={handleChange}
+          value={tabState.name}
+          onChange={onChange}
         />
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -172,20 +94,20 @@ function TabTask() {
               label="categoria"
               icon={<CategoryOutlinedIcon className={classes.icons} />}
               name="category"
-              value={state.category}
-              onChange={handleChange}
+              value={tabState.category}
+              onChange={onChange}
               options={categoryOp}
             />
 
             <Box className={classes.input}>
               <ShortTextIcon className={classes.icons} />
               <FormInput
-                id={`title-name-${state.description}`}
+                id={`title-name-${tabState.description}`}
                 title="descrição"
                 variant="standard"
                 name="description"
-                value={state.description}
-                onChange={handleChange}
+                value={tabState.description}
+                onChange={onChange}
                 row={2}
               />
             </Box>
@@ -198,8 +120,8 @@ function TabTask() {
                 ampm={false}
                 margin="normal"
                 // name="dateTime"
-                value={datetime}
-                onChange={handleChangeTime}
+                value={time}
+                onChange={onChangeTime}
                 renderInput={(params) => (
                   <TextField variant="standard" {...params} />
                 )}
@@ -213,8 +135,8 @@ function TabTask() {
                 inputFormat="dd/MM/yyyy"
                 hiddenlabel="true"
                 // name="date"
-                value={newDate}
-                onChange={handleChangeDate}
+                value={date}
+                onChange={onChangeDate}
                 renderInput={(params) => (
                   <TextField variant="standard" {...params} />
                 )}
@@ -224,32 +146,34 @@ function TabTask() {
               label="duração"
               icon={<TimelapseIcon className={classes.icons} />}
               name="duration"
-              value={state.duration}
-              onChange={handleChange}
+              value={tabState.duration}
+              onChange={onChange}
               options={durationOp}
             />
             <FormSelect
               label="lembrete"
               icon={<NotificationsNoneIcon className={classes.icons} />}
               name="timeReminder"
-              value={state.timeReminder}
-              onChange={handleChange}
+              value={tabState.timeReminder}
+              onChange={onChange}
               options={alarmOp}
             />
             <FormSelect
               label="repetir"
               icon={<LoopIcon className={classes.icons} />}
               name="recurrence"
-              value={state.recurrence}
-              onChange={handleChange}
+              value={tabState.recurrence}
+              onChange={onChange}
               options={recurrenceOp}
             />
           </Stack>
         </LocalizationProvider>
-        <FormButtonCreate state={state} title="Criar tarefa" />
+        <div className={classes.divButton}>
+          <FormButtonCreate state={tabState} title={button} />
+        </div>
       </Box>
     </div>
   );
 }
 
-export default TabTask;
+export default TabSampler;

@@ -132,7 +132,7 @@ function EventDetail() {
                   textTransform: "unset",
                 }}
                 variant="contained"
-                href=""
+                href={`/updateevent/${_id}`}
               >
                 Editar
               </Button>

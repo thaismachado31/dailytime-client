@@ -34,6 +34,10 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
 import useStyles from "../styles/styles";
 
+import FormSelect from "./FormSelect";
+import FormInput from "./FormInput";
+import FormButtonCreate from "./FormButtonCreate";
+
 function TabEvent() {
   const navigate = useNavigate();
 
@@ -57,13 +61,40 @@ function TabEvent() {
     msg: null,
   });
 
-  // const alarmOp = [
-  //   "-",
-  //   "5min antes",
-  //   "10min antes",
-  //   "15min antes",
-  //   "30min antes",
-  // ];
+  const alarmOp = [
+    { name: "-", value: 0 },
+    { name: "5min antes", value: 5 },
+    { name: "10min antes", value: 10 },
+    { name: "15min antes", value: 15 },
+    { name: "30min antes", value: 30 },
+  ];
+
+  const categoryOp = [
+    { name: "lazer", value: 0 },
+    { name: "refeições", value: 1 },
+    { name: "trabalho/estudo", value: 2 },
+    { name: "cotidiano", value: 3 },
+    { name: "transporte", value: 4 },
+    { name: "reunião", value: 5 },
+    { name: "outro", value: 6 },
+  ];
+
+  const recurrenceOp = [
+    { name: "-", value: "-" },
+    { name: "Diário", value: "diario" },
+    { name: "Semanal", value: "semanal" },
+    { name: "Mensal", value: "mensal" },
+  ];
+
+  const durationOp = [
+    { name: "5min", value: 5 },
+    { name: "15min", value: 15 },
+    { name: "30min", value: 30 },
+    { name: "1 hora", value: 60 },
+    { name: "2 horas", value: 120 },
+    { name: "3 horas", value: 180 },
+    { name: "4 horas", value: 240 },
+  ];
 
   function handleChange(event) {
     setState({ ...state, [event.target.name]: event.target.value });
@@ -75,23 +106,31 @@ function TabEvent() {
     const finalDate = new Date(date + " " + time);
     setState({ ...state, dateTime: finalDate });
   }
+  const handleChangeTime = (newDatetime) => setDatetime(newDatetime);
+
+  const handleChangeDate = (newValue) => setNewDate(newValue);
 
   useEffect(() => {
     dataFormat();
   }, [newDate, datetime]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setErrors({ msg: null });
+  }, [errors]);
+
   async function handleSubmit(event) {
     event.preventDefault();
-    // if (isBefore(state.dateTime, new Date())) {
-    //   return setErrors({
-    //     msg: "Your date has to be after today.",
-    //   });
-    // }
-    // if (!state.name || !state.dateTime || !state.duration || !state.category) {
-    //   return setErrors({
-    //     msg: "You have to fill in: name, date, time and duration to complete.",
-    //   });
-    // }
+    if (isBefore(new Date(state.dateTime), new Date())) {
+      return setErrors({
+        msg: "You cannot create an event for a past date.",
+      });
+    }
+    if (!state.name || !state.dateTime || !state.duration || !state.category) {
+      return setErrors({
+        msg: "You have to fill in: name, date, time and duration to complete.",
+      });
+    }
     try {
       const response = await api.post("/event", state);
       setErrors({ msg: null });
@@ -102,29 +141,14 @@ function TabEvent() {
     }
   }
 
-  const removeBorderInput = {
-    "&:after": {
-      border: "none",
-    },
-    "&:before": {
-      border: "none",
-    },
-    "&:hover:not(.Mui-disabled):before": {
-      border: "none",
-    },
-  };
-
   return (
-    <div>
+    <div style={{ height: "calc(100vh - 144px )", overflow: "scroll" }}>
       {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
       <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
-        <TextField
-          InputProps={{ disableUnderline: true }}
-          sx={{ marginTop: "20px", marginBottom: "40px" }}
-          fullWidth
-          hiddenlabel="true"
-          id="filled-hidden-label-small"
-          placeholder="nome do evento"
+        <FormInput
+          id={`title-name-${state.name}`}
+          multiline={false}
+          title="nome do evento"
           variant="filled"
           size="small"
           name="name"
@@ -134,44 +158,24 @@ function TabEvent() {
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Stack spacing={3}>
-            <Box className={classes.input}>
-              <CategoryOutlinedIcon className={classes.icons} />
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">categoria</InputLabel>
-                <Select
-                  sx={removeBorderInput}
-                  style={{ width: "140px" }}
-                  variant="standard"
-                  id="label-category"
-                  value={state.category}
-                  name="category"
-                  label="categoria"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={0}>lazer</MenuItem>
-                  <MenuItem value={1}>refeições</MenuItem>
-                  <MenuItem value={2}>trabalho/estudo</MenuItem>
-                  <MenuItem value={3}>cotidiano</MenuItem>
-                  <MenuItem value={4}>transporte</MenuItem>
-                  <MenuItem value={5}>reunião</MenuItem>
-                  <MenuItem value={6}>outro</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
+            <FormSelect
+              label="categoria"
+              icon={<CategoryOutlinedIcon className={classes.icons} />}
+              name="category"
+              value={state.category}
+              onChange={handleChange}
+              options={categoryOp}
+            />
             <Box className={classes.input}>
               <ShortTextIcon className={classes.icons} />
-              <TextField
-                InputProps={{ disableUnderline: true }}
-                fullWidth
-                id="input-description"
-                label="descrição"
-                placeholder="descrição"
-                multiline
+              <FormInput
+                id={`title-name-${state.description}`}
+                title="descrição"
                 variant="standard"
                 name="description"
                 value={state.description}
                 onChange={handleChange}
-                maxRows={2}
+                row={2}
               />
             </Box>
             <Box className={classes.input}>
@@ -183,9 +187,7 @@ function TabEvent() {
                 ampm={false}
                 margin="normal"
                 value={datetime}
-                onChange={(newDatetime) => {
-                  setDatetime(newDatetime);
-                }}
+                onChange={handleChangeTime}
                 renderInput={(params) => (
                   <TextField variant="standard" {...params} />
                 )}
@@ -199,9 +201,7 @@ function TabEvent() {
                 inputFormat="dd/MM/yyyy"
                 hiddenlabel="true"
                 value={newDate}
-                onChange={(newValue) => {
-                  setNewDate(newValue);
-                }}
+                onChange={handleChangeDate}
                 renderInput={(params) => (
                   <TextField variant="standard" {...params} />
                 )}
@@ -217,74 +217,25 @@ function TabEvent() {
               variant="standard"
             />
           </Box> */}
-            <Box className={classes.input}>
-              <TimelapseIcon className={classes.icons} />
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">duração</InputLabel>
-                <Select
-                  sx={removeBorderInput}
-                  style={{ width: "140px" }}
-                  variant="standard"
-                  id="notification-alarm"
-                  name="duration"
-                  value={state.duration}
-                  hiddenlabel="true"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={5}>5min </MenuItem>
-                  <MenuItem value={15}>15min </MenuItem>
-                  <MenuItem value={30}>30min </MenuItem>
-                  <MenuItem value={60}>1 hora </MenuItem>
-                  <MenuItem value={120}>2 horas </MenuItem>
-                  <MenuItem value={180}>3 horas </MenuItem>
-                  <MenuItem value={240}>4 horas </MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <Box className={classes.input}>
-              <NotificationsNoneIcon className={classes.icons} />
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">lembrete</InputLabel>
-                <Select
-                  sx={removeBorderInput}
-                  style={{
-                    width: "140px",
-                  }}
-                  variant="standard"
-                  labelId="notification"
-                  id="notification-alarm"
-                  name="timeReminder"
-                  value={state.timeReminder}
-                  hiddenlabel="true"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={0}>-</MenuItem>
-                  <MenuItem value={5}>5min antes</MenuItem>
-                  <MenuItem value={10}>10min antes</MenuItem>
-                  <MenuItem value={30}>30min antes</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
+            <FormSelect
+              label="duração"
+              icon={<TimelapseIcon className={classes.icons} />}
+              name="duration"
+              value={state.duration}
+              onChange={handleChange}
+              options={durationOp}
+            />
+            <FormSelect
+              label="lembrete"
+              icon={<NotificationsNoneIcon className={classes.icons} />}
+              name="timeReminder"
+              value={state.timeReminder}
+              onChange={handleChange}
+              options={alarmOp}
+            />
           </Stack>
         </LocalizationProvider>
-        <div className={classes.divButton}>
-          <Button
-            className={classes.buttonStyle}
-            sx={{
-              width: "197px",
-              height: "42px",
-              borderRadius: "100px",
-              backgroundColor: state.name && state.date ? "#32747F" : "#CDD4DB",
-              padding: "10px",
-              textTransform: "unset",
-            }}
-            variant="contained"
-            type="submit"
-            endIcon={<PlayArrowOutlinedIcon />}
-          >
-            Criar evento
-          </Button>
-        </div>
+        <FormButtonCreate state={state} title="Criar evento" />
       </Box>
     </div>
   );
