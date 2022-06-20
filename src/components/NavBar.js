@@ -14,41 +14,43 @@ function NavBar() {
     <div>
       <Box
         // sx={{
-        //   display: "flex",
         //   height: "75.63px",
         //   width: "100%",
-        //   justifyContent: "space-around",
+        //   alignItems: "center",
         //   top: "calc(100vh - 76px )",
         //   position: "absolute",
+        //   bottom: 0,
         // }}
         sx={{
           width: "100%",
-          // position: "absolute",
+          height: "75.63px",
+          position: "absolute",
           margin: 0,
           bottom: 0,
+          display: "block",
         }}
       >
         <BottomNavigation
-          // style={{ color: "#ADB7C2" }}
+          style={{ color: "#ADB7C2" }}
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
         >
           <BottomNavigationAction
-            // style={{ color: "#ADB7C2" }}
+            style={{ color: "#ADB7C2" }}
             component={Link}
             to="/home"
             icon={<HomeOutlinedIcon />}
           />
           <BottomNavigationAction
-            // style={{ color: "#ADB7C2" }}
+            style={{ color: "#ADB7C2" }}
             component={Link}
             to="/create"
             icon={<AddCircleOutlineOutlinedIcon />}
           />
           <BottomNavigationAction
-            // style={{ color: "#ADB7C2" }}
+            style={{ color: "#ADB7C2" }}
             component={Link}
             to={`/userprofile/${loggedInUser.user._id}`}
             icon={<PermIdentityOutlinedIcon />}

@@ -30,14 +30,20 @@ function FormSelect(props) {
             width: "140px",
           }}
           variant="standard"
-          labelId={name}
+          labelId={label}
           id={name}
           value={value}
-          label={name}
+          label={label}
+          name={name}
           onChange={onChange}
         >
           {options.map((option) => (
-            <MenuItem value={option}>{option}</MenuItem>
+            <MenuItem
+              key={`${option.name}-${option.value}`}
+              value={option.value}
+            >
+              {option.name}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>

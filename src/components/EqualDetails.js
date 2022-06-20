@@ -4,7 +4,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -12,6 +12,12 @@ import RestaurantOutlinedIcon from "@mui/icons-material/RestaurantOutlined";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import AlarmOnOutlinedIcon from "@mui/icons-material/AlarmOnOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
+import ShortTextIcon from "@mui/icons-material/ShortText";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import LoopIcon from "@mui/icons-material/Loop";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import TimelapseIcon from "@mui/icons-material/Timelapse";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
 import { format } from "date-fns";
 
@@ -72,39 +78,35 @@ function EqualDetails(props) {
           }}
         >
           <div style={iconsStyle}> {catIcon} </div>
-          <div> {props.name}</div>
+          <Typography> {props.name}</Typography>
         </div>
       </div>
 
-      <div style={informationsStyle}>
-        <DescriptionOutlinedIcon style={iconsStyle}></DescriptionOutlinedIcon>
+      <Typography style={informationsStyle}>
+        <ShortTextIcon style={iconsStyle}></ShortTextIcon>
         {props.description}
-      </div>
+      </Typography>
 
-      <div style={informationsStyle}>
+      <Typography style={informationsStyle}>
         <AccessTimeIcon style={iconsStyle}></AccessTimeIcon>
         {format(new Date(props.dateTime), `HH:mm`)}
-      </div>
+      </Typography>
 
-      <div style={informationsStyle}>
-        <CalendarMonthOutlinedIcon
-          style={iconsStyle}
-        ></CalendarMonthOutlinedIcon>
+      <Typography style={informationsStyle}>
+        <CalendarMonthIcon style={iconsStyle}></CalendarMonthIcon>
         {format(new Date(props.dateTime), `dd/MM/yyyy`)}
-      </div>
+      </Typography>
 
-      <div style={informationsStyle}>
-        <NotificationsNoneOutlinedIcon
-          style={iconsStyle}
-        ></NotificationsNoneOutlinedIcon>
+      <Typography style={informationsStyle}>
+        <TimelapseIcon style={iconsStyle}></TimelapseIcon>
         {props.duration} min
-      </div>
+      </Typography>
 
       {props.timeReminder > 0 ? (
-        <div style={informationsStyle}>
-          <VolumeUpOutlinedIcon style={iconsStyle}></VolumeUpOutlinedIcon>
+        <Typography style={informationsStyle}>
+          <NotificationsNoneIcon style={iconsStyle}></NotificationsNoneIcon>
           {props.timeReminder} min antes
-        </div>
+        </Typography>
       ) : (
         ""
       )}

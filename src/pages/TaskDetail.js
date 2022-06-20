@@ -124,7 +124,7 @@ function TaskDetail() {
                   textTransform: "unset",
                 }}
                 variant="contained"
-                href=""
+                href={`/updatetask/${_id}`}
               >
                 Editar
               </Button>

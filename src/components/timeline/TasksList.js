@@ -1,21 +1,9 @@
 import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { format, minutesToHours, addMinutes } from "date-fns";
 
 import EachTask from "./eachTask";
-import { Typography } from "@mui/material";
-import {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineOppositeContent,
-  TimelineDot,
-} from "@mui/lab";
+import { Timeline } from "@mui/lab";
 
-import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -45,7 +33,7 @@ function TasksList(props) {
         main: "#EBEDF1",
       },
       success: {
-        main: "#3DC6C9",
+        main: "#67A12D",
       },
       error: {
         main: "#E29478",
@@ -103,7 +91,7 @@ function TasksList(props) {
       <Timeline
         style={{
           backgroundColor: "#EDE7E0CC",
-          height: "calc(95vh - 213px )",
+          height: "calc(95vh - 238px )",
           marginTop: "30px",
           marginBottom: 0,
           overflow: "scroll",
@@ -111,7 +99,7 @@ function TasksList(props) {
         align="left"
       >
         {props.all.map((element) => {
-          const { _id, name, dateTime, duration, category } = element;
+          const { _id, name, dateTime, duration, category, inviteId } = element;
           const startTime = formatTime(dateTime);
           const end = addMinutes(new Date(dateTime), duration);
           const endTime = formatTime(end);
@@ -122,7 +110,7 @@ function TasksList(props) {
               key={_id}
               time={startTime}
               colorDot={catColor}
-              link={`/task/${_id}`}
+              link={inviteId ? `/event/${_id}` : `/task/${_id}`}
               icon={catIcon}
               taskName={name}
               timeEnd={endTime}

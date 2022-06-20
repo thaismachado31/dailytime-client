@@ -1,18 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import InviteList from "../components/InviteList";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import api from "../apis/api";
-import {
-  lastDayOfWeek,
-  startOfWeek,
-  eachDayOfInterval,
-  format,
-} from "date-fns";
-import MyInvites from "../components/MyInvites";
-import DayComponent from "../components/weekbar/DayComponent";
 import WeekBar from "../components/weekbar/WeekBar";
-import DayTimeline from "../components/timeline/DayTimeline";
 
 function SecondHome() {
   const theme = createTheme({
