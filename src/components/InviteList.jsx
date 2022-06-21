@@ -141,7 +141,7 @@ const InviteList = (props) => {
                 />
 
                 {(loggedInUser.user.email === email ||
-                  loggedInUser.user._id === eventId.createdBy) && (
+                  loggedInUser.user._id === eventId.userId) && (
                   <Box sx={buttonBoxCss}>
                     {!confirmacao && (
                       <Button
