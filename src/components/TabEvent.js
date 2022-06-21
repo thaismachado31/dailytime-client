@@ -114,11 +114,6 @@ function TabEvent() {
     dataFormat();
   }, [newDate, datetime]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setErrors({ msg: null });
-  }, [errors]);
-
   async function handleSubmit(event) {
     event.preventDefault();
     if (isBefore(new Date(state.dateTime), new Date())) {
