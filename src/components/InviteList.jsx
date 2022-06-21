@@ -113,7 +113,7 @@ const InviteList = (props) => {
               <ListItem sx={listItemCss}>
                 <ListItemText
                   primary={
-                    <Link to={`/eventDetail/${eventId._id}`}>
+                    <Link to={`/event/${eventId._id}`}>
                       <Typography
                         variant="h5"
                         color="text.primary"
@@ -141,7 +141,7 @@ const InviteList = (props) => {
                 />
 
                 {(loggedInUser.user.email === email ||
-                  loggedInUser.user._id === eventId.createdBy) && (
+                  loggedInUser.user._id === eventId.userId) && (
                   <Box sx={buttonBoxCss}>
                     {!confirmacao && (
                       <Button
