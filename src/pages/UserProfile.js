@@ -227,7 +227,7 @@ function EventDetail() {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
-    height: "calc(100vh - 124px )",
+    height: "calc(100vh - 125px )",
   };
 
   return (
@@ -278,13 +278,23 @@ function EventDetail() {
       <Box style={mainDiv}>
         <ThemeProvider theme={theme}>
           <div style={titlePositionCss}>
-            <img
-              style={{ width: "150px", height: "150px", borderRadius: "100%" }}
-              src={state.profilePicture}
-            />
-            <Button onClick={context.handleLogout}>
-              <Typography variant="h6">Logout</Typography>
-            </Button>
+            <label htmlFor="contained-button-file">
+              <img
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  borderRadius: "100%",
+                }}
+                src={state.profilePicture}
+              />
+              <input
+                style={{ display: "none" }}
+                id="contained-button-file"
+                type="file"
+                name="picture"
+                onChange={handleChange}
+              />
+            </label>
           </div>
           {componentToRender === 1 ? (
             <MyInvites title="Meus Convites" height="50" route="/myinvites" />
@@ -333,22 +343,15 @@ function EventDetail() {
                 <Button variant="contained" style={buttonCss} type="submit">
                   Atualizar
                 </Button>
-                <label htmlFor="contained-button-file">
-                  <input
-                    style={{ display: "none" }}
-                    id="contained-button-file"
-                    type="file"
-                    name="picture"
-                    onChange={handleChange}
-                  />
-                  <Button
-                    variant="contained"
-                    component="span"
-                    style={buttonCss}
-                  >
-                    Upload image
-                  </Button>
-                </label>
+
+                <Button
+                  variant="contained"
+                  component="span"
+                  style={buttonCss}
+                  onClick={context.handleLogout}
+                >
+                  Logout
+                </Button>
               </Stack>
             </Box>
           )}

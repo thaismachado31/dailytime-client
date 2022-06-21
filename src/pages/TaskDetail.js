@@ -111,6 +111,7 @@ function TaskDetail() {
               dateTime={task.dateTime}
               duration={task.duration}
               timeReminder={task.timeReminder}
+              category={task.category}
             />
 
             <Stack justifyContent="center" direction="row" spacing={2} mt={3}>

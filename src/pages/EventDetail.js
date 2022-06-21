@@ -25,9 +25,10 @@ function EventDetail() {
     reminder: "",
     timeReminder: 0,
     address: "",
-    invites: {},
+    invites: [],
   });
 
+  const { invites } = event;
   const { _id } = useParams();
   const { loggedInUser } = useContext(AuthContext);
 
@@ -48,6 +49,12 @@ function EventDetail() {
 
   function isOwner() {
     return event.userId === loggedInUser.user._id;
+  }
+
+  function isInvited() {
+    return invites.some((el) => {
+      return el.email === loggedInUser.user.email;
+    });
   }
 
   const theme = createTheme({
@@ -103,9 +110,9 @@ function EventDetail() {
   });
 
   return (
-    <div>
+    <div style={{ height: "90vh", overflow: "scroll" }}>
       <ThemeProvider theme={theme}>
-        {isOwner() && (
+        {(isOwner() || isInvited()) && (
           <div>
             <EqualDetails
               key={event._id}
@@ -114,6 +121,7 @@ function EventDetail() {
               dateTime={event.dateTime}
               duration={event.duration}
               timeReminder={event.timeReminder}
+              category={event.category}
             />
             <CreateInvite eventId={_id} />
             <MyInvites
