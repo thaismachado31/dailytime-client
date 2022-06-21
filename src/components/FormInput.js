@@ -2,12 +2,23 @@ import React from "react";
 import { TextField } from "@mui/material";
 
 function FormInput(props) {
-  const { id, title, multiline, variant, name, value, onChange, size, row } =
-    props;
+  const {
+    id,
+    title,
+    multiline,
+    variant,
+    name,
+    value,
+    onChange,
+    size,
+    row,
+    marginTop,
+    marginBottom,
+  } = props;
   return (
     <TextField
       InputProps={{ disableUnderline: true }}
-      sx={{ marginTop: "20px", marginBottom: "20px" }}
+      sx={{ marginTop: { marginTop }, marginBottom: { marginBottom } }}
       fullWidth
       hiddenlabel="true"
       id={id}

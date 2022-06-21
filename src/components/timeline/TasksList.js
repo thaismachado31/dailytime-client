@@ -99,7 +99,7 @@ function TasksList(props) {
         align="left"
       >
         {props.all.map((element) => {
-          const { _id, name, dateTime, duration, category, inviteId } = element;
+          const { _id, name, dateTime, duration, category, invites } = element;
           const startTime = formatTime(dateTime);
           const end = addMinutes(new Date(dateTime), duration);
           const endTime = formatTime(end);
@@ -110,7 +110,7 @@ function TasksList(props) {
               key={_id}
               time={startTime}
               colorDot={catColor}
-              link={inviteId ? `/event/${_id}` : `/task/${_id}`}
+              link={invites ? `/event/${_id}` : `/task/${_id}`}
               icon={catIcon}
               taskName={name}
               timeEnd={endTime}
