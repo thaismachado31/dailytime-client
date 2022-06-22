@@ -131,36 +131,38 @@ function EventDetail() {
               route={`/myinvites/${_id}`}
               isAnEvent={true}
             />
-            <Stack justifyContent="center" direction="row" spacing={2} mt={5}>
-              <Button
-                sx={{
-                  width: "10rem",
-                  height: "2.7rem",
-                  borderRadius: "100px",
-                  backgroundColor: "#32747F",
-                  padding: "10px",
-                  textTransform: "unset",
-                }}
-                variant="contained"
-                href={`/updateevent/${_id}`}
-              >
-                Editar
-              </Button>
-              <Button
-                sx={{
-                  width: "10rem",
-                  height: "2.7rem",
-                  borderRadius: "100px",
-                  padding: "10px",
-                  textTransform: "unset",
-                }}
-                variant="contained"
-                href={`/eventdelete/${_id}`}
-                color="error"
-              >
-                Deletar
-              </Button>
-            </Stack>
+            {isOwner() && (
+              <Stack justifyContent="center" direction="row" spacing={2} mt={5}>
+                <Button
+                  sx={{
+                    width: "10rem",
+                    height: "2.7rem",
+                    borderRadius: "100px",
+                    backgroundColor: "#32747F",
+                    padding: "10px",
+                    textTransform: "unset",
+                  }}
+                  variant="contained"
+                  href={`/updateevent/${_id}`}
+                >
+                  Editar
+                </Button>
+                <Button
+                  sx={{
+                    width: "10rem",
+                    height: "2.7rem",
+                    borderRadius: "100px",
+                    padding: "10px",
+                    textTransform: "unset",
+                  }}
+                  variant="contained"
+                  href={`/eventdelete/${_id}`}
+                  color="error"
+                >
+                  Deletar
+                </Button>
+              </Stack>
+            )}
           </div>
         )}
       </ThemeProvider>
