@@ -3,7 +3,7 @@ import { isExpired } from "react-jwt";
 
 const apis = {
   development: "http://localhost:4000",
-  production: "A URL DO SEU SERVIDOR DEPLOYADO NO HEROKU AQUI",
+  production: "https://testedailyapi.herokuapp.com/",
 };
 
 // Pré-configurando a URL padrão do nosso backend em uma instância do Axios
