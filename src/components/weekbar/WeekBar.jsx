@@ -59,7 +59,10 @@ const WeekBar = () => {
   return (
     <div>
       <Box>
-        <Typography variant="h5" style={{ color: "#32747F" }}>
+        <Typography
+          variant="h5"
+          style={{ color: "#32747F", height: "32.02px" }}
+        >
           {selectedDay}
         </Typography>
         <Box style={weekbuttonsCss}>

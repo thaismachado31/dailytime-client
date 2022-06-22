@@ -130,16 +130,16 @@ function TabTask() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (isBefore(new Date(state.dateTime), new Date())) {
-      return setErrors({
-        msg: "Your date has to be after today.",
-      });
-    }
-    if (!state.name || !state.duration || !state.category) {
-      return setErrors({
-        msg: "You have to fill in: name, category and duration to complete.",
-      });
-    }
+    // if (isBefore(new Date(state.dateTime), new Date())) {
+    //   return setErrors({
+    //     msg: "Your date has to be after today.",
+    //   });
+    // }
+    // if (!state.name || !state.duration || !state.category) {
+    //   return setErrors({
+    //     msg: "You have to fill in: name, category and duration to complete.",
+    //   });
+    // }
     try {
       const response = await api.post("/newtask", state);
       console.log(response);

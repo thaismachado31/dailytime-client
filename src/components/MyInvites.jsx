@@ -50,6 +50,7 @@ const MyInvites = (props) => {
       style={{ height: `${height}vh`, overflow: `auto` }}
     >
       <InviteList
+        isAnEvent={props.isAnEvent}
         list={invites}
         title={" " || "My Invites"}
         functions={{ deleteInvite, acceptInvite }}
