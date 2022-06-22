@@ -26,11 +26,16 @@ const DayComponent = (props) => {
       console.error(error);
     }
   }
-
   useEffect(() => {
     getTask();
   }, []);
-  getTask();
+
+  useEffect(() => {
+    getTask();
+  }, [day]);
+
+  // getTask();
+
   const theme = createTheme({
     typography: {
       fontFamily: [

@@ -123,11 +123,13 @@ function EventDetail() {
               timeReminder={event.timeReminder}
               category={event.category}
             />
-            <CreateInvite eventId={_id} />
+            {isOwner() && <CreateInvite eventId={_id} />}
+
             <MyInvites
               title="Convites do Evento"
               height="30"
-              route={`/eventinvites/${_id}`}
+              route={`/myinvites/${_id}`}
+              isAnEvent={true}
             />
             {isOwner() && (
               <Stack justifyContent="center" direction="row" spacing={2} mt={5}>

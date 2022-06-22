@@ -79,13 +79,6 @@ function TabEvent() {
     { name: "outro", value: 6 },
   ];
 
-  const recurrenceOp = [
-    { name: "-", value: "-" },
-    { name: "Diário", value: "diario" },
-    { name: "Semanal", value: "semanal" },
-    { name: "Mensal", value: "mensal" },
-  ];
-
   const durationOp = [
     { name: "5min", value: 5 },
     { name: "15min", value: 15 },
@@ -137,7 +130,14 @@ function TabEvent() {
   }
 
   return (
-    <div style={{ height: "calc(100vh - 144px )", overflow: "scroll" }}>
+    <div
+      style={{
+        height: "calc(100vh - 144px )",
+        marginLeft: "20px",
+        marginRight: "20px",
+        overflow: "scroll",
+      }}
+    >
       {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
       <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
         <FormInput
@@ -147,6 +147,8 @@ function TabEvent() {
           variant="filled"
           size="small"
           name="name"
+          marginTop="20px"
+          marginBottom="20px"
           value={state.name}
           onChange={handleChange}
         />

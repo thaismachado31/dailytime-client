@@ -32,7 +32,7 @@ import api from "../apis/api";
 import { useNavigate } from "react-router-dom";
 
 import useStyles from "../styles/styles";
-import { lightFormat, isBefore } from "date-fns";
+import { lightFormat, isBefore, getDay, addWeeks } from "date-fns";
 import FormSelect from "./FormSelect";
 import FormInput from "./FormInput";
 import FormButtonCreate from "./FormButtonCreate";
@@ -72,9 +72,9 @@ function TabTask() {
 
   const recurrenceOp = [
     { name: "-", value: "-" },
-    { name: "Diário", value: "diario" },
-    { name: "Semanal", value: "semanal" },
-    { name: "Mensal", value: "mensal" },
+    { name: "Diário", value: "daily" },
+    { name: "Semanal", value: "weekly" },
+    { name: "Mensal", value: "monthly" },
   ];
 
   const durationOp = [
@@ -111,22 +111,35 @@ function TabTask() {
     setState({ ...state, dateTime: finalDate });
   }
 
+  function dailyRecurrency() {
+    if (state.recurrence === "daily") {
+      getDay(state.dateTime);
+    }
+  }
+
+  function weeklyRecurrency() {
+    if (state.recurrence === "weekly") {
+      addWeeks(state.dateTime, 1);
+      getDay(state.dateTime);
+    }
+  }
+
   useEffect(() => {
     dataFormat();
   }, [newDate, datetime]);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (isBefore(new Date(state.dateTime), new Date())) {
-      return setErrors({
-        msg: "Your date has to be after today.",
-      });
-    }
-    if (!state.name || !state.dateTime || !state.duration || !state.category) {
-      return setErrors({
-        msg: "You have to fill in: name, date, time and duration to complete.",
-      });
-    }
+    // if (isBefore(new Date(state.dateTime), new Date())) {
+    //   return setErrors({
+    //     msg: "Your date has to be after today.",
+    //   });
+    // }
+    // if (!state.name || !state.duration || !state.category) {
+    //   return setErrors({
+    //     msg: "You have to fill in: name, category and duration to complete.",
+    //   });
+    // }
     try {
       const response = await api.post("/newtask", state);
       console.log(response);
@@ -151,7 +164,14 @@ function TabTask() {
   };
   console.log(state);
   return (
-    <div style={{ height: "calc(100vh - 144px )", overflow: "scroll" }}>
+    <div
+      style={{
+        height: "calc(100vh - 144px )",
+        marginLeft: "20px",
+        marginRight: "20px",
+        overflow: "scroll",
+      }}
+    >
       {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
 
       <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
@@ -162,6 +182,8 @@ function TabTask() {
           variant="filled"
           size="small"
           name="name"
+          marginTop="20px"
+          marginBottom="20px"
           value={state.name}
           onChange={handleChange}
         />

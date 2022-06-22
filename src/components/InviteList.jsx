@@ -113,15 +113,19 @@ const InviteList = (props) => {
               <ListItem sx={listItemCss}>
                 <ListItemText
                   primary={
-                    <Link to={`/event/${eventId._id}`}>
-                      <Typography
-                        variant="h5"
-                        color="text.primary"
-                        sx={{ textDecoration: "underline", color: "#32747F" }}
-                      >
-                        {eventId.name}
-                      </Typography>
-                    </Link>
+                    props.isAnEvent ? (
+                      ""
+                    ) : (
+                      <Link to={`/event/${eventId._id}`}>
+                        <Typography
+                          variant="h5"
+                          color="text.primary"
+                          sx={{ textDecoration: "underline", color: "#32747F" }}
+                        >
+                          {eventId.name}
+                        </Typography>
+                      </Link>
+                    )
                   }
                   secondary={
                     <React.Fragment>
@@ -143,7 +147,7 @@ const InviteList = (props) => {
                 {(loggedInUser.user.email === email ||
                   loggedInUser.user._id === eventId.userId) && (
                   <Box sx={buttonBoxCss}>
-                    {!confirmacao && (
+                    {!confirmacao && loggedInUser.user.email === email && (
                       <Button
                         sx={buttonCss}
                         onClick={() => {

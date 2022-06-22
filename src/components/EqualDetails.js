@@ -56,7 +56,7 @@ function EqualDetails(props) {
           justifyContent: "space-around",
         }}
       >
-        <Typography x={{ fontSize: "15px" }}>DETALHES: </Typography>
+        <Typography x={{ fontSize: "15px" }}>Detalhes: </Typography>
       </h4>
       <div
         style={{
@@ -80,11 +80,14 @@ function EqualDetails(props) {
           <Typography sx={{ fontSize: "17px" }}> {props.name}</Typography>
         </div>
       </div>
-
-      <Typography style={informationsStyle}>
-        <ShortTextIcon style={iconsStyle}></ShortTextIcon>
-        {props.description}
-      </Typography>
+      {props.description ? (
+        <Typography style={informationsStyle}>
+          <ShortTextIcon style={iconsStyle}></ShortTextIcon>
+          {props.description}
+        </Typography>
+      ) : (
+        ""
+      )}
 
       <Typography style={informationsStyle}>
         <AccessTimeIcon style={iconsStyle}></AccessTimeIcon>
