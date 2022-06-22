@@ -1,17 +1,7 @@
 import * as React from "react";
 
 import { useState, useEffect } from "react";
-import {
-  TextField,
-  Box,
-  Button,
-  Stack,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  Select,
-  Alert,
-} from "@mui/material";
+import { TextField, Box, Stack, Alert } from "@mui/material";
 
 import {
   TimePicker,
@@ -32,7 +22,7 @@ import api from "../apis/api";
 import { useNavigate } from "react-router-dom";
 
 import useStyles from "../styles/styles";
-import { lightFormat, isBefore, getDay, addWeeks } from "date-fns";
+import { lightFormat } from "date-fns";
 import FormSelect from "./FormSelect";
 import FormInput from "./FormInput";
 import FormButtonCreate from "./FormButtonCreate";
@@ -111,18 +101,18 @@ function TabTask() {
     setState({ ...state, dateTime: finalDate });
   }
 
-  function dailyRecurrency() {
-    if (state.recurrence === "daily") {
-      getDay(state.dateTime);
-    }
-  }
+  // function dailyRecurrency() {
+  //   if (state.recurrence === "daily") {
+  //     getDay(state.dateTime);
+  //   }
+  // }
 
-  function weeklyRecurrency() {
-    if (state.recurrence === "weekly") {
-      addWeeks(state.dateTime, 1);
-      getDay(state.dateTime);
-    }
-  }
+  // function weeklyRecurrency() {
+  //   if (state.recurrence === "weekly") {
+  //     addWeeks(state.dateTime, 1);
+  //     getDay(state.dateTime);
+  //   }
+  // }
 
   useEffect(() => {
     dataFormat();
@@ -151,18 +141,6 @@ function TabTask() {
     }
   }
 
-  const removeBorderInput = {
-    "&:after": {
-      border: "none",
-    },
-    "&::before": {
-      border: "none",
-    },
-    "&:hover:not(.Mui-disabled):before": {
-      border: "none",
-    },
-  };
-  console.log(state);
   return (
     <div
       style={{

@@ -8,7 +8,7 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { AuthContext } from "../contexts/authContext";
 function NavBar() {
   const [value, setValue] = useState(0);
-  const { loggedInUser, loading } = useContext(AuthContext);
+  const { loggedInUser } = useContext(AuthContext);
 
   return (
     <div>

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { isToday } from "date-fns";
-import { startOfDay, useId } from "react";
 import api from "../../apis/api";
 
 const DayComponent = (props) => {

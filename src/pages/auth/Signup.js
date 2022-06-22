@@ -4,22 +4,19 @@ import {
   Typography,
   Box,
   Button,
-  Divider,
   Checkbox,
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import KeyIcon from "@mui/icons-material/Key";
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../../apis/api";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import { AuthContext } from "../../contexts/authContext";
 import Alert from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Login(props) {
-  const authContext = useContext(AuthContext);
   const [state, setState] = useState({ password: "", email: "", name: "" });
   const [checkbox, setCheckbox] = useState(false);
   const [errors, setErrors] = useState({
@@ -44,9 +41,6 @@ function Login(props) {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const from = location.state?.from?.pathname || "/";
 
   function handleChange(event) {
     setState({
@@ -64,6 +58,7 @@ function Login(props) {
 
     try {
       const response = await api.post("/signup", state);
+      console.log(response);
       setErrors({ msg: null });
       navigate("/login");
     } catch (err) {
@@ -102,16 +97,6 @@ function Login(props) {
     "&:hover:not(.Mui-disabled):before": {
       border: "none",
     },
-  };
-
-  const linkSenhaCss = {
-    width: "198px",
-    height: "15px",
-    marginTop: "5px",
-    textAlign: "center",
-    fontSize: "12px",
-    color: "#333D49",
-    textDecoration: "none",
   };
 
   const buttonCss = {

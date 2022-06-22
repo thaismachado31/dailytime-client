@@ -2,13 +2,10 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Typography from "@mui/material/Typography";
 import React, { useContext } from "react";
-import EventDetail from "../pages/EventDetail";
 import { Backdrop, Box, Button, Fade, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
-import api from "../apis/api";
 import { useState } from "react";
 import { AuthContext } from "../contexts/authContext";
 
@@ -105,7 +102,7 @@ const InviteList = (props) => {
 
         {props.list?.map((element) => {
           const { _id, eventId, userId, confirmacao, email } = element;
-          const { deleteInvite, acceptInvite } = props.functions;
+          const { acceptInvite } = props.functions;
 
           console.log(eventId.createdBy);
           return (

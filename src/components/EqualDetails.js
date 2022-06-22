@@ -1,10 +1,6 @@
 import * as React from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
-import { Button, Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -14,10 +10,8 @@ import AlarmOnOutlinedIcon from "@mui/icons-material/AlarmOnOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import ShortTextIcon from "@mui/icons-material/ShortText";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import LoopIcon from "@mui/icons-material/Loop";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
-import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
 import { format } from "date-fns";
 
