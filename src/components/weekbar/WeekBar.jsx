@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import api from "../../apis/api";
 import DayComponent from "./DayComponent";
 import DayTimeline from "../timeline/DayTimeline";
-import TasksList from "../timeline/TasksList";
 
 import {
   lastDayOfWeek,
   startOfWeek,
   eachDayOfInterval,
-  format,
   isToday,
 } from "date-fns";
 import { Box, Button, Typography } from "@mui/material";
@@ -95,7 +92,7 @@ const WeekBar = () => {
         >
           {daysOfCurrentWeek.map((date, index) => {
             return (
-              <div>
+              <div key={`${index}-${date}`}>
                 <DayComponent
                   key={index}
                   day={date}

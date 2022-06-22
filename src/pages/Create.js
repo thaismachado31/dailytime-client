@@ -90,7 +90,6 @@ function Create() {
                 backgroundColor: "#83C5BE",
               },
             }}
-            textColor="#32747F"
             value={state}
             onChange={handleChange}
             aria-label="tarefas ou eventos"

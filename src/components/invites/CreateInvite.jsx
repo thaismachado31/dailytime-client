@@ -9,13 +9,14 @@ const CreateInvite = (props) => {
   async function handleInvite(eventId) {
     try {
       const response = api.post(`/newinvite`, { email, eventId });
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   }
 
   function handleChange({ target }) {
-    const { name, value } = target;
+    const { value } = target;
 
     setEmail(value);
   }

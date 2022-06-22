@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import InviteList from "../components/InviteList";
 import api from "../apis/api";
 
-import { Box, Input, Button } from "@mui/material";
-import CreateInvite from "./invites/CreateInvite";
-
 const MyInvites = (props) => {
   const [invites, setInvites] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const { title, height } = props;
+  const { height } = props;
 
   async function getInvites() {
     try {
@@ -23,6 +20,7 @@ const MyInvites = (props) => {
   const deleteInvite = async (_id) => {
     try {
       const response = await api.delete(`/invite/${_id}`);
+      console.log(response);
       setRefresh(!refresh);
     } catch (error) {
       console.error(error);
@@ -32,6 +30,7 @@ const MyInvites = (props) => {
   const acceptInvite = async (_id) => {
     try {
       const response = await api.patch(`/invite/${_id}`, { confirmacao: true });
+      console.log(response);
       setRefresh(!refresh);
     } catch (error) {
       console.error(error);
@@ -41,8 +40,6 @@ const MyInvites = (props) => {
   useEffect(() => {
     getInvites();
   }, [refresh]);
-
-  console.log(invites);
 
   return (
     <div

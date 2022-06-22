@@ -6,7 +6,6 @@ import WorkerBuilder from "../../assets/workers/workerBuilder";
 import workerNotification from "../../assets/workers/worker-notification";
 import api from "../../apis/api";
 import Alert from "@mui/material/Alert";
-import { startOfDay } from "date-fns";
 
 const instance = new WorkerBuilder(workerNotification);
 

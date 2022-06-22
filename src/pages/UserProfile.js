@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import {
   Input,
   InputAdornment,
@@ -8,7 +7,6 @@ import {
   Tabs,
   Tab,
   Stack,
-  Typography,
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import KeyIcon from "@mui/icons-material/Key";
@@ -19,7 +17,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyInvites from "../components/MyInvites";
 import useStyles from "../styles/styles";
 import { AuthContext } from "../contexts/authContext";
-import CreateInvite from "../components/invites/CreateInvite";
 
 function EventDetail() {
   const [state, setState] = useState({
@@ -187,31 +184,12 @@ function EventDetail() {
     },
   };
 
-  const linkSenhaCss = {
-    width: "198px",
-    height: "15px",
-    marginTop: "5px",
-    textAlign: "center",
-    fontSize: "12px",
-    color: "#333D49",
-    textDecoration: "none",
-  };
-
   const buttonCss = {
     width: "142px",
     height: "41px",
     borderRadius: "100px",
     backgroundColor: "#32747F",
     color: "white",
-  };
-
-  const linkRegistroCss = {
-    width: "228px",
-    height: "15px",
-    textAlign: "center",
-    fontSize: "14px",
-    color: "#516274",
-    textDecoration: "none",
   };
 
   const formCss = {
