@@ -190,6 +190,7 @@ function EventDetail() {
     borderRadius: "100px",
     backgroundColor: "#32747F",
     color: "white",
+    textTransform: "unset",
   };
 
   const formCss = {
@@ -198,6 +199,7 @@ function EventDetail() {
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
+    overflow: "scroll",
   };
 
   const mainDiv = {
@@ -206,6 +208,7 @@ function EventDetail() {
     alignItems: "center",
     justifyContent: "space-around",
     height: "calc(100vh - 125px )",
+    overflow: "scroll",
   };
 
   return (

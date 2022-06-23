@@ -1,31 +1,16 @@
-![logo_ironhack_blue 7](https://user-images.githubusercontent.com/23629340/40541063-a07a0a8a-601a-11e8-91b5-2f13e4e6b441.png)
+!["/public/logoDailytime.png] Daily Time
 
-# React IronPlate
+## Português
 
-Esse boilerplate já inclui:
+(Scroll down for the English version)
 
-- Pré-configuração do Axios para injeção de cabeçalhos de autenticação e BaseURL
-- Context para armazenar state de usuário logado
-- Forms de Login e Signup
-- Roteamento básico
-- Componente de rota protegida
+Baseado num projeto de UX/UI desenvolvido pela Carolina Caetano da turma de UX/UI da Ironhack.
 
-## Para Começar
+Aplicativo desenvolvido especialmente para pessoas portadoras de Sindrome de Down, com o fim de facilitar a noção de tempo em tarefas e eventos.
 
-- Faça o fork e clone deste repositório
+Navegue pelo aplicativo [daily time](https://daily-time-app.netlify.app/)
 
-## Instalação
+<br>
 
-```shell
-$ npm install
-```
-
-## Deploy no Netlify
-
-1. Faça login no Netlify e selecione seu repositório
-2. Em 'Deploy settings > build command' escreva: CI=false npm run build
-3. Em 'publish directory' escreva: build/
-4. No arquivo `apis/api.js`, preencha a URL do seu servidor Express deployado no objeto `apis`, chave `production`
-5. Adicione a URL do seu app hospedado no Netlify nas variáveis de ambiente do backend no Heroku
-
-Happy coding! 💙
+Projeto desenvolvido para o Bootcamp de Web Development da Ironhack por [André Leal](https://github.com/andreirece) [Bruno Wake](https://github.com/brunowake) e [Thaís Machado](https://github.com/thaismachado31)
+Apresentação: [slides](https://docs.google.com/presentation/d/1hlPxue5IARrPvFwg8_uHHvngdMm_J3pu1Zm7NDVt79o/edit#slide=id.g134a2957081_0_2)
