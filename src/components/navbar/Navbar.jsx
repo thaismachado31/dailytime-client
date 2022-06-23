@@ -16,7 +16,7 @@ const Navbar = () => {
       sx={{
         display: "flex",
         height: "75.63px",
-        width: "390px",
+        width: "100%",
         justifyContent: "space-around",
         top: "calc(100vh - 76px )",
         position: "absolute",
