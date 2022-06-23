@@ -1,8 +1,5 @@
-!["/public/logoDailytime.png] Daily Time
+##Daily Time
 
-## Português
-
-(Scroll down for the English version)
 
 Baseado num projeto de UX/UI desenvolvido pela Carolina Caetano da turma de UX/UI da Ironhack.
 
