@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import NavBar from "../../components/NavBar";
+import NavBar from "../../components/navbar/Navbar";
 import { AuthContext } from "../../contexts/authContext";
 import WorkerBuilder from "../../assets/workers/workerBuilder";
 import workerNotification from "../../assets/workers/worker-notification";

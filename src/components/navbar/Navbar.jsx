@@ -1,12 +1,15 @@
 import { Box } from "@mui/material";
-import OtherHousesOutlinedIcon from "@mui/icons-material/OtherHousesOutlined";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import React from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/authContext";
+import { useContext } from "react";
 
 const Navbar = () => {
+  const { loggedInUser } = useContext(AuthContext);
+
   const boxButtonCss = { width: "22px", height: "22px", mt: "17px" };
   return (
     <Box
@@ -20,22 +23,21 @@ const Navbar = () => {
       }}
     >
       <Box sx={boxButtonCss}>
-        <Link to="/" style={{ color: "#ADB7C2" }}>
-          <OtherHousesOutlinedIcon />
+        <Link to="/home" style={{ color: "#ADB7C2" }}>
+          <HomeOutlinedIcon />
         </Link>
       </Box>
+
       <Box sx={boxButtonCss}>
-        <Link to="/login" style={{ color: "#ADB7C2" }}>
-          <CalendarMonthOutlinedIcon />
-        </Link>
-      </Box>
-      <Box sx={boxButtonCss}>
-        <Link to="/signup" style={{ color: "#ADB7C2" }}>
+        <Link to="/create" style={{ color: "#ADB7C2" }}>
           <AddCircleOutlineOutlinedIcon />
         </Link>
       </Box>
       <Box sx={boxButtonCss}>
-        <Link to="/" style={{ color: "#ADB7C2" }}>
+        <Link
+          to={`/userprofile/${loggedInUser.user._id}`}
+          style={{ color: "#ADB7C2" }}
+        >
           <PersonOutlineOutlinedIcon />
         </Link>
       </Box>

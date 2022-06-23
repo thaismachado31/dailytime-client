@@ -98,16 +98,16 @@ function TabEvent() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (isBefore(new Date(state.dateTime), new Date())) {
-      return setErrors({
-        msg: "You cannot create an event for a past date.",
-      });
-    }
-    if (!state.name || !state.dateTime || !state.duration || !state.category) {
-      return setErrors({
-        msg: "You have to fill in: name, date, time and duration to complete.",
-      });
-    }
+    // if (isBefore(new Date(state.dateTime), new Date())) {
+    //   return setErrors({
+    //     msg: "You cannot create an event for a past date.",
+    //   });
+    // }
+    // if (!state.name || !state.dateTime || !state.duration || !state.category) {
+    //   return setErrors({
+    //     msg: "You have to fill in: name, date, time and duration to complete.",
+    //   });
+    // }
     try {
       const response = await api.post("/event", state);
       setErrors({ msg: null });
