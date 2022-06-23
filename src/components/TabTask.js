@@ -22,7 +22,7 @@ import api from "../apis/api";
 import { useNavigate } from "react-router-dom";
 
 import useStyles from "../styles/styles";
-import { lightFormat } from "date-fns";
+import { lightFormat, isBefore, addDays } from "date-fns";
 import FormSelect from "./FormSelect";
 import FormInput from "./FormInput";
 import FormButtonCreate from "./FormButtonCreate";
@@ -119,10 +119,11 @@ function TabTask() {
   }, [newDate, datetime]);
 
   async function handleSubmit(event) {
+    // setErrors({ msg: null });
     event.preventDefault();
-    // if (isBefore(new Date(state.dateTime), new Date())) {
+    // if (isBefore(addDays(new Date(state.dateTime), 1), new Date())) {
     //   return setErrors({
-    //     msg: "Your date has to be after today.",
+    //     msg: "Your date has to from today forward.",
     //   });
     // }
     // if (!state.name || !state.duration || !state.category) {
