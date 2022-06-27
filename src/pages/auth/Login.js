@@ -59,7 +59,6 @@ function Login(props) {
 
     try {
       const response = await api.post("/login", state);
-      console.log(response);
 
       authContext.setLoggedInUser({ ...response.data });
       localStorage.setItem(
@@ -74,8 +73,7 @@ function Login(props) {
     }
   }
 
-  console.log(errors);
-  // css
+
 
   const titlePositionCss = {
     width: "304px",

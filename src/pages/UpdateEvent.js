@@ -66,9 +66,6 @@ function UpdateEvent() {
     async function eventDetails() {
       try {
         const response = await api.get(`/event/${_id}`);
-
-        console.log(response.data);
-
         setState({ ...response.data });
       } catch (err) {
         console.error(err);
@@ -96,8 +93,6 @@ function UpdateEvent() {
     event.preventDefault();
     try {
       const response = await api.patch(`/event/${_id}`, state);
-      console.log(response);
-
       setErrors({ msg: null });
 
       navigate(`/event/${_id}`);

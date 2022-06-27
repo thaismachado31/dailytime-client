@@ -32,9 +32,6 @@ function TaskDetail() {
     async function taskDetails() {
       try {
         const response = await api.get(`/task/${_id}`);
-
-        console.log(response.data);
-
         setTask({ ...response.data });
       } catch (err) {
         console.error(err);

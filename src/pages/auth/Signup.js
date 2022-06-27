@@ -58,7 +58,6 @@ function Login(props) {
 
     try {
       const response = await api.post("/signup", state);
-      console.log(response);
       setErrors({ msg: null });
       navigate("/login");
     } catch (err) {
@@ -72,8 +71,6 @@ function Login(props) {
     }
   }
 
-  console.log(state);
-  // css
 
   const titlePositionCss = {
     width: "304px",

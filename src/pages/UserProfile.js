@@ -63,8 +63,6 @@ function EventDetail() {
   async function handleFileUpload(file) {
     const formData = new FormData();
     formData.append("picture", file);
-    console.log("entrou handler", formData);
-    console.log("entrou handler file", file);
     const response = await api.post("/upload", formData);
     return response.data;
   }

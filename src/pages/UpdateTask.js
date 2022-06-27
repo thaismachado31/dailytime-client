@@ -64,9 +64,6 @@ function UpdateTask() {
     async function taskDetails() {
       try {
         const response = await api.get(`/task/${_id}`);
-
-        console.log(response.data);
-
         setState({ ...response.data });
       } catch (err) {
         console.error(err);
@@ -94,8 +91,6 @@ function UpdateTask() {
     event.preventDefault();
     try {
       const response = await api.patch(`/task/${_id}`, state);
-      console.log(response);
-
       setErrors({ msg: null });
 
       navigate(`/task/${_id}`);
