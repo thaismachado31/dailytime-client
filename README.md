@@ -16,7 +16,7 @@ Navegue pelo aplicativo [daily time](https://daily-time-app.netlify.app/)
 - [React-router-dom](https://v5.reactrouter.com/) (roteamento virtual de páginas/SPA)
 - [Material UI](https://mui.com/)
 - [Axios](https://axios-http.com/) (requisições http/CRUD)
-- [Date-fns] (https://date-fns.org/) (biblioteca para manipular data)
+- [Date-fns](https://date-fns.org/) (biblioteca para manipular data)
 - [Netlify](https://www.netlify.com/) (plataforma para deploy do aplicativo em React)
 
 ### Features
