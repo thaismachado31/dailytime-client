@@ -14,7 +14,6 @@ const DayComponent = (props) => {
   async function getTask() {
     try {
       const mytasks = await api.get(`/timeline/${day}`);
-      console.log(mytasks.data);
       if (mytasks.data.length === 0) {
         setHasTask(false);
         return;
@@ -32,8 +31,6 @@ const DayComponent = (props) => {
   useEffect(() => {
     getTask();
   }, [day]);
-
-  // getTask();
 
   const theme = createTheme({
     typography: {
@@ -71,8 +68,8 @@ const DayComponent = (props) => {
       functions.selectedDay === portugueseDays[day.getDay()]
         ? "#32747F"
         : isToday(day)
-        ? "#83C5BE"
-        : "white",
+          ? "#83C5BE"
+          : "white",
     borderRadius: "40px",
   };
   return (

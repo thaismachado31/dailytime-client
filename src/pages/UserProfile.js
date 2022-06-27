@@ -212,7 +212,7 @@ function EventDetail() {
   };
 
   return (
-    <Box>
+    <Box style={ {overflow:'scroll '} }>
       {errors.msg && (
         <Alert severity="error" onClose={() => setErrors({ msg: null })}>
           {errors.msg}
@@ -261,6 +261,7 @@ function EventDetail() {
           <div style={titlePositionCss}>
             <label htmlFor="contained-button-file">
               <img
+                loading='lazy'
                 style={{
                   width: "150px",
                   height: "150px",

@@ -12,7 +12,6 @@ function DayTimeline(props) {
 
   async function getTask() {
     try {
-      console.log(date);
       const mytasks = await api.get(
         `/timeline/${date || startOfDay(new Date())}`
       );

@@ -133,7 +133,6 @@ function TabTask() {
     // }
     try {
       const response = await api.post("/newtask", state);
-      console.log(response);
       setErrors({ msg: null });
       navigate(`/task/${response.data._id}`);
     } catch (err) {

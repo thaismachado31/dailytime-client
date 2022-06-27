@@ -9,7 +9,6 @@ const CreateInvite = (props) => {
   async function handleInvite(eventId) {
     try {
       const response = api.post(`/newinvite`, { email, eventId });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +30,6 @@ const CreateInvite = (props) => {
     marginTop: "2rem",
   };
 
-  console.log(email);
   return (
     <Box mt={2} textAlign="center" sx={informationsStyle}>
       <PersonAddAlt1OutlinedIcon

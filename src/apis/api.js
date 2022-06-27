@@ -2,7 +2,7 @@ import axios from "axios";
 import { isExpired } from "react-jwt";
 
 const apis = {
-  development: "http://localhost:4000",
+  development: "https://testedailyapi.herokuapp.com/",
   production: "https://testedailyapi.herokuapp.com/",
 };
 

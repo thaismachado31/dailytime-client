@@ -9,18 +9,14 @@ const MyInvites = (props) => {
 
   async function getInvites() {
     try {
-      // /eventinvites/629b9859ef51fb2688f9c0b9
-      // /eventinvites/62a4c4a6946c8247c4060d31
-      // /myinvites
       const myinvites = await api.get(props.route);
       setInvites(myinvites.data);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const deleteInvite = async (_id) => {
     try {
       const response = await api.delete(`/invite/${_id}`);
-      console.log(response);
       setRefresh(!refresh);
     } catch (error) {
       console.error(error);
@@ -30,7 +26,6 @@ const MyInvites = (props) => {
   const acceptInvite = async (_id) => {
     try {
       const response = await api.patch(`/invite/${_id}`, { confirmacao: true });
-      console.log(response);
       setRefresh(!refresh);
     } catch (error) {
       console.error(error);
