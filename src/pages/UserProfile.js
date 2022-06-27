@@ -63,8 +63,6 @@ function EventDetail() {
   async function handleFileUpload(file) {
     const formData = new FormData();
     formData.append("picture", file);
-    console.log("entrou handler", formData);
-    console.log("entrou handler file", file);
     const response = await api.post("/upload", formData);
     return response.data;
   }
@@ -212,7 +210,7 @@ function EventDetail() {
   };
 
   return (
-    <Box>
+    <Box style={ {overflow:'scroll '} }>
       {errors.msg && (
         <Alert severity="error" onClose={() => setErrors({ msg: null })}>
           {errors.msg}
@@ -261,6 +259,7 @@ function EventDetail() {
           <div style={titlePositionCss}>
             <label htmlFor="contained-button-file">
               <img
+                loading='lazy'
                 style={{
                   width: "150px",
                   height: "150px",

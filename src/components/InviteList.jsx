@@ -104,7 +104,6 @@ const InviteList = (props) => {
           const { _id, eventId, userId, confirmacao, email } = element;
           const { acceptInvite } = props.functions;
 
-          console.log(eventId.createdBy);
           return (
             <React.Fragment key={_id}>
               <ListItem sx={listItemCss}>
@@ -143,28 +142,28 @@ const InviteList = (props) => {
 
                 {(loggedInUser.user.email === email ||
                   loggedInUser.user._id === eventId.userId) && (
-                  <Box sx={buttonBoxCss}>
-                    {!confirmacao && loggedInUser.user.email === email && (
+                    <Box sx={buttonBoxCss}>
+                      {!confirmacao && loggedInUser.user.email === email && (
+                        <Button
+                          sx={buttonCss}
+                          onClick={() => {
+                            acceptInvite(_id);
+                          }}
+                        >
+                          Aceitar
+                        </Button>
+                      )}
                       <Button
                         sx={buttonCss}
                         onClick={() => {
-                          acceptInvite(_id);
+                          setDeleteInviteId(_id);
+                          handleModal();
                         }}
                       >
-                        Aceitar
+                        {confirmacao ? "Excluir" : "Recusar"}
                       </Button>
-                    )}
-                    <Button
-                      sx={buttonCss}
-                      onClick={() => {
-                        setDeleteInviteId(_id);
-                        handleModal();
-                      }}
-                    >
-                      {confirmacao ? "Excluir" : "Recusar"}
-                    </Button>
-                  </Box>
-                )}
+                    </Box>
+                  )}
               </ListItem>
               <Divider component="li" />
             </React.Fragment>

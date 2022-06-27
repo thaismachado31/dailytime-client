@@ -17,17 +17,13 @@ function ProtectedRoute({ component: Component }) {
   instance.onmessage = (message) => {
     if (message) {
       setAlerts(JSON.parse(message.data));
-      console.log("retorno worker react", JSON.parse(message.data));
     }
   };
 
-  console.log(`state`, alerts);
   useEffect(() => {
     (async function getTask() {
       try {
         const mytasks = await api.get(`/taskbydate/${new Date()}`);
-
-        console.log(mytasks);
 
         const workerTasks = mytasks?.data?.map((task) => {
           return {

@@ -37,8 +37,6 @@ function EventDetail() {
       try {
         const response = await api.get(`/event/${_id}`);
 
-        console.log(response.data);
-
         setEvent({ ...response.data });
       } catch (err) {
         console.error(err);

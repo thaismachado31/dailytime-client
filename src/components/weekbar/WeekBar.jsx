@@ -16,7 +16,7 @@ const WeekBar = () => {
       start: startOfWeek(new Date()),
       end: lastDayOfWeek(new Date()),
     })
-  ); //.map((date) => format(date, "d/M/y"));
+  );
   const [weekcounter, setWeekCounter] = useState(0);
 
   const [selectedDay, setSelectedDay] = useState("Hoje");
@@ -52,7 +52,6 @@ const WeekBar = () => {
     handleWeek();
   }, [weekcounter]);
 
-  console.log("renderizou");
   return (
     <div>
       <Box>
