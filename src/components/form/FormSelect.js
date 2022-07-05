@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
-import useStyles from "../styles/styles";
+import useStyles from "../../styles/styles";
 
 function FormSelect(props) {
   const classes = useStyles();

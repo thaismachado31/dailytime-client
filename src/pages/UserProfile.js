@@ -13,8 +13,7 @@ import KeyIcon from "@mui/icons-material/Key";
 import api from "../apis/api";
 
 import Alert from "@mui/material/Alert";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MyInvites from "../components/MyInvites";
+import MyInvites from "../components/invites/MyInvites";
 import useStyles from "../styles/styles";
 import { AuthContext } from "../contexts/authContext";
 
@@ -63,6 +62,8 @@ function EventDetail() {
   async function handleFileUpload(file) {
     const formData = new FormData();
     formData.append("picture", file);
+    console.log("entrou handler", formData);
+    console.log("entrou handler file", file);
     const response = await api.post("/upload", formData);
     return response.data;
   }
@@ -103,58 +104,6 @@ function EventDetail() {
       }
     }
   }
-
-  const theme = createTheme({
-    typography: {
-      fontFamily: [
-        "Quicksand",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
-    palette: {
-      primary: {
-        light: "#b5f8f1",
-        main: "#83C5BE",
-        dark: "#53948e",
-      },
-      secondary: {
-        light: "#63a2ae",
-        main: "#32747F",
-        dark: "#004753",
-      },
-      warning: {
-        main: "#E29478",
-      },
-      info: {
-        main: "#FFB672",
-      },
-      grey: {
-        50: "#FFFFFF",
-        100: "#EBEDF1",
-        200: "#CDD4DB",
-        300: "#ADB7C2",
-        400: "#8D9AAA",
-        500: "#768597",
-        600: "#5E7185",
-        700: "#516274",
-        800: "#333D49",
-        900: "#212932",
-      },
-    },
-    button: {
-      fontWeight: 500,
-      fontSize: "14px",
-      textTransform: "unset",
-    },
-  });
 
   const titlePositionCss = {
     width: "304px",
@@ -210,7 +159,7 @@ function EventDetail() {
   };
 
   return (
-    <Box style={ {overflow:'scroll '} }>
+    <Box>
       {errors.msg && (
         <Alert severity="error" onClose={() => setErrors({ msg: null })}>
           {errors.msg}
@@ -255,87 +204,85 @@ function EventDetail() {
         </Tabs>
       </Box>
       <Box style={mainDiv}>
-        <ThemeProvider theme={theme}>
-          <div style={titlePositionCss}>
-            <label htmlFor="contained-button-file">
-              <img
-                loading='lazy'
-                style={{
-                  width: "150px",
-                  height: "150px",
-                  borderRadius: "100%",
-                }}
-                src={state.profilePicture}
-              />
-              <input
-                style={{ display: "none" }}
-                id="contained-button-file"
-                type="file"
-                name="picture"
-                onChange={handleChange}
-              />
-            </label>
-          </div>
-          {componentToRender === 1 ? (
-            <MyInvites title="Meus Convites" height="50" route="/myinvites" />
-          ) : (
-            <Box component="form" onSubmit={handleSubmit} style={formCss}>
-              <Input
-                sx={inputCss}
-                placeholder="Nome"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <AccountCircleOutlinedIcon />
-                  </InputAdornment>
-                }
-                name="name"
-                value={state.name}
-                onChange={handleChange}
-              />
-              <Input
-                sx={inputCss}
-                placeholder="Password"
-                type="password"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <KeyIcon />
-                  </InputAdornment>
-                }
-                name="password"
-                value={state.password}
-                onChange={handleChange}
-              />
-              <Input
-                sx={inputCss}
-                placeholder="Confirm Password"
-                type="password"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <KeyIcon />
-                  </InputAdornment>
-                }
-                name="confirmPassword"
-                value={state.confirmPassword}
-                onChange={handleChange}
-              />
+        <div style={titlePositionCss}>
+          <label htmlFor="contained-button-file">
+            <img
+              style={{
+                width: "150px",
+                height: "150px",
+                borderRadius: "100%",
+              }}
+              src={state.profilePicture}
+              alt={`${state.name} profile`}
+            />
+            <input
+              style={{ display: "none" }}
+              id="contained-button-file"
+              type="file"
+              name="picture"
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+        {componentToRender === 1 ? (
+          <MyInvites height="50" route="/myinvites" />
+        ) : (
+          <Box component="form" onSubmit={handleSubmit} style={formCss}>
+            <Input
+              sx={inputCss}
+              placeholder="Nome"
+              startAdornment={
+                <InputAdornment position="start">
+                  <AccountCircleOutlinedIcon />
+                </InputAdornment>
+              }
+              name="name"
+              value={state.name}
+              onChange={handleChange}
+            />
+            <Input
+              sx={inputCss}
+              placeholder="Password"
+              type="password"
+              startAdornment={
+                <InputAdornment position="start">
+                  <KeyIcon />
+                </InputAdornment>
+              }
+              name="password"
+              value={state.password}
+              onChange={handleChange}
+            />
+            <Input
+              sx={inputCss}
+              placeholder="Confirm Password"
+              type="password"
+              startAdornment={
+                <InputAdornment position="start">
+                  <KeyIcon />
+                </InputAdornment>
+              }
+              name="confirmPassword"
+              value={state.confirmPassword}
+              onChange={handleChange}
+            />
 
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Button variant="contained" style={buttonCss} type="submit">
-                  Atualizar
-                </Button>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Button variant="contained" style={buttonCss} type="submit">
+                Atualizar
+              </Button>
 
-                <Button
-                  variant="contained"
-                  component="span"
-                  style={buttonCss}
-                  onClick={context.handleLogout}
-                >
-                  Logout
-                </Button>
-              </Stack>
-            </Box>
-          )}
-        </ThemeProvider>
+              <Button
+                variant="contained"
+                component="span"
+                style={buttonCss}
+                onClick={context.handleLogout}
+              >
+                Logout
+              </Button>
+            </Stack>
+          </Box>
+        )}
       </Box>
     </Box>
   );
