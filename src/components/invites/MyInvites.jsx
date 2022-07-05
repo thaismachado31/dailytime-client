@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import InviteList from "../components/InviteList";
-import api from "../apis/api";
+import InviteList from "../invites/InviteList";
+import api from "../../apis/api";
 
 const MyInvites = (props) => {
   const [invites, setInvites] = useState([]);
@@ -11,7 +11,7 @@ const MyInvites = (props) => {
     try {
       const myinvites = await api.get(props.route);
       setInvites(myinvites.data);
-    } catch (error) { }
+    } catch (error) {}
   }
 
   const deleteInvite = async (_id) => {

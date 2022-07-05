@@ -1,7 +1,5 @@
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MyInvites from "../components/MyInvites";
 import CreateInvite from "../components/invites/CreateInvite";
 
 import { useState, useEffect, useContext } from "react";
@@ -12,6 +10,7 @@ import EqualDetails from "../components/EqualDetails";
 import { AuthContext } from "../contexts/authContext";
 
 import api from "../apis/api";
+import InviteList from "../components/invites/InviteList";
 
 function EventDetail() {
   const [event, setEvent] = useState({
@@ -55,115 +54,118 @@ function EventDetail() {
     });
   }
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: "#b5f8f1",
-        main: "#83C5BE",
-        dark: "#53948e",
-      },
-      secondary: {
-        light: "#63a2ae",
-        main: "#32747F",
-        dark: "#004753",
-      },
-      warning: {
-        main: "#E29478",
-      },
-      info: {
-        main: "#FFB672",
-      },
-      grey: {
-        50: "#FFFFFF",
-        100: "#EBEDF1",
-        200: "#CDD4DB",
-        300: "#ADB7C2",
-        400: "#8D9AAA",
-        500: "#768597",
-        600: "#5E7185",
-        700: "#516274",
-        800: "#333D49",
-        900: "#212932",
-      },
-    },
-    typography: {
-      fontFamily: [
-        "Quicksand",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
-    button: {
-      fontWeight: 500,
-      fontSize: "14px",
-      textTransform: "unset",
-    },
-  });
+  const [emailInvite, setEmailInvite] = useState("");
+  async function handleInvite() {
+    try {
+      const response = api.post(`/newinvite`, {
+        email: emailInvite,
+        eventId: _id,
+      });
+      setRefresh(!refresh);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function handleChange({ target }) {
+    const { value } = target;
+    setEmailInvite(value);
+  }
+  const [myInvites, setMyInvites] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
+  async function getInvites() {
+    try {
+      const myinvites = await api.get(`/myinvites/${_id}`);
+      setMyInvites(myinvites.data);
+    } catch (error) {}
+  }
+  console.log(myInvites);
+  const deleteInvite = async (id) => {
+    try {
+      const response = await api.delete(`/invite/${id}`);
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const acceptInvite = async (id) => {
+    try {
+      const response = await api.patch(`/invite/${id}`, { confirmacao: true });
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getInvites();
+  }, [refresh]);
 
   return (
     <div style={{ height: "90vh", overflow: "scroll" }}>
-      <ThemeProvider theme={theme}>
-        {(isOwner() || isInvited()) && (
-          <div>
-            <EqualDetails
-              key={event._id}
-              name={event.name}
-              description={event.description}
-              dateTime={event.dateTime}
-              duration={event.duration}
-              timeReminder={event.timeReminder}
-              category={event.category}
+      {(isOwner() || isInvited()) && (
+        <div>
+          <EqualDetails
+            key={event._id}
+            name={event.name}
+            description={event.description}
+            dateTime={event.dateTime}
+            duration={event.duration}
+            timeReminder={event.timeReminder}
+            category={event.category}
+          />
+          {isOwner() && (
+            <CreateInvite
+              onChange={handleChange}
+              onClick={handleInvite}
+              value={emailInvite}
+              eventId={_id}
             />
-            {isOwner() && <CreateInvite eventId={_id} />}
+          )}
 
-            <MyInvites
-              title="Convites do Evento"
-              height="30"
-              route={`/myinvites/${_id}`}
-              isAnEvent={true}
-            />
-            {isOwner() && (
-              <Stack justifyContent="center" direction="row" spacing={2} mt={5}>
-                <Button
-                  sx={{
-                    width: "10rem",
-                    height: "2.7rem",
-                    borderRadius: "100px",
-                    backgroundColor: "#32747F",
-                    padding: "10px",
-                    textTransform: "unset",
-                  }}
-                  variant="contained"
-                  href={`/updateevent/${_id}`}
-                >
-                  Editar
-                </Button>
-                <Button
-                  sx={{
-                    width: "10rem",
-                    height: "2.7rem",
-                    borderRadius: "100px",
-                    padding: "10px",
-                    textTransform: "unset",
-                  }}
-                  variant="contained"
-                  href={`/eventdelete/${_id}`}
-                  color="error"
-                >
-                  Deletar
-                </Button>
-              </Stack>
-            )}
-          </div>
-        )}
-      </ThemeProvider>
+          <InviteList
+            height="30"
+            isAnEvent={true}
+            list={myInvites}
+            deleteInvite={deleteInvite}
+            acceptInvite={acceptInvite}
+          />
+          {isOwner() && (
+            <Stack justifyContent="center" direction="row" spacing={2} mt={5}>
+              <Button
+                sx={{
+                  width: "10rem",
+                  height: "2.7rem",
+                  borderRadius: "100px",
+                  backgroundColor: "#32747F",
+                  padding: "10px",
+                  textTransform: "unset",
+                }}
+                variant="contained"
+                href={`/updateevent/${_id}`}
+              >
+                Editar
+              </Button>
+              <Button
+                sx={{
+                  width: "10rem",
+                  height: "2.7rem",
+                  borderRadius: "100px",
+                  padding: "10px",
+                  textTransform: "unset",
+                }}
+                variant="contained"
+                href={`/eventdelete/${_id}`}
+                color="error"
+              >
+                Deletar
+              </Button>
+            </Stack>
+          )}
+        </div>
+      )}
     </div>
   );
 }

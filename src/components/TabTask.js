@@ -23,9 +23,9 @@ import { useNavigate } from "react-router-dom";
 
 import useStyles from "../styles/styles";
 import { lightFormat, isBefore, addDays } from "date-fns";
-import FormSelect from "./FormSelect";
-import FormInput from "./FormInput";
-import FormButtonCreate from "./FormButtonCreate";
+import FormSelect from "./form/FormSelect";
+import FormInput from "./form/FormInput";
+import FormButtonCreate from "./form/FormButtonCreate";
 
 function TabTask() {
   const navigate = useNavigate();

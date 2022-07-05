@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@mui/material";
-import useStyles from "../styles/styles";
+import useStyles from "../../styles/styles";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 
 function FormButtonCreate(props) {
@@ -19,8 +19,9 @@ function FormButtonCreate(props) {
             state.name && state.dateTime && state.duration
               ? "#32747F"
               : "#CDD4DB",
+          color:
+            state.name && state.dateTime && state.duration ? "white" : "black",
           padding: "10px",
-          textTransform: "unset",
         }}
         variant="contained"
         type="submit"

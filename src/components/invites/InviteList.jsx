@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 import { Backdrop, Box, Button, Fade, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { AuthContext } from "../contexts/authContext";
+import { AuthContext } from "../../contexts/authContext";
 
 const buttonCss = {
   textTransform: "unset",
@@ -61,7 +61,10 @@ const InviteList = (props) => {
   }
 
   return (
-    <>
+    <div
+      className="text-center"
+      style={{ height: `${props.height}vh`, overflow: `auto` }}
+    >
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -85,7 +88,7 @@ const InviteList = (props) => {
                 sx={buttonCss}
                 onClick={() => {
                   handleModal();
-                  props.functions.deleteInvite(deleteInviteId);
+                  props.deleteInvite(deleteInviteId);
                 }}
               >
                 Sim
@@ -102,7 +105,6 @@ const InviteList = (props) => {
 
         {props.list?.map((element) => {
           const { _id, eventId, userId, confirmacao, email } = element;
-          const { acceptInvite } = props.functions;
 
           return (
             <React.Fragment key={_id}>
@@ -126,11 +128,11 @@ const InviteList = (props) => {
                   secondary={
                     <React.Fragment>
                       <Typography variant="body2" color="text.primary">
-                        Convidado por: {userId.name}
+                        Criado por: {userId.name}
                       </Typography>
 
                       <Typography variant="body2" color="text.primary">
-                        Email: {email}
+                        Convidado: {email}
                       </Typography>
 
                       <Typography variant="body2" color="text.primary">
@@ -142,35 +144,37 @@ const InviteList = (props) => {
 
                 {(loggedInUser.user.email === email ||
                   loggedInUser.user._id === eventId.userId) && (
-                    <Box sx={buttonBoxCss}>
-                      {!confirmacao && loggedInUser.user.email === email && (
-                        <Button
-                          sx={buttonCss}
-                          onClick={() => {
-                            acceptInvite(_id);
-                          }}
-                        >
-                          Aceitar
-                        </Button>
-                      )}
+                  <Box sx={buttonBoxCss}>
+                    {!confirmacao && loggedInUser.user.email === email && (
                       <Button
                         sx={buttonCss}
                         onClick={() => {
-                          setDeleteInviteId(_id);
-                          handleModal();
+                          props.acceptInvite(_id);
                         }}
                       >
-                        {confirmacao ? "Excluir" : "Recusar"}
+                        Aceitar
                       </Button>
-                    </Box>
-                  )}
+                    )}
+                    <Button
+                      sx={buttonCss}
+                      onClick={() => {
+                        setDeleteInviteId(_id);
+                        handleModal();
+                      }}
+                    >
+                      {loggedInUser.user._id === eventId.userId
+                        ? "Excluir"
+                        : "Recusar"}
+                    </Button>
+                  </Box>
+                )}
               </ListItem>
               <Divider component="li" />
             </React.Fragment>
           );
         })}
       </List>
-    </>
+    </div>
   );
 };
 

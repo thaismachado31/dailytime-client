@@ -1,25 +1,8 @@
 import { Box, Button, Input } from "@mui/material";
 import React from "react";
-import { useState } from "react";
-import api from "../../apis/api";
 import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined";
 
 const CreateInvite = (props) => {
-  const [email, setEmail] = useState("");
-  async function handleInvite(eventId) {
-    try {
-      const response = api.post(`/newinvite`, { email, eventId });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  function handleChange({ target }) {
-    const { value } = target;
-
-    setEmail(value);
-  }
-
   const informationsStyle = {
     display: "flex",
     flexDirection: "row",
@@ -33,7 +16,6 @@ const CreateInvite = (props) => {
   return (
     <Box mt={2} textAlign="center" sx={informationsStyle}>
       <PersonAddAlt1OutlinedIcon
-        // sx={{ informationsStyle }}
         style={{ color: "#32747F", marginRight: "1rem" }}
       />
       <Input
@@ -49,16 +31,10 @@ const CreateInvite = (props) => {
           },
         }}
         placeholder="Insira email...."
-        onChange={handleChange}
-        value={email}
+        onChange={props.onChange}
+        value={props.value}
       ></Input>
-      <Button
-        onClick={() => {
-          handleInvite(props.eventId);
-        }}
-      >
-        Convidar
-      </Button>
+      <Button onClick={props.onClick}>Convidar</Button>
     </Box>
   );
 };

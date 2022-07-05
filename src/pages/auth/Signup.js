@@ -14,30 +14,12 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../../apis/api";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import Alert from "@mui/material/Alert";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Login(props) {
   const [state, setState] = useState({ password: "", email: "", name: "" });
   const [checkbox, setCheckbox] = useState(false);
   const [errors, setErrors] = useState({
     msg: null,
-  });
-
-  const theme = createTheme({
-    typography: {
-      fontFamily: [
-        "Quicksand",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
   });
 
   const navigate = useNavigate();
@@ -70,7 +52,6 @@ function Login(props) {
       console.error(err);
     }
   }
-
 
   const titlePositionCss = {
     width: "304px",
@@ -134,72 +115,70 @@ function Login(props) {
 
   return (
     <div style={mainDiv}>
-      <ThemeProvider theme={theme}>
-        {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
-        <div style={titlePositionCss}>
-          <Typography
-            component="h4"
-            sx={{ fontSize: "24px", fontWeight: 700, lineHeight: "32.53px" }}
-          >
-            <strong> Vamos começar!</strong>
-          </Typography>
-          <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
-            Conte-me mais sobre você
-          </Typography>
+      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
+      <div style={titlePositionCss}>
+        <Typography
+          component="h4"
+          sx={{ fontSize: "24px", fontWeight: 700, lineHeight: "32.53px" }}
+        >
+          <strong> Vamos começar!</strong>
+        </Typography>
+        <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
+          Conte-me mais sobre você
+        </Typography>
+      </div>
+
+      <Box component="form" onSubmit={handleSubmit} style={formCss}>
+        <Input
+          sx={inputCss}
+          placeholder="Nome"
+          startAdornment={
+            <InputAdornment position="start">
+              <AccountCircleOutlinedIcon />
+            </InputAdornment>
+          }
+          name="name"
+          onChange={handleChange}
+        />
+        <Input
+          sx={inputCss}
+          placeholder="Email"
+          startAdornment={
+            <InputAdornment position="start">
+              <EmailOutlinedIcon />
+            </InputAdornment>
+          }
+          name="email"
+          onChange={handleChange}
+        />
+        <Input
+          sx={inputCss}
+          placeholder="Password"
+          type="password"
+          startAdornment={
+            <InputAdornment position="start">
+              <KeyIcon />
+            </InputAdornment>
+          }
+          name="password"
+          onChange={handleChange}
+        />
+
+        <div href="/">
+          <Checkbox
+            onChange={(event) => setCheckbox(event.target.checked)}
+            checked={checkbox}
+          />
+          Concordo com os <strong>Termos e condições</strong>
         </div>
+        <Button variant="contained" style={buttonCss} type="submit">
+          Registrar
+        </Button>
+      </Box>
 
-        <Box component="form" onSubmit={handleSubmit} style={formCss}>
-          <Input
-            sx={inputCss}
-            placeholder="Nome"
-            startAdornment={
-              <InputAdornment position="start">
-                <AccountCircleOutlinedIcon />
-              </InputAdornment>
-            }
-            name="name"
-            onChange={handleChange}
-          />
-          <Input
-            sx={inputCss}
-            placeholder="Email"
-            startAdornment={
-              <InputAdornment position="start">
-                <EmailOutlinedIcon />
-              </InputAdornment>
-            }
-            name="email"
-            onChange={handleChange}
-          />
-          <Input
-            sx={inputCss}
-            placeholder="Password"
-            type="password"
-            startAdornment={
-              <InputAdornment position="start">
-                <KeyIcon />
-              </InputAdornment>
-            }
-            name="password"
-            onChange={handleChange}
-          />
-
-          <div href="/">
-            <Checkbox
-              onChange={(event) => setCheckbox(event.target.checked)}
-              checked={checkbox}
-            />
-            Concordo com os <strong>Termos e condições</strong>
-          </div>
-          <Button variant="contained" style={buttonCss} type="submit">
-            Registrar
-          </Button>
-        </Box>
-
-        <Link style={linkRegistroCss} to="/login">
-          Já tem uma conta? <strong>Iniciar sessão</strong>
-        </Link>
-      </ThemeProvider>
+      <Link style={linkRegistroCss} to="/login">
+        Já tem uma conta? <strong>Iniciar sessão</strong>
+      </Link>
     </div>
   );
 }

@@ -12,8 +12,7 @@ import ShortTextIcon from "@mui/icons-material/ShortText";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
-
-import { format } from "date-fns";
+import { format, minutesToHours } from "date-fns";
 
 function EqualDetails(props) {
   const icons = [
@@ -25,6 +24,15 @@ function EqualDetails(props) {
     <AssignmentIndOutlinedIcon />,
     <MoreHorizOutlinedIcon />,
   ];
+
+  function formatMinutes(minutes) {
+    if (minutes >= 60) {
+      const hours = minutesToHours(minutes);
+      if (hours === 1) {
+        return `${hours}hora`;
+      } else return `${hours} horas`;
+    } else return `${minutes} min`;
+  }
 
   const catIcon = icons[props.category];
 
@@ -95,7 +103,7 @@ function EqualDetails(props) {
 
       <Typography style={informationsStyle}>
         <TimelapseIcon style={iconsStyle}></TimelapseIcon>
-        {props.duration} min
+        {formatMinutes(props.duration)}
       </Typography>
 
       {props.timeReminder > 0 ? (

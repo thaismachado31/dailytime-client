@@ -13,7 +13,6 @@ import {
   Select,
   Alert,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   TimePicker,
   LocalizationProvider,
@@ -114,246 +113,191 @@ function UpdateTask() {
 
   const classes = useStyles();
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: "#b5f8f1",
-        main: "#83C5BE",
-        dark: "#53948e",
-      },
-      secondary: {
-        light: "#63a2ae",
-        main: "#32747F",
-        dark: "#004753",
-      },
-      warning: {
-        main: "#E29478",
-      },
-      info: {
-        main: "#FFB672",
-      },
-      grey: {
-        50: "#FFFFFF",
-        100: "#EBEDF1",
-        200: "#CDD4DB",
-        300: "#ADB7C2",
-        400: "#8D9AAA",
-        500: "#768597",
-        600: "#5E7185",
-        700: "#516274",
-        800: "#333D49",
-        900: "#212932",
-      },
-    },
-    typography: {
-      fontFamily: [
-        "Quicksand",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
-    button: {
-      fontWeight: 500,
-      fontSize: "14px",
-      textTransform: "unset",
-    },
-  });
-
   return (
     <div>
-      <ThemeProvider theme={theme}>
-        {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
+      {errors.msg && <Alert severity="error">{errors.msg}</Alert>}
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
-          <TextField
-            InputProps={{ disableUnderline: true }}
-            sx={{ marginTop: "20px", marginBottom: "40px" }}
-            fullWidth
-            hiddenlabel="true"
-            id="filled-hidden-label-small"
-            placeholder="nome da tarefa"
-            variant="filled"
-            size="small"
-            name="name"
-            value={state.name}
-            onChange={handleChange}
-          />
+      <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
+        <TextField
+          InputProps={{ disableUnderline: true }}
+          sx={{ marginTop: "20px", marginBottom: "40px" }}
+          fullWidth
+          hiddenlabel="true"
+          id="filled-hidden-label-small"
+          placeholder="nome da tarefa"
+          variant="filled"
+          size="small"
+          name="name"
+          value={state.name}
+          onChange={handleChange}
+        />
 
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Stack spacing={3}>
-              <Box className={classes.input}>
-                <CategoryOutlinedIcon className={classes.icons} />
-                <FormControl>
-                  <InputLabel id="demo-simple-select-label">
-                    categoria
-                  </InputLabel>
-                  <Select
-                    sx={removeBorderInput}
-                    style={{ width: "140px" }}
-                    variant="standard"
-                    id="label-category"
-                    value={state.category}
-                    name="category"
-                    label="categoria"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={0}>lazer</MenuItem>
-                    <MenuItem value={1}>refeições</MenuItem>
-                    <MenuItem value={2}>trabalho/estudo</MenuItem>
-                    <MenuItem value={3}>cotidiano</MenuItem>
-                    <MenuItem value={4}>transporte</MenuItem>
-                    <MenuItem value={5}>reunião</MenuItem>
-                    <MenuItem value={6}>outro</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box className={classes.input}>
-                <ShortTextIcon className={classes.icons} />
-                <TextField
-                  InputProps={{ disableUnderline: true }}
-                  fullWidth
-                  id="input-description"
-                  hiddenlabel="true"
-                  placeholder="descrição"
-                  multiline
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Stack spacing={3}>
+            <Box className={classes.input}>
+              <CategoryOutlinedIcon className={classes.icons} />
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">categoria</InputLabel>
+                <Select
+                  sx={removeBorderInput}
+                  style={{ width: "140px" }}
                   variant="standard"
-                  name="description"
-                  value={state.description}
+                  id="label-category"
+                  value={state.category}
+                  name="category"
+                  label="categoria"
                   onChange={handleChange}
-                  maxRows={2}
-                />
-              </Box>
-              <Box className={classes.input}>
-                <AccessTimeIcon className={classes.icons} />
-                <TimePicker
-                  className={classes.picker}
-                  InputProps={{ disableUnderline: true }}
+                >
+                  <MenuItem value={0}>lazer</MenuItem>
+                  <MenuItem value={1}>refeições</MenuItem>
+                  <MenuItem value={2}>trabalho/estudo</MenuItem>
+                  <MenuItem value={3}>cotidiano</MenuItem>
+                  <MenuItem value={4}>transporte</MenuItem>
+                  <MenuItem value={5}>reunião</MenuItem>
+                  <MenuItem value={6}>outro</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box className={classes.input}>
+              <ShortTextIcon className={classes.icons} />
+              <TextField
+                InputProps={{ disableUnderline: true }}
+                fullWidth
+                id="input-description"
+                hiddenlabel="true"
+                placeholder="descrição"
+                multiline
+                variant="standard"
+                name="description"
+                value={state.description}
+                onChange={handleChange}
+                maxRows={2}
+              />
+            </Box>
+            <Box className={classes.input}>
+              <AccessTimeIcon className={classes.icons} />
+              <TimePicker
+                className={classes.picker}
+                InputProps={{ disableUnderline: true }}
+                hiddenlabel="true"
+                ampm={false}
+                margin="normal"
+                // name="dateTime"
+                value={datetime}
+                onChange={(newDatetime) => setDatetime(newDatetime)}
+                renderInput={(params) => (
+                  <TextField variant="standard" {...params} />
+                )}
+              />
+            </Box>
+            <Box className={classes.input}>
+              <CalendarMonthIcon className={classes.icons} />
+              <DatePicker
+                className={classes.picker}
+                InputProps={{ disableUnderline: true }}
+                inputFormat="dd/MM/yyyy"
+                hiddenlabel="true"
+                value={newDate}
+                onChange={(newValue) => setNewDate(newValue)}
+                renderInput={(params) => (
+                  <TextField variant="standard" {...params} />
+                )}
+              />
+            </Box>
+            <Box className={classes.input}>
+              <TimelapseIcon className={classes.icons} />
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">duração</InputLabel>
+                <Select
+                  sx={removeBorderInput}
+                  style={{ width: "140px" }}
+                  variant="standard"
+                  id="notification-alarm"
+                  name="duration"
+                  value={state.duration}
                   hiddenlabel="true"
-                  ampm={false}
-                  margin="normal"
-                  // name="dateTime"
-                  value={datetime}
-                  onChange={(newDatetime) => setDatetime(newDatetime)}
-                  renderInput={(params) => (
-                    <TextField variant="standard" {...params} />
-                  )}
-                />
-              </Box>
-              <Box className={classes.input}>
-                <CalendarMonthIcon className={classes.icons} />
-                <DatePicker
-                  className={classes.picker}
-                  InputProps={{ disableUnderline: true }}
-                  inputFormat="dd/MM/yyyy"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={5}>5min </MenuItem>
+                  <MenuItem value={15}>15min </MenuItem>
+                  <MenuItem value={30}>30min </MenuItem>
+                  <MenuItem value={60}>1 hora </MenuItem>
+                  <MenuItem value={120}>2 horas </MenuItem>
+                  <MenuItem value={180}>3 horas </MenuItem>
+                  <MenuItem value={240}>4 horas </MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box className={classes.input}>
+              <LoopIcon className={classes.icons} />
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">repetir</InputLabel>
+                <Select
+                  sx={removeBorderInput}
+                  style={{ width: "140px" }}
+                  variant="standard"
+                  id="week-recurrence"
+                  value={state.recurrence}
+                  name="recurrence"
+                  label="recurrence"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"-"}>-</MenuItem>
+                  <MenuItem value={"diario"}>Diario</MenuItem>
+                  <MenuItem value={"semanal"}>Semanal</MenuItem>
+                  <MenuItem value={"mensal"}>Mensal</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box className={classes.input}>
+              <NotificationsNoneIcon className={classes.icons} />
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">lembrete</InputLabel>
+                <Select
+                  sx={removeBorderInput}
+                  style={{ width: "140px" }}
+                  variant="standard"
+                  id="notification-alarm"
+                  name="timeReminder"
+                  value={state.timeReminder}
                   hiddenlabel="true"
-                  // name="date"
-                  value={newDate}
-                  onChange={(newValue) => setNewDate(newValue)}
-                  renderInput={(params) => (
-                    <TextField variant="standard" {...params} />
-                  )}
-                />
-              </Box>
-              <Box className={classes.input}>
-                <TimelapseIcon className={classes.icons} />
-                <FormControl>
-                  <InputLabel id="demo-simple-select-label">duração</InputLabel>
-                  <Select
-                    sx={removeBorderInput}
-                    style={{ width: "140px" }}
-                    variant="standard"
-                    id="notification-alarm"
-                    name="duration"
-                    value={state.duration}
-                    hiddenlabel="true"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={5}>5min </MenuItem>
-                    <MenuItem value={15}>15min </MenuItem>
-                    <MenuItem value={30}>30min </MenuItem>
-                    <MenuItem value={60}>1 hora </MenuItem>
-                    <MenuItem value={120}>2 horas </MenuItem>
-                    <MenuItem value={180}>3 horas </MenuItem>
-                    <MenuItem value={240}>4 horas </MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box className={classes.input}>
-                <LoopIcon className={classes.icons} />
-                <FormControl>
-                  <InputLabel id="demo-simple-select-label">repetir</InputLabel>
-                  <Select
-                    sx={removeBorderInput}
-                    style={{ width: "140px" }}
-                    variant="standard"
-                    id="week-recurrence"
-                    value={state.recurrence}
-                    name="recurrence"
-                    label="recurrence"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={"-"}>-</MenuItem>
-                    <MenuItem value={"diario"}>Diario</MenuItem>
-                    <MenuItem value={"semanal"}>Semanal</MenuItem>
-                    <MenuItem value={"mensal"}>Mensal</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box className={classes.input}>
-                <NotificationsNoneIcon className={classes.icons} />
-                <FormControl>
-                  <InputLabel id="demo-simple-select-label">
-                    lembrete
-                  </InputLabel>
-                  <Select
-                    sx={removeBorderInput}
-                    style={{ width: "140px" }}
-                    variant="standard"
-                    id="notification-alarm"
-                    name="timeReminder"
-                    value={state.timeReminder}
-                    hiddenlabel="true"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={0}>-</MenuItem>
-                    <MenuItem value={5}>5min antes</MenuItem>
-                    <MenuItem value={15}>15min antes</MenuItem>
-                    <MenuItem value={30}>30min antes</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-            </Stack>
-          </LocalizationProvider>
-          <div className={classes.divButton}>
-            <Button
-              className={classes.styleButton}
-              sx={{
-                width: "197px",
-                height: "42px",
-                borderRadius: "100px",
-                backgroundColor:
-                  state.name && state.dateTime && state.duration
-                    ? "#32747F"
-                    : "#CDD4DB",
-                padding: "10px",
-                textTransform: "unset",
-              }}
-              variant="contained"
-              type="submit"
-              endIcon={<PlayArrowOutlinedIcon />}
-            >
-              Atualizar tarefa
-            </Button>
-          </div>
-        </Box>
-      </ThemeProvider>
+                  onChange={handleChange}
+                >
+                  <MenuItem value={0}>-</MenuItem>
+                  <MenuItem value={5}>5min antes</MenuItem>
+                  <MenuItem value={15}>15min antes</MenuItem>
+                  <MenuItem value={30}>30min antes</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </Stack>
+        </LocalizationProvider>
+        <div className={classes.divButton}>
+          <Button
+            className={classes.styleButton}
+            sx={{
+              width: "197px",
+              height: "42px",
+              borderRadius: "100px",
+              backgroundColor:
+                state.name && state.dateTime && state.duration
+                  ? "#32747F"
+                  : "#CDD4DB",
+              color:
+                state.name && state.dateTime && state.duration
+                  ? "white"
+                  : "black",
+              padding: "10px",
+              textTransform: "unset",
+            }}
+            variant="contained"
+            type="submit"
+            endIcon={<PlayArrowOutlinedIcon />}
+          >
+            Atualizar tarefa
+          </Button>
+        </div>
+      </Box>
     </div>
   );
 }

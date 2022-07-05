@@ -23,9 +23,9 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
 import useStyles from "../styles/styles";
 
-import FormSelect from "./FormSelect";
-import FormInput from "./FormInput";
-import FormButtonCreate from "./FormButtonCreate";
+import FormSelect from "./form/FormSelect";
+import FormInput from "./form/FormInput";
+import FormButtonCreate from "./form/FormButtonCreate";
 
 function TabEvent() {
   const navigate = useNavigate();
@@ -193,16 +193,6 @@ function TabEvent() {
                 )}
               />
             </Box>
-            {/* <Box className={classes.input}>
-            <PersonAddAltOutlinedIcon className={classes.icons} />
-            <TextField
-              InputProps={{ disableUnderline: true }}
-              id="input-invite"
-              label="convidado"
-              placeholder="convidado"
-              variant="standard"
-            />
-          </Box> */}
             <FormSelect
               label="duração"
               icon={<TimelapseIcon className={classes.icons} />}
