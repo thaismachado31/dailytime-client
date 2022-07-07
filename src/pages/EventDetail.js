@@ -27,6 +27,9 @@ function EventDetail() {
     invites: [],
   });
 
+  const [myInvites, setMyInvites] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
   const { invites } = event;
   const { _id } = useParams();
   const { loggedInUser } = useContext(AuthContext);
@@ -57,7 +60,7 @@ function EventDetail() {
   const [emailInvite, setEmailInvite] = useState("");
   async function handleInvite() {
     try {
-      const response = api.post(`/newinvite`, {
+      const response = await api.post(`/newinvite`, {
         email: emailInvite,
         eventId: _id,
       });
@@ -71,8 +74,6 @@ function EventDetail() {
     const { value } = target;
     setEmailInvite(value);
   }
-  const [myInvites, setMyInvites] = useState([]);
-  const [refresh, setRefresh] = useState(false);
 
   async function getInvites() {
     try {
